@@ -78,7 +78,7 @@ body {
 }
 
 .app-title {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
   letter-spacing: -0.02em;
@@ -130,7 +130,7 @@ body {
   margin: 0;
   color: #4a5568;
   font-weight: 600;
-  font-size: 1.125rem;
+  font-size: 1.5rem;
 }
 
 .header-actions {
@@ -161,7 +161,7 @@ body {
 }
 
 .quick-add-section h2 {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 600;
   color: #2d3748;
   margin-bottom: 1.5rem;
@@ -585,7 +585,7 @@ body {
 }
 
 .randomizer-start h3 {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 600;
   color: #2d3748;
   margin-bottom: 0.5rem;
@@ -607,8 +607,8 @@ body {
 }
 
 .task-display h3 {
-  font-size: 1.125rem;
-  font-weight: 500;
+  font-size: 1.5rem;
+  font-weight: 600;
   color: #4a5568;
   margin-bottom: 1rem;
 }
@@ -647,8 +647,8 @@ body {
 }
 
 .active-task-display h3 {
-  font-size: 1.125rem;
-  font-weight: 500;
+  font-size: 1.5rem;
+  font-weight: 600;
   color: #4a5568;
   margin-bottom: 1rem;
 }
@@ -711,7 +711,7 @@ body {
 }
 
 .task-completed h3 {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 600;
   color: #2d3748;
   margin-bottom: 0.5rem;
