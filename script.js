@@ -62,6 +62,17 @@ class TaskRandomizer {
     document
       .getElementById("taskType")
       .addEventListener("change", () => this.toggleCooldownOptions());
+
+    // Task editing
+    document
+      .getElementById("saveEditBtn")
+      .addEventListener("click", () => this.saveTaskEdit());
+    document
+      .getElementById("cancelEditBtn")
+      .addEventListener("click", () => this.hideTaskEdit());
+    document
+      .getElementById("editTaskType")
+      .addEventListener("change", () => this.toggleEditCooldownOptions());
   }
 
   // Local storage management
@@ -202,6 +213,31 @@ class TaskRandomizer {
     this.toggleCooldownOptions();
   }
 
+  showTaskEdit(index) {
+    const task = this.tasks[index];
+    const container = document.getElementById("taskEditContainer");
+
+    // Populate form with task data
+    document.getElementById("editTaskInput").value = task.text;
+    document.getElementById("editTaskType").value = task.type;
+    document.getElementById("editCooldownPeriod").value = task.cooldown;
+
+    // Show/hide cooldown options based on task type
+    this.toggleEditCooldownOptions();
+
+    // Store the index being edited
+    this.editingTaskIndex = index;
+
+    container.style.display = "block";
+    document.getElementById("editTaskInput").focus();
+  }
+
+  hideTaskEdit() {
+    const container = document.getElementById("taskEditContainer");
+    container.style.display = "none";
+    this.editingTaskIndex = null;
+  }
+
   hideTaskInput() {
     const container = document.getElementById("taskInputContainer");
     container.style.display = "none";
@@ -210,6 +246,17 @@ class TaskRandomizer {
   toggleCooldownOptions() {
     const taskType = document.getElementById("taskType").value;
     const cooldownContainer = document.getElementById("cooldownContainer");
+
+    if (taskType === "repeatable") {
+      cooldownContainer.style.display = "block";
+    } else {
+      cooldownContainer.style.display = "none";
+    }
+  }
+
+  toggleEditCooldownOptions() {
+    const taskType = document.getElementById("editTaskType").value;
+    const cooldownContainer = document.getElementById("editCooldownContainer");
 
     if (taskType === "repeatable") {
       cooldownContainer.style.display = "block";
@@ -257,6 +304,62 @@ class TaskRandomizer {
 
     // Enable randomize button if it was disabled
     this.updateRandomizeButton();
+  }
+
+  saveTaskEdit() {
+    if (this.editingTaskIndex === null) return;
+
+    const input = document.getElementById("editTaskInput");
+    const taskText = input.value.trim();
+    const taskType = document.getElementById("editTaskType").value;
+    const cooldownPeriod = document.getElementById("editCooldownPeriod").value;
+
+    if (!taskText) {
+      this.showToast("Please enter a task", "error");
+      return;
+    }
+
+    if (taskText.length > 200) {
+      this.showToast("Task is too long (max 200 characters)", "error");
+      return;
+    }
+
+    // Check if text already exists in other tasks
+    const existingTask = this.tasks.find(
+      (task, index) =>
+        task.text === taskText && index !== this.editingTaskIndex,
+    );
+    if (existingTask) {
+      this.showToast("This task already exists", "error");
+      return;
+    }
+
+    // Update the task
+    const task = this.tasks[this.editingTaskIndex];
+    const oldType = task.type;
+
+    task.text = taskText;
+    task.type = taskType;
+    task.cooldown = cooldownPeriod;
+
+    // If changing from repeatable to oneoff, reset executions and completed status
+    if (oldType === "repeatable" && taskType === "oneoff") {
+      task.executions = [];
+      task.completed = false;
+    }
+
+    // If changing from oneoff to repeatable, ensure proper structure
+    if (oldType === "oneoff" && taskType === "repeatable") {
+      task.completed = false;
+      // Keep executions array as is
+    }
+
+    this.saveTasks();
+    this.updateUI();
+    this.updateStats();
+    this.updateRandomizeButton();
+    this.hideTaskEdit();
+    this.showToast("Task updated successfully", "success");
   }
 
   deleteTask(index) {
@@ -312,7 +415,7 @@ class TaskRandomizer {
       const typeIcon = task.type === "repeatable" ? "🔄" : "📝";
       const cooldownText =
         task.type === "repeatable"
-          ? ` (${this.formatCooldown(task.cooldown)})`
+          ? ` - ${this.formatCooldown(task.cooldown)}`
           : "";
 
       taskItem.innerHTML = `
@@ -324,6 +427,9 @@ class TaskRandomizer {
                     </div>
                 </div>
                 <div class="task-actions">
+                    <button class="edit-btn" onclick="app.showTaskEdit(${index})" aria-label="Edit task">
+                        <img src="img/edit.svg" alt="Edit" width="16" height="16" />
+                    </button>
                     <button class="delete-btn" onclick="app.deleteTask(${index})" aria-label="Delete task">
                         <img src="img/trash.svg" alt="Delete" width="16" height="16" />
                     </button>

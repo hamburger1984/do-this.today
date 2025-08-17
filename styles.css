@@ -171,8 +171,14 @@ body {
     hue-rotate(346deg) brightness(104%) contrast(97%);
 }
 
+.edit-btn img {
+  filter: brightness(0) saturate(100%) invert(40%) sepia(77%) saturate(1019%)
+    hue-rotate(213deg) brightness(94%) contrast(91%);
+}
+
 /* Task input */
-.task-input-container {
+.task-input-container,
+.task-edit-container {
   margin-bottom: 1.5rem;
   animation: fadeIn 0.3s ease;
 }
@@ -332,6 +338,25 @@ body {
 .task-actions {
   display: flex;
   gap: 0.5rem;
+}
+
+.edit-btn {
+  background: none;
+  border: none;
+  color: #4a5568;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  min-height: 36px;
+}
+
+.edit-btn:hover {
+  background: rgba(74, 85, 104, 0.1);
 }
 
 .delete-btn {
@@ -770,6 +795,11 @@ body {
   .btn-icon img {
     filter: brightness(0) saturate(100%) invert(28%) sepia(77%) saturate(1269%)
       hue-rotate(213deg) brightness(94%) contrast(91%);
+  }
+
+  .edit-btn img {
+    filter: brightness(0) saturate(100%) invert(89%) sepia(6%) saturate(1019%)
+      hue-rotate(183deg) brightness(96%) contrast(93%);
   }
 }
 
