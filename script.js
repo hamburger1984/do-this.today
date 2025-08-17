@@ -1,12 +1,14 @@
 class TaskRandomizer {
   constructor() {
     this.tasks = [];
+    this.deletedTasks = [];
     this.completedTasks = 0;
     this.currentSelectedTask = null;
     this.activeTask = null;
     this.activeTaskTimer = null;
     this.nextTaskId = 1;
     this.taskListCollapsed = true;
+    this.currentPage = "main";
     this.init();
   }
 
@@ -71,11 +73,25 @@ class TaskRandomizer {
     document
       .getElementById("editTaskType")
       .addEventListener("change", () => this.toggleEditCooldownOptions());
+
+    // Navigation
+    document
+      .getElementById("trashBtn")
+      .addEventListener("click", () => this.showTrashPage());
+    document
+      .getElementById("backToMainBtn")
+      .addEventListener("click", () => this.showMainPage());
+
+    // Trash actions
+    document
+      .getElementById("clearAllTrashBtn")
+      .addEventListener("click", () => this.clearAllTrash());
   }
 
   // Local storage management
   saveTasks() {
     localStorage.setItem("nowwhat-tasks", JSON.stringify(this.tasks));
+    localStorage.setItem("nowwhat-deleted", JSON.stringify(this.deletedTasks));
     localStorage.setItem("nowwhat-completed", this.completedTasks.toString());
     localStorage.setItem("nowwhat-active", JSON.stringify(this.activeTask));
     localStorage.setItem("nowwhat-nextid", this.nextTaskId.toString());
@@ -83,6 +99,7 @@ class TaskRandomizer {
 
   loadTasks() {
     const saved = localStorage.getItem("nowwhat-tasks");
+    const deletedSaved = localStorage.getItem("nowwhat-deleted");
     const completedSaved = localStorage.getItem("nowwhat-completed");
     const activeSaved = localStorage.getItem("nowwhat-active");
     const nextIdSaved = localStorage.getItem("nowwhat-nextid");
@@ -174,6 +191,23 @@ class TaskRandomizer {
       this.saveTasks();
     }
 
+    if (deletedSaved) {
+      this.deletedTasks = JSON.parse(deletedSaved).map((task) => {
+        if (typeof task === "string") {
+          return {
+            id: this.nextTaskId++,
+            text: task,
+            type: "oneoff",
+            cooldown: "daily",
+            executions: [],
+            completed: false,
+            deletedAt: Date.now(),
+          };
+        }
+        return { ...task, deletedAt: task.deletedAt || Date.now() };
+      });
+    }
+
     if (completedSaved) {
       this.completedTasks = parseInt(completedSaved);
     }
@@ -194,6 +228,20 @@ class TaskRandomizer {
     return this.tasks.length > 0
       ? Math.max(...this.tasks.map((t) => t.id || 0))
       : 0;
+  }
+
+  // Navigation methods
+  showMainPage() {
+    this.currentPage = "main";
+    document.getElementById("mainPage").style.display = "block";
+    document.getElementById("trashPage").style.display = "none";
+  }
+
+  showTrashPage() {
+    this.currentPage = "trash";
+    document.getElementById("mainPage").style.display = "none";
+    document.getElementById("trashPage").style.display = "block";
+    this.renderTrashList();
   }
 
   // Task management methods
@@ -386,11 +434,13 @@ class TaskRandomizer {
 
   deleteTask(index) {
     const task = this.tasks[index];
+    task.deletedAt = Date.now();
+    this.deletedTasks.push(task);
     this.tasks.splice(index, 1);
     this.saveTasks();
     this.updateUI();
     this.updateStats();
-    this.showToast(`"${task.text}" deleted`, "success");
+    this.showToast(`"${task.text}" moved to trash`, "success");
 
     // Update randomize button state
     this.updateRandomizeButton();
@@ -814,6 +864,92 @@ class TaskRandomizer {
       this.updateStats();
       this.resetRandomizer();
       this.showToast("All data cleared", "success");
+    }
+  }
+
+  // Trash management methods
+  renderTrashList() {
+    const trashList = document.getElementById("trashList");
+    const emptyTrashState = document.getElementById("emptyTrashState");
+
+    trashList.innerHTML = "";
+
+    if (this.deletedTasks.length === 0) {
+      emptyTrashState.style.display = "block";
+      trashList.style.display = "none";
+      return;
+    }
+
+    emptyTrashState.style.display = "none";
+    trashList.style.display = "block";
+
+    this.deletedTasks.forEach((task, index) => {
+      const taskItem = document.createElement("div");
+      taskItem.className = "trash-item";
+
+      const typeIcon = task.type === "repeatable" ? "🔄" : "📝";
+      const deletedDate = new Date(task.deletedAt).toLocaleDateString();
+
+      taskItem.innerHTML = `
+          <div class="task-content">
+            <div class="task-text">${this.escapeHtml(task.text)}</div>
+            <div class="task-meta">
+              <span class="task-type">${typeIcon}</span>
+              <span class="deleted-date">Deleted: ${deletedDate}</span>
+            </div>
+          </div>
+          <div class="task-actions">
+            <button class="restore-btn" onclick="app.restoreTask(${index})" aria-label="Restore task">
+              <img src="img/refresh.svg" alt="Restore" width="16" height="16" />
+            </button>
+            <button class="delete-forever-btn" onclick="app.deleteTaskForever(${index})" aria-label="Delete forever">
+              <img src="img/trash.svg" alt="Delete Forever" width="16" height="16" />
+            </button>
+          </div>
+        `;
+      trashList.appendChild(taskItem);
+    });
+  }
+
+  restoreTask(index) {
+    const task = this.deletedTasks[index];
+    delete task.deletedAt;
+    this.tasks.push(task);
+    this.deletedTasks.splice(index, 1);
+    this.saveTasks();
+    this.renderTrashList();
+    this.showToast(`"${task.text}" restored`, "success");
+  }
+
+  deleteTaskForever(index) {
+    if (
+      confirm(
+        "Are you sure you want to permanently delete this task? This cannot be undone.",
+      )
+    ) {
+      const task = this.deletedTasks[index];
+      this.deletedTasks.splice(index, 1);
+      this.saveTasks();
+      this.renderTrashList();
+      this.showToast(`"${task.text}" deleted permanently`, "success");
+    }
+  }
+
+  clearAllTrash() {
+    if (this.deletedTasks.length === 0) {
+      this.showToast("Trash is already empty", "default");
+      return;
+    }
+
+    if (
+      confirm(
+        `Are you sure you want to permanently delete all ${this.deletedTasks.length} tasks in trash? This cannot be undone.`,
+      )
+    ) {
+      this.deletedTasks = [];
+      this.saveTasks();
+      this.renderTrashList();
+      this.showToast("All trash cleared", "success");
     }
   }
 }

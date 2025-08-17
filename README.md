@@ -25,6 +25,7 @@ A mobile-first Progressive Web App that helps you decide what to do next by rand
   - ⏰ Cooldown (orange) - waiting for cooldown to expire
   - 🏁 Completed (blue) - one-time task finished
 - **Full task editing** - modify text, type, and cooldown periods after creation
+- **Trash system** - deleted tasks move to trash for recovery or permanent deletion
 - **Execution tracking** - keeps history of when tasks were completed
 
 ### 🎲 Intelligent Randomization
@@ -55,6 +56,7 @@ A mobile-first Progressive Web App that helps you decide what to do next by rand
   - `Space`: Randomize task (when not typing)
 - **Dark mode support** based on system preference
 - **Collapsible task list** - stays collapsed by default, focuses on the randomizer
+- **Trash page** - safely delete and restore tasks with separate trash management
 - **Accessibility features** - ARIA labels, focus management, screen reader support
 
 ## 🚀 Getting Started
@@ -95,6 +97,7 @@ Then visit `http://localhost:8000`
 - **View Tasks**: Click the "My Tasks" header to expand/collapse the task list
 - **Add Tasks**: Click the **"+"** button (automatically expands the list)
 - **Edit Tasks**: Click the **pencil icon (✏️)** next to any task (automatically expands the list)
+- **Delete Tasks**: Click the **trash icon** to move tasks to trash (not permanently deleted)
 - **Convert Types**: Tasks can be switched between one-time and repeatable types
 
 ### Working with Tasks
@@ -109,6 +112,13 @@ Then visit `http://localhost:8000`
 - **Active**: Currently working on (8-hour window)
 - **Cooldown**: Waiting for cooldown period to expire (repeatable tasks only)
 - **Completed**: Finished (one-time tasks only)
+
+### Managing Deleted Tasks
+- **Access Trash**: Click the **trash icon** in the header to view deleted tasks
+- **Restore Tasks**: Click the **restore icon** to bring tasks back to your active list
+- **Delete Forever**: Click the **delete icon** to permanently remove tasks
+- **Clear All**: Remove all deleted tasks permanently with one click
+- **Safe Deletion**: Tasks are moved to trash first, giving you a chance to recover them
 
 ## 🏗️ Technical Details
 
@@ -141,6 +151,7 @@ Then visit `http://localhost:8000`
 │   ├── refresh.svg    # Try another icon
 │   ├── edit.svg       # Edit task icon
 │   ├── trash.svg      # Delete task icon
+│   ├── arrow-left.svg # Back navigation icon
 │   ├── x.svg          # Cancel/close icon
 │   └── clock.svg      # Timer/cooldown icon
 └── README.md          # This documentation
@@ -151,16 +162,17 @@ Tasks are stored as objects with the following structure:
 ```javascript
 {
   id: 1,                    // Unique identifier
-  text: "Clean kitchen",    // Task description
-  type: "repeatable",       // "oneoff" or "repeatable"
-  cooldown: "daily",        // Cooldown period
-  executions: [             // History of completions
+  text: "Clean kitchen",    # Task description
+  type: "repeatable",       # "oneoff" or "repeatable"
+  cooldown: "daily",        # Cooldown period
+  executions: [             # History of completions
     {
-      timestamp: 1234567890,  // When completed
-      duration: 7200000       // How long it took
+      timestamp: 1234567890,  # When completed
+      duration: 7200000       # How long it took
     }
   ],
-  completed: false          // For one-off tasks
+  completed: false,         # For one-off tasks
+  deletedAt: 1234567890     # When moved to trash (deleted tasks only)
 }
 ```
 
@@ -187,13 +199,15 @@ The modular JavaScript class structure makes it easy to:
 - Add task categories or tags
 - Integrate with external APIs
 - Add data export/import functionality
+- Implement automatic trash cleanup after X days
 
 ## 🔒 Privacy & Security
 
-- **Local-first**: All data stays on your device
+- **Local-first**: All data stays on your device (including trash)
 - **No tracking**: No analytics, cookies, or data collection
 - **No accounts**: No registration or personal information required
 - **Offline capable**: Works completely offline after first load
+- **Safe deletion**: Trash system prevents accidental data loss
 - **Open source**: Full source code available for inspection
 
 ## 🌟 Why Use Now What?

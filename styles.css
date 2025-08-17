@@ -41,6 +41,25 @@ body {
   position: relative;
 }
 
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title-section {
+  flex: 1;
+  text-align: left;
+}
+
+.trash-btn {
+  color: white;
+}
+
+.trash-btn img {
+  filter: brightness(0) saturate(100%) invert(1);
+}
+
 .app-title {
   font-size: 2rem;
   font-weight: 700;
@@ -409,6 +428,44 @@ body {
   background: rgba(229, 62, 62, 0.1);
 }
 
+.restore-btn {
+  background: none;
+  border: none;
+  color: #38a169;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  min-height: 36px;
+}
+
+.restore-btn:hover {
+  background: rgba(56, 161, 105, 0.1);
+}
+
+.delete-forever-btn {
+  background: none;
+  border: none;
+  color: #e53e3e;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  min-height: 36px;
+}
+
+.delete-forever-btn:hover {
+  background: rgba(229, 62, 62, 0.1);
+}
+
 /* Empty state */
 .empty-state {
   text-align: center;
@@ -587,6 +644,89 @@ body {
 .task-completed p {
   color: #718096;
   margin-bottom: 2rem;
+}
+
+/* Trash page styles */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: #f7fafc;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.page-header h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin: 0;
+}
+
+.back-btn {
+  color: #4a5568;
+}
+
+.clear-all-btn {
+  min-width: auto;
+  padding: 0.75rem 1rem;
+}
+
+.trash-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.trash-item {
+  background: #fef5e7;
+  border: 1px solid #f6ad55;
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+  animation: slideIn 0.3s ease;
+}
+
+.trash-item:hover {
+  background: #fed7aa;
+  border-color: #f59e0b;
+  transform: translateY(-1px);
+}
+
+.deleted-date {
+  font-size: 0.75rem;
+  color: #92400e;
+  background: #fcd34d;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.empty-trash-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #718096;
+}
+
+.empty-trash-state .empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.empty-trash-state h3 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: #4a5568;
+}
+
+.empty-trash-state p {
+  font-size: 0.95rem;
 }
 
 /* Footer */
@@ -831,6 +971,34 @@ body {
   .edit-btn img {
     filter: brightness(0) saturate(100%) invert(89%) sepia(6%) saturate(1019%)
       hue-rotate(183deg) brightness(96%) contrast(93%);
+  }
+
+  .page-header {
+    background: #2d3748;
+    border-color: #4a5568;
+  }
+
+  .page-header h2 {
+    color: #e2e8f0;
+  }
+
+  .trash-item {
+    background: #4a5568;
+    border-color: #718096;
+  }
+
+  .trash-item:hover {
+    background: #2d3748;
+    border-color: #cbd5e0;
+  }
+
+  .deleted-date {
+    background: #4a5568;
+    color: #e2e8f0;
+  }
+
+  .empty-trash-state h3 {
+    color: #e2e8f0;
   }
 }
 
