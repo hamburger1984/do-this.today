@@ -69,6 +69,37 @@ body {
   margin-bottom: 1.5rem;
 }
 
+/* Collapsible header */
+.collapsible-header {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 0;
+}
+
+.collapsible-header:hover {
+  background: #f7fafc;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.collapse-indicator {
+  font-size: 1.2rem;
+  color: #4a5568;
+  transition: transform 0.2s ease;
+  user-select: none;
+}
+
+.task-content {
+  overflow: hidden;
+  animation: fadeIn 0.3s ease;
+}
+
 .section-header h2 {
   font-size: 1.5rem;
   font-weight: 600;

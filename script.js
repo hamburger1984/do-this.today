@@ -6,6 +6,7 @@ class TaskRandomizer {
     this.activeTask = null;
     this.activeTaskTimer = null;
     this.nextTaskId = 1;
+    this.taskListCollapsed = true;
     this.init();
   }
 
@@ -20,10 +21,7 @@ class TaskRandomizer {
 
   // Event binding
   bindEvents() {
-    // Task management
-    document
-      .getElementById("addTaskBtn")
-      .addEventListener("click", () => this.showTaskInput());
+    // Task management - handled in HTML onclick to prevent event bubbling
     document
       .getElementById("cancelTaskBtn")
       .addEventListener("click", () => this.hideTaskInput());
@@ -199,7 +197,26 @@ class TaskRandomizer {
   }
 
   // Task management methods
+  toggleTaskList() {
+    this.taskListCollapsed = !this.taskListCollapsed;
+    const taskContent = document.getElementById("taskContent");
+    const indicator = document.getElementById("collapseIndicator");
+
+    if (this.taskListCollapsed) {
+      taskContent.style.display = "none";
+      indicator.textContent = "▼";
+    } else {
+      taskContent.style.display = "block";
+      indicator.textContent = "▲";
+    }
+  }
+
   showTaskInput() {
+    // First expand the task list if collapsed
+    if (this.taskListCollapsed) {
+      this.toggleTaskList();
+    }
+
     const container = document.getElementById("taskInputContainer");
     const input = document.getElementById("taskInput");
 
@@ -214,6 +231,11 @@ class TaskRandomizer {
   }
 
   showTaskEdit(index) {
+    // First expand the task list if collapsed
+    if (this.taskListCollapsed) {
+      this.toggleTaskList();
+    }
+
     const task = this.tasks[index];
     const container = document.getElementById("taskEditContainer");
 

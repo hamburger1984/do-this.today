@@ -54,6 +54,7 @@ A mobile-first Progressive Web App that helps you decide what to do next by rand
   - `Escape`: Cancel task input
   - `Space`: Randomize task (when not typing)
 - **Dark mode support** based on system preference
+- **Collapsible task list** - stays collapsed by default, focuses on the randomizer
 - **Accessibility features** - ARIA labels, focus management, screen reader support
 
 ## 🚀 Getting Started
@@ -82,7 +83,7 @@ Then visit `http://localhost:8000`
 ## 📖 How to Use
 
 ### Adding Tasks
-1. Click the **"+"** button in the task list
+1. Click the **"+"** button in the task list header (this will expand the list if collapsed)
 2. Enter your task description
 3. Choose task type:
    - **One-time task**: Complete once and it's done forever
@@ -90,11 +91,11 @@ Then visit `http://localhost:8000`
 4. For repeatable tasks, select cooldown period
 5. Click **"Save"**
 
-### Editing Tasks
-1. Click the **pencil icon (✏️)** next to any task
-2. Modify the task description, type, or cooldown period
-3. Click **"Update"** to save changes or **"Cancel"** to discard
-4. Tasks can be converted between one-time and repeatable types
+### Managing Tasks
+- **View Tasks**: Click the "My Tasks" header to expand/collapse the task list
+- **Add Tasks**: Click the **"+"** button (automatically expands the list)
+- **Edit Tasks**: Click the **pencil icon (✏️)** next to any task (automatically expands the list)
+- **Convert Types**: Tasks can be switched between one-time and repeatable types
 
 ### Working with Tasks
 1. **Pick a Task**: Click "Pick Random Task" to get a random available task

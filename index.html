@@ -28,129 +28,6 @@
       </header>
 
       <main class="main-content">
-        <!-- Task Management Section -->
-        <section class="task-management" id="taskManagement">
-          <div class="section-header">
-            <h2>My Tasks</h2>
-            <button
-              class="btn-icon add-task-btn"
-              id="addTaskBtn"
-              aria-label="Add new task"
-            >
-              <img src="img/plus.svg" alt="Add" width="24" height="24" />
-            </button>
-          </div>
-
-          <div
-            class="task-input-container"
-            id="taskInputContainer"
-            style="display: none"
-          >
-            <div class="input-group">
-              <input
-                type="text"
-                id="taskInput"
-                placeholder="Enter a new task..."
-                maxlength="200"
-              />
-              <div class="task-options">
-                <div class="option-group">
-                  <label for="taskType">Task Type:</label>
-                  <select id="taskType" onchange="app.toggleCooldownOptions()">
-                    <option value="oneoff">One-time task</option>
-                    <option value="repeatable">Repeatable task</option>
-                  </select>
-                </div>
-                <div
-                  class="option-group"
-                  id="cooldownContainer"
-                  style="display: none"
-                >
-                  <label for="cooldownPeriod">Cooldown:</label>
-                  <select id="cooldownPeriod">
-                    <option value="daily">Daily (24h)</option>
-                    <option value="weekly">Weekly (7 days)</option>
-                    <option value="monthly">Monthly (30 days)</option>
-                    <option value="12">12 hours</option>
-                    <option value="6">6 hours</option>
-                    <option value="3">3 hours</option>
-                    <option value="1">1 hour</option>
-                  </select>
-                </div>
-              </div>
-              <div class="input-actions">
-                <button class="btn-secondary cancel-btn" id="cancelTaskBtn">
-                  Cancel
-                </button>
-                <button class="btn-primary save-btn" id="saveTaskBtn">
-                  Save
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div
-            class="task-edit-container"
-            id="taskEditContainer"
-            style="display: none"
-          >
-            <div class="input-group">
-              <input
-                type="text"
-                id="editTaskInput"
-                placeholder="Edit task..."
-                maxlength="200"
-              />
-              <div class="task-options">
-                <div class="option-group">
-                  <label for="editTaskType">Task Type:</label>
-                  <select
-                    id="editTaskType"
-                    onchange="app.toggleEditCooldownOptions()"
-                  >
-                    <option value="oneoff">One-time task</option>
-                    <option value="repeatable">Repeatable task</option>
-                  </select>
-                </div>
-                <div
-                  class="option-group"
-                  id="editCooldownContainer"
-                  style="display: none"
-                >
-                  <label for="editCooldownPeriod">Cooldown:</label>
-                  <select id="editCooldownPeriod">
-                    <option value="daily">Daily (24h)</option>
-                    <option value="weekly">Weekly (7 days)</option>
-                    <option value="monthly">Monthly (30 days)</option>
-                    <option value="12">12 hours</option>
-                    <option value="6">6 hours</option>
-                    <option value="3">3 hours</option>
-                    <option value="1">1 hour</option>
-                  </select>
-                </div>
-              </div>
-              <div class="input-actions">
-                <button class="btn-secondary cancel-btn" id="cancelEditBtn">
-                  Cancel
-                </button>
-                <button class="btn-primary save-btn" id="saveEditBtn">
-                  Update
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="task-list" id="taskList">
-            <!-- Tasks will be dynamically inserted here -->
-          </div>
-
-          <div class="empty-state" id="emptyState">
-            <div class="empty-icon">📝</div>
-            <h3>No tasks yet</h3>
-            <p>Add some tasks to get started with randomization</p>
-          </div>
-        </section>
-
         <!-- Randomizer Section -->
         <section class="randomizer-section" id="randomizerSection">
           <div class="randomizer-card">
@@ -225,6 +102,141 @@
               <button class="btn-primary" id="nextTaskBtn">
                 Pick Another Task
               </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Task Management Section -->
+        <section class="task-management" id="taskManagement">
+          <div
+            class="section-header collapsible-header"
+            onclick="app.toggleTaskList()"
+          >
+            <h2>My Tasks</h2>
+            <div class="header-actions">
+              <span class="collapse-indicator" id="collapseIndicator">▼</span>
+              <button
+                class="btn-icon add-task-btn"
+                id="addTaskBtn"
+                aria-label="Add new task"
+                onclick="event.stopPropagation(); app.showTaskInput();"
+              >
+                <img src="img/plus.svg" alt="Add" width="24" height="24" />
+              </button>
+            </div>
+          </div>
+
+          <div class="task-content" id="taskContent" style="display: none">
+            <div
+              class="task-input-container"
+              id="taskInputContainer"
+              style="display: none"
+            >
+              <div class="input-group">
+                <input
+                  type="text"
+                  id="taskInput"
+                  placeholder="Enter a new task..."
+                  maxlength="200"
+                />
+                <div class="task-options">
+                  <div class="option-group">
+                    <label for="taskType">Task Type:</label>
+                    <select
+                      id="taskType"
+                      onchange="app.toggleCooldownOptions()"
+                    >
+                      <option value="oneoff">One-time task</option>
+                      <option value="repeatable">Repeatable task</option>
+                    </select>
+                  </div>
+                  <div
+                    class="option-group"
+                    id="cooldownContainer"
+                    style="display: none"
+                  >
+                    <label for="cooldownPeriod">Cooldown:</label>
+                    <select id="cooldownPeriod">
+                      <option value="daily">Daily (24h)</option>
+                      <option value="weekly">Weekly (7 days)</option>
+                      <option value="monthly">Monthly (30 days)</option>
+                      <option value="12">12 hours</option>
+                      <option value="6">6 hours</option>
+                      <option value="3">3 hours</option>
+                      <option value="1">1 hour</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="input-actions">
+                  <button class="btn-secondary cancel-btn" id="cancelTaskBtn">
+                    Cancel
+                  </button>
+                  <button class="btn-primary save-btn" id="saveTaskBtn">
+                    Save
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="task-edit-container"
+              id="taskEditContainer"
+              style="display: none"
+            >
+              <div class="input-group">
+                <input
+                  type="text"
+                  id="editTaskInput"
+                  placeholder="Edit task..."
+                  maxlength="200"
+                />
+                <div class="task-options">
+                  <div class="option-group">
+                    <label for="editTaskType">Task Type:</label>
+                    <select
+                      id="editTaskType"
+                      onchange="app.toggleEditCooldownOptions()"
+                    >
+                      <option value="oneoff">One-time task</option>
+                      <option value="repeatable">Repeatable task</option>
+                    </select>
+                  </div>
+                  <div
+                    class="option-group"
+                    id="editCooldownContainer"
+                    style="display: none"
+                  >
+                    <label for="editCooldownPeriod">Cooldown:</label>
+                    <select id="editCooldownPeriod">
+                      <option value="daily">Daily (24h)</option>
+                      <option value="weekly">Weekly (7 days)</option>
+                      <option value="monthly">Monthly (30 days)</option>
+                      <option value="12">12 hours</option>
+                      <option value="6">6 hours</option>
+                      <option value="3">3 hours</option>
+                      <option value="1">1 hour</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="input-actions">
+                  <button class="btn-secondary cancel-btn" id="cancelEditBtn">
+                    Cancel
+                  </button>
+                  <button class="btn-primary save-btn" id="saveEditBtn">
+                    Update
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="task-list" id="taskList">
+              <!-- Tasks will be dynamically inserted here -->
+            </div>
+
+            <div class="empty-state" id="emptyState">
+              <div class="empty-icon">📝</div>
+              <h3>No tasks yet</h3>
+              <p>Add some tasks to get started with randomization</p>
             </div>
           </div>
         </section>
