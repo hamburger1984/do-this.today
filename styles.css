@@ -93,7 +93,7 @@ body {
 /* Main content */
 .main-content {
   flex: 1;
-  padding: 1.5rem;
+  padding: 0.75rem;
   overflow-y: auto;
 }
 
@@ -157,27 +157,25 @@ body {
 
 /* Quick add section */
 .quick-add-section {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .task-section {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .task-card {
   background: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 16px;
+  border-radius: 12px;
   padding: 0;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .quick-add-card {
   background: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 16px;
-  padding: 2rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .quick-add-card h2 {
@@ -569,16 +567,15 @@ body {
 
 /* Randomizer section */
 .randomizer-section {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .randomizer-card {
   background: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 16px;
-  padding: 2rem;
+  border-radius: 12px;
+  padding: 1.5rem;
   text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .randomizer-icon {
@@ -729,11 +726,10 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   padding: 1rem;
   background: #f7fafc;
   border-radius: 12px;
-  border: 1px solid #e2e8f0;
 }
 
 .page-header h2 {
@@ -962,18 +958,18 @@ body {
 @media (min-width: 481px) {
   .app-container {
     max-width: 600px;
-    margin: 2rem auto;
-    min-height: calc(100vh - 4rem);
+    margin: 1rem auto;
+    min-height: calc(100vh - 2rem);
     border-radius: 16px;
     overflow: hidden;
   }
 
   .main-content {
-    padding: 2rem;
+    padding: 1.5rem;
   }
 
   .randomizer-card {
-    padding: 2.5rem;
+    padding: 2rem;
   }
 
   .current-task .task-actions {
@@ -992,11 +988,11 @@ body {
   }
 
   .task-item {
-    padding: 1.25rem;
+    padding: 1rem 0.75rem;
   }
 
   .randomizer-card {
-    padding: 3rem;
+    padding: 2.5rem;
   }
 }
 
@@ -1118,7 +1114,6 @@ body {
   .quick-add-card,
   .task-card {
     background: #2d3748;
-    border-color: #4a5568;
   }
 
   .quick-add-card h2 {
@@ -1166,7 +1161,6 @@ body {
 
   .page-header {
     background: #2d3748;
-    border-color: #4a5568;
   }
 
   .page-header h2 {
