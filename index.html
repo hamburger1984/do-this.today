@@ -316,6 +316,27 @@
     <!-- Toast Notifications -->
     <div class="toast" id="toast"></div>
 
+    <!-- Abandon Reason Modal -->
+    <div class="modal-overlay" id="abandonReasonModal" style="display: none">
+      <div class="modal-content">
+        <h3>Why are you abandoning this task?</h3>
+        <textarea
+          id="abandonReasonInput"
+          placeholder="Enter reason for abandoning (e.g., 'Too difficult right now', 'Need more resources', 'Changed priorities')..."
+          rows="4"
+          maxlength="300"
+        ></textarea>
+        <div class="modal-actions">
+          <button class="btn-secondary" id="cancelAbandonReasonBtn">
+            Cancel
+          </button>
+          <button class="btn-primary" id="saveAbandonReasonBtn">
+            Abandon Task
+          </button>
+        </div>
+      </div>
+    </div>
+
     <script src="script.js"></script>
   </body>
 </html>

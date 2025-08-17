@@ -86,6 +86,25 @@ class TaskRandomizer {
     document
       .getElementById("clearAllTrashBtn")
       .addEventListener("click", () => this.clearAllTrash());
+
+    // Abandon reason modal
+    document
+      .getElementById("saveAbandonReasonBtn")
+      .addEventListener("click", () => this.saveAbandonReason());
+    document
+      .getElementById("cancelAbandonReasonBtn")
+      .addEventListener("click", () => this.hideAbandonReasonModal());
+
+    // Abandon reason keyboard support
+    document
+      .getElementById("abandonReasonInput")
+      .addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && e.ctrlKey) {
+          this.saveAbandonReason();
+        } else if (e.key === "Escape") {
+          this.hideAbandonReasonModal();
+        }
+      });
   }
 
   // Local storage management
@@ -719,11 +738,51 @@ class TaskRandomizer {
 
   abandonActiveTask() {
     if (this.activeTask) {
+      this.showAbandonReasonModal();
+    }
+  }
+
+  showAbandonReasonModal() {
+    const modal = document.getElementById("abandonReasonModal");
+    const input = document.getElementById("abandonReasonInput");
+
+    modal.style.display = "block";
+    input.value = "";
+    input.focus();
+  }
+
+  hideAbandonReasonModal() {
+    const modal = document.getElementById("abandonReasonModal");
+    modal.style.display = "none";
+  }
+
+  saveAbandonReason() {
+    const reasonInput = document.getElementById("abandonReasonInput");
+    const reason = reasonInput.value.trim();
+
+    if (!reason) {
+      this.showToast("Please enter a reason for abandoning", "error");
+      return;
+    }
+
+    if (this.activeTask) {
+      // Find the task and add abandon reason to executions
+      const task = this.tasks.find((t) => t.id === this.activeTask.task.id);
+      if (task) {
+        task.executions.push({
+          timestamp: Date.now(),
+          duration: Date.now() - this.activeTask.startTime,
+          abandoned: true,
+          reason: reason,
+        });
+      }
+
       this.activeTask = null;
       this.clearActiveTaskTimer();
       this.saveTasks();
       this.resetRandomizer();
-      this.showToast("Task abandoned. You can try another one!", "default");
+      this.hideAbandonReasonModal();
+      this.showToast("Task abandoned with reason recorded", "default");
     }
   }
 

@@ -38,7 +38,8 @@ A mobile-first Progressive Web App that helps you decide what to do next by rand
 - **8-hour focus window** - when you accept a task, you have up to 8 hours to complete it
 - **Real-time countdown timer** showing remaining time (HH:MM:SS format)
 - **Persistent active tasks** - survives browser refreshes and closures
-- **Flexible completion** - mark done or abandon at any time
+- **Flexible completion** - mark done or abandon with reason tracking
+- **Abandon reasons** - record why tasks are abandoned for future insights
 - **Auto-expiration** - tasks automatically expire after 8 hours
 
 ### 📊 Progress Tracking
@@ -52,8 +53,9 @@ A mobile-first Progressive Web App that helps you decide what to do next by rand
 - **Toast notifications** for user feedback
 - **Keyboard shortcuts** for power users:
   - `Enter`: Save new task
-  - `Escape`: Cancel task input
+  - `Escape`: Cancel task input / Close abandon reason modal
   - `Space`: Randomize task (when not typing)
+  - `Ctrl+Enter`: Save abandon reason
 - **Dark mode support** based on system preference
 - **Collapsible task list** - stays collapsed by default, focuses on the randomizer
 - **Trash page** - safely delete and restore tasks with separate trash management
@@ -104,8 +106,9 @@ Then visit `http://localhost:8000`
 1. **Pick a Task**: Click "Pick Random Task" to get a random available task
 2. **Decide**: Either "Try Another" if you don't like it, or "Let's Do It!" to commit
 3. **Focus**: When you accept, the task becomes active for up to 8 hours
-4. **Complete**: Click "Mark as Done" when finished, or "Give Up" to try something else
-5. **Repeat**: Pick another task when ready!
+4. **Complete**: Click "Mark as Done" when finished, or "Give Up" with a reason
+5. **Abandon with Reason**: When giving up, explain why (tracked for insights)
+6. **Repeat**: Pick another task when ready!
 
 ### Task States
 - **Available**: Ready to be selected in randomization
@@ -165,10 +168,12 @@ Tasks are stored as objects with the following structure:
   text: "Clean kitchen",    # Task description
   type: "repeatable",       # "oneoff" or "repeatable"
   cooldown: "daily",        # Cooldown period
-  executions: [             # History of completions
+  executions: [             # History of completions and abandons
     {
-      timestamp: 1234567890,  # When completed
-      duration: 7200000       # How long it took
+      timestamp: 1234567890,  # When completed/abandoned
+      duration: 7200000,      # How long it took
+      abandoned: false,       # Whether task was abandoned
+      reason: "Too difficult" # Abandon reason (if abandoned)
     }
   ],
   completed: false,         # For one-off tasks
