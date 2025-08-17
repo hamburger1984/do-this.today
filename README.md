@@ -58,7 +58,7 @@ A mobile-first Progressive Web App that helps you decide what to do next by rand
   - `Ctrl+Enter`: Save abandon reason
 - **Dark mode support** based on system preference
 - **Multi-page interface** - separate pages for main randomizer, task management, and trash
-- **Prominent trash access** - clearly visible trash button in header for easy navigation
+- **Contextual trash access** - trash button available on task management page where it's most relevant
 - **Quick task entry** - add form directly on main page for immediate task creation
 - **Accessibility features** - ARIA labels, focus management, screen reader support
 
@@ -121,7 +121,7 @@ Then visit `http://localhost:8000`
 - **Completed**: Finished (one-time tasks only)
 
 ### Managing Deleted Tasks
-- **Access Trash**: Click the prominent **"Trash"** button in the header to view deleted tasks
+- **Access Trash**: Click the **"Trash"** button on the task management page to view deleted tasks
 - **Restore Tasks**: Click the **restore icon** to bring tasks back to your active list
 - **Delete Forever**: Click the **delete icon** to permanently remove tasks
 - **Clear All**: Remove all deleted tasks permanently with one click
