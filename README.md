@@ -105,12 +105,12 @@ Then visit `http://localhost:8000`
 - **Convert Types**: Tasks can be switched between one-time and repeatable types
 
 ### Working with Tasks
-1. **Pick a Task**: Click "Pick Random Task" to get a random available task
+1. **Pick a Task**: Click "Pick Random Task" to get a random available task (avoids repeating the same task)
 2. **Decide**: Either "Try Another" if you don't like it, or "Let's Do It!" to commit
 3. **Focus**: When you accept, the task becomes active for up to 8 hours
 4. **Complete**: Click "Mark as Done" when finished, or "Give Up" with a reason
 5. **Abandon with Reason**: When giving up, explain why (tracked for insights)
-6. **Repeat**: Pick another task when ready!
+6. **Repeat**: "Pick Another Task" button automatically selects a new random task
 
 ### Task States
 - **Available**: Ready to be selected in randomization
