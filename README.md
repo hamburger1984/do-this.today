@@ -24,6 +24,7 @@ A mobile-first Progressive Web App that helps you decide what to do next by rand
   - ✅ Available (green) - ready to be selected
   - ⏰ Cooldown (orange) - waiting for cooldown to expire
   - 🏁 Completed (blue) - one-time task finished
+- **Full task editing** - modify text, type, and cooldown periods after creation
 - **Execution tracking** - keeps history of when tasks were completed
 
 ### 🎲 Intelligent Randomization
@@ -89,6 +90,12 @@ Then visit `http://localhost:8000`
 4. For repeatable tasks, select cooldown period
 5. Click **"Save"**
 
+### Editing Tasks
+1. Click the **pencil icon (✏️)** next to any task
+2. Modify the task description, type, or cooldown period
+3. Click **"Update"** to save changes or **"Cancel"** to discard
+4. Tasks can be converted between one-time and repeatable types
+
 ### Working with Tasks
 1. **Pick a Task**: Click "Pick Random Task" to get a random available task
 2. **Decide**: Either "Try Another" if you don't like it, or "Let's Do It!" to commit
@@ -131,6 +138,7 @@ Then visit `http://localhost:8000`
 │   ├── dice.svg       # Randomize icon
 │   ├── check.svg      # Complete/accept icon
 │   ├── refresh.svg    # Try another icon
+│   ├── edit.svg       # Edit task icon
 │   ├── trash.svg      # Delete task icon
 │   ├── x.svg          # Cancel/close icon
 │   └── clock.svg      # Timer/cooldown icon
