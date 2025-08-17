@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Now What?" />
+    <meta name="theme-color" content="#667eea" />
+    <title>Now What? - Task Randomizer</title>
+    <link rel="manifest" href="manifest.json" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="app-container">
+      <header class="app-header">
+        <h1 class="app-title">Now What?</h1>
+        <p class="app-subtitle">Let us decide what to do next</p>
+      </header>
+
+      <main class="main-content">
+        <!-- Task Management Section -->
+        <section class="task-management" id="taskManagement">
+          <div class="section-header">
+            <h2>My Tasks</h2>
+            <button
+              class="btn-icon add-task-btn"
+              id="addTaskBtn"
+              aria-label="Add new task"
+            >
+              <img src="img/plus.svg" alt="Add" width="24" height="24" />
+            </button>
+          </div>
+
+          <div
+            class="task-input-container"
+            id="taskInputContainer"
+            style="display: none"
+          >
+            <div class="input-group">
+              <input
+                type="text"
+                id="taskInput"
+                placeholder="Enter a new task..."
+                maxlength="200"
+              />
+              <div class="task-options">
+                <div class="option-group">
+                  <label for="taskType">Task Type:</label>
+                  <select id="taskType" onchange="app.toggleCooldownOptions()">
+                    <option value="oneoff">One-time task</option>
+                    <option value="repeatable">Repeatable task</option>
+                  </select>
+                </div>
+                <div
+                  class="option-group"
+                  id="cooldownContainer"
+                  style="display: none"
+                >
+                  <label for="cooldownPeriod">Cooldown:</label>
+                  <select id="cooldownPeriod">
+                    <option value="daily">Daily (24h)</option>
+                    <option value="weekly">Weekly (7 days)</option>
+                    <option value="monthly">Monthly (30 days)</option>
+                    <option value="12">12 hours</option>
+                    <option value="6">6 hours</option>
+                    <option value="3">3 hours</option>
+                    <option value="1">1 hour</option>
+                  </select>
+                </div>
+              </div>
+              <div class="input-actions">
+                <button class="btn-secondary cancel-btn" id="cancelTaskBtn">
+                  Cancel
+                </button>
+                <button class="btn-primary save-btn" id="saveTaskBtn">
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="task-list" id="taskList">
+            <!-- Tasks will be dynamically inserted here -->
+          </div>
+
+          <div class="empty-state" id="emptyState">
+            <div class="empty-icon">📝</div>
+            <h3>No tasks yet</h3>
+            <p>Add some tasks to get started with randomization</p>
+          </div>
+        </section>
+
+        <!-- Randomizer Section -->
+        <section class="randomizer-section" id="randomizerSection">
+          <div class="randomizer-card">
+            <div class="current-task" id="currentTask" style="display: none">
+              <div class="task-display">
+                <h3>Your next task:</h3>
+                <div class="task-text" id="selectedTaskText"></div>
+              </div>
+              <div class="task-actions">
+                <button
+                  class="btn-secondary randomize-btn"
+                  id="randomizeAgainBtn"
+                >
+                  <img
+                    src="img/refresh.svg"
+                    alt="Refresh"
+                    width="20"
+                    height="20"
+                  />
+                  Try Another
+                </button>
+                <button class="btn-primary accept-btn" id="acceptTaskBtn">
+                  <img src="img/check.svg" alt="Check" width="20" height="20" />
+                  Let's Do It!
+                </button>
+              </div>
+            </div>
+
+            <div class="randomizer-start" id="randomizerStart">
+              <div class="randomizer-icon">🎲</div>
+              <h3>Ready to pick a task?</h3>
+              <p>Click the button below to randomly select one of your tasks</p>
+              <button
+                class="btn-primary randomize-btn"
+                id="randomizeBtn"
+                disabled
+              >
+                <img src="img/dice.svg" alt="Dice" width="20" height="20" />
+                Pick Random Task
+              </button>
+            </div>
+
+            <div class="active-task" id="activeTask" style="display: none">
+              <div class="active-task-display">
+                <h3>Active Task</h3>
+                <div class="task-text" id="activeTaskText"></div>
+                <div class="timer-display">
+                  <div class="timer-label">Time Remaining:</div>
+                  <div class="timer-value" id="activeTaskTimer">8:00:00</div>
+                </div>
+              </div>
+              <div class="active-task-actions">
+                <button class="btn-secondary" id="abandonActiveBtn">
+                  <img src="img/x.svg" alt="Close" width="20" height="20" />
+                  Give Up
+                </button>
+                <button class="btn-primary" id="completeActiveBtn">
+                  <img src="img/check.svg" alt="Check" width="20" height="20" />
+                  Mark as Done
+                </button>
+              </div>
+            </div>
+
+            <div
+              class="task-completed"
+              id="taskCompleted"
+              style="display: none"
+            >
+              <div class="success-icon">✅</div>
+              <h3>Great job!</h3>
+              <p>Task completed. Ready for the next one?</p>
+              <button class="btn-primary" id="nextTaskBtn">
+                Pick Another Task
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- Statistics Footer -->
+      <footer class="app-footer">
+        <div class="stats">
+          <div class="stat-item">
+            <span class="stat-number" id="totalTasks">0</span>
+            <span class="stat-label">Total Tasks</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" id="completedTasks">0</span>
+            <span class="stat-label">Completed</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast" id="toast"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
