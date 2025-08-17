@@ -78,8 +78,8 @@ body {
 }
 
 .app-title {
-  font-size: 2rem;
-  font-weight: 700;
+  font-size: 1.5rem;
+  font-weight: 600;
   margin-bottom: 0.5rem;
   letter-spacing: -0.02em;
 }
@@ -87,7 +87,7 @@ body {
 .app-subtitle {
   font-size: 1rem;
   opacity: 0.9;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 /* Main content */
@@ -130,7 +130,7 @@ body {
   margin: 0;
   color: #4a5568;
   font-weight: 600;
-  font-size: 1.25rem;
+  font-size: 1.125rem;
 }
 
 .header-actions {
@@ -161,7 +161,7 @@ body {
 }
 
 .quick-add-section h2 {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 600;
   color: #2d3748;
   margin-bottom: 1.5rem;
@@ -199,7 +199,7 @@ body {
 }
 
 .section-header h2 {
-  font-size: 1.5rem;
+  font-size: 1.125rem;
   font-weight: 600;
   color: #2d3748;
 }
@@ -211,7 +211,7 @@ body {
   border: none;
   padding: 0.875rem 1.5rem;
   border-radius: 12px;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -244,7 +244,7 @@ body {
   border: 1px solid #e2e8f0;
   padding: 0.75rem 1.25rem;
   border-radius: 8px;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -323,7 +323,7 @@ body {
   padding: 1rem;
   border: 2px solid #e2e8f0;
   border-radius: 12px;
-  font-size: 1rem;
+  font-size: 0.9rem;
   transition: all 0.2s ease;
   background: #f7fafc;
 }
@@ -349,7 +349,7 @@ body {
 
 .option-group label {
   display: block;
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   color: #4a5568;
   margin-bottom: 0.5rem;
   font-weight: 500;
@@ -360,7 +360,7 @@ body {
   padding: 0.75rem;
   border: 2px solid #e2e8f0;
   border-radius: 8px;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   background: #f7fafc;
   color: #2d3748;
   transition: all 0.2s ease;
@@ -419,7 +419,7 @@ body {
 }
 
 .task-text {
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #2d3748;
   margin-bottom: 0.5rem;
   word-break: break-word;
@@ -434,7 +434,7 @@ body {
 
 .task-type,
 .task-status {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   padding: 0.25rem 0.5rem;
   border-radius: 12px;
   font-weight: 500;
@@ -555,14 +555,14 @@ body {
 }
 
 .empty-state h3 {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   font-weight: 500;
   margin-bottom: 0.5rem;
   color: #4a5568;
 }
 
 .empty-state p {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
 /* Randomizer section */
@@ -585,7 +585,7 @@ body {
 }
 
 .randomizer-start h3 {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 600;
   color: #2d3748;
   margin-bottom: 0.5rem;
@@ -594,7 +594,7 @@ body {
 .randomizer-start p {
   color: #718096;
   margin-bottom: 2rem;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
 /* Current task display */
@@ -607,7 +607,7 @@ body {
 }
 
 .task-display h3 {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   font-weight: 500;
   color: #4a5568;
   margin-bottom: 1rem;
@@ -618,7 +618,7 @@ body {
   color: white;
   padding: 1.5rem;
   border-radius: 12px;
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-weight: 500;
   line-height: 1.5;
   margin: 0;
@@ -647,7 +647,7 @@ body {
 }
 
 .active-task-display h3 {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   font-weight: 500;
   color: #4a5568;
   margin-bottom: 1rem;
@@ -658,7 +658,7 @@ body {
   color: white;
   padding: 1.5rem;
   border-radius: 12px;
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-weight: 500;
   line-height: 1.5;
   margin: 0 0 1.5rem 0;
@@ -673,7 +673,7 @@ body {
 }
 
 .timer-label {
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   color: #4a5568;
   margin-bottom: 0.5rem;
   font-weight: 500;
@@ -711,7 +711,7 @@ body {
 }
 
 .task-completed h3 {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 600;
   color: #2d3748;
   margin-bottom: 0.5rem;
@@ -720,6 +720,7 @@ body {
 .task-completed p {
   color: #718096;
   margin-bottom: 2rem;
+  font-size: 0.9rem;
 }
 
 /* Trash page styles */
@@ -734,7 +735,7 @@ body {
 }
 
 .page-header h2 {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 600;
   color: #2d3748;
   margin: 0;
@@ -774,7 +775,7 @@ body {
 }
 
 .deleted-date {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: #92400e;
   background: #fcd34d;
   padding: 0.25rem 0.5rem;
@@ -794,14 +795,14 @@ body {
 }
 
 .empty-trash-state h3 {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   font-weight: 500;
   margin-bottom: 0.5rem;
   color: #4a5568;
 }
 
 .empty-trash-state p {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
 /* Modal styles */
@@ -830,7 +831,7 @@ body {
 }
 
 .modal-content h3 {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   font-weight: 600;
   color: #2d3748;
   margin-bottom: 1rem;
@@ -842,7 +843,7 @@ body {
   padding: 1rem;
   border: 2px solid #e2e8f0;
   border-radius: 12px;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-family: inherit;
   resize: vertical;
   min-height: 100px;
@@ -893,7 +894,7 @@ body {
 }
 
 .stat-label {
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   color: #718096;
   font-weight: 500;
 }
@@ -908,7 +909,7 @@ body {
   color: white;
   padding: 1rem 1.5rem;
   border-radius: 8px;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 500;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   opacity: 0;
