@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favicon Generator - Now What?</title>
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+        }
+        .favicon-preview {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin: 2rem auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .sizes {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+        .size-preview {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        .size-16 { width: 16px; height: 16px; font-size: 10px; }
+        .size-32 { width: 32px; height: 32px; font-size: 18px; }
+        .size-48 { width: 48px; height: 48px; font-size: 28px; }
+        canvas {
+            border: 1px solid #ccc;
+            margin: 1rem;
+        }
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 0.5rem;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        .instructions {
+            text-align: left;
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+        .instructions h3 {
+            margin-top: 0;
+            color: #4a5568;
+        }
+        .instructions ol {
+            color: #718096;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Now What? Favicon Generator</h1>
+        <p>Generate favicon.ico for the task randomizer app</p>
+
+        <div class="favicon-preview">🎲</div>
+
+        <div class="sizes">
+            <div class="size-preview size-16">🎲</div>
+            <div class="size-preview size-32">🎲</div>
+            <div class="size-preview size-48">🎲</div>
+        </div>
+
+        <canvas id="canvas16" width="16" height="16" style="display: none;"></canvas>
+        <canvas id="canvas32" width="32" height="32" style="display: none;"></canvas>
+        <canvas id="canvas48" width="48" height="48" style="display: none;"></canvas>
+
+        <button onclick="generateFavicon()">Generate favicon.ico</button>
+        <button onclick="downloadSVG()">Download SVG</button>
+
+        <div class="instructions">
+            <h3>How to use:</h3>
+            <ol>
+                <li>Click "Generate favicon.ico" to create the icon file</li>
+                <li>Save the downloaded file as "favicon.ico" in your project root</li>
+                <li>The favicon will automatically work with the existing HTML link tag</li>
+                <li>For modern browsers, you can also use the SVG version</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        function drawFavicon(canvas, size) {
+            const ctx = canvas.getContext('2d');
+
+            // Create gradient background
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#667eea');
+            gradient.addColorStop(1, '#764ba2');
+
+            // Draw rounded rectangle background
+            ctx.fillStyle = gradient;
+            roundRect(ctx, 0, 0, size, size, size * 0.15);
+            ctx.fill();
+
+            // Draw dice emoji
+            ctx.fillStyle = 'white';
+            ctx.font = `${size * 0.6}px system-ui, sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('🎲', size/2, size/2);
+        }
+
+        function roundRect(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+        }
+
+        function generateFavicon() {
+            // Draw favicons at different sizes
+            const canvas16 = document.getElementById('canvas16');
+            const canvas32 = document.getElementById('canvas32');
+            const canvas48 = document.getElementById('canvas48');
+
+            drawFavicon(canvas16, 16);
+            drawFavicon(canvas32, 32);
+            drawFavicon(canvas48, 48);
+
+            // Create ICO file (simplified - just use 32x32 PNG)
+            canvas32.toBlob(function(blob) {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'favicon.ico';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 'image/png');
+        }
+
+        function downloadSVG() {
+            const svgContent = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="6" fill="url(#grad)"/>
+  <text x="16" y="22" font-family="system-ui, sans-serif" font-size="18" text-anchor="middle" fill="white">🎲</text>
+</svg>`;
+
+            const blob = new Blob([svgContent], { type: 'image/svg+xml' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'favicon.svg';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
