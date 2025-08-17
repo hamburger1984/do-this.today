@@ -23,16 +23,27 @@ class TaskRandomizer {
 
   // Event binding
   bindEvents() {
-    // Task management - handled in HTML onclick to prevent event bubbling
+    // Task management
+    document
+      .getElementById("addTaskBtn")
+      .addEventListener("click", () => this.showTaskInput());
     document
       .getElementById("cancelTaskBtn")
       .addEventListener("click", () => this.hideTaskInput());
     document
       .getElementById("saveTaskBtn")
       .addEventListener("click", () => this.saveTask());
+    document
+      .getElementById("saveTaskBtn2")
+      .addEventListener("click", () => this.saveTask2());
     document.getElementById("taskInput").addEventListener("keypress", (e) => {
       if (e.key === "Enter") {
         this.saveTask();
+      }
+    });
+    document.getElementById("taskInput2").addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        this.saveTask2();
       }
     });
 
@@ -62,6 +73,9 @@ class TaskRandomizer {
     document
       .getElementById("taskType")
       .addEventListener("change", () => this.toggleCooldownOptions());
+    document
+      .getElementById("taskType2")
+      .addEventListener("change", () => this.toggleCooldownOptions2());
 
     // Task editing
     document
@@ -80,6 +94,12 @@ class TaskRandomizer {
       .addEventListener("click", () => this.showTrashPage());
     document
       .getElementById("backToMainBtn")
+      .addEventListener("click", () => this.showMainPage());
+    document
+      .getElementById("viewTasksBtn")
+      .addEventListener("click", () => this.showTaskManagementPage());
+    document
+      .getElementById("backToMainFromTasks")
       .addEventListener("click", () => this.showMainPage());
 
     // Trash actions
@@ -253,54 +273,45 @@ class TaskRandomizer {
   showMainPage() {
     this.currentPage = "main";
     document.getElementById("mainPage").style.display = "block";
+    document.getElementById("taskManagementPage").style.display = "none";
     document.getElementById("trashPage").style.display = "none";
+  }
+
+  showTaskManagementPage() {
+    this.currentPage = "tasks";
+    document.getElementById("mainPage").style.display = "none";
+    document.getElementById("taskManagementPage").style.display = "block";
+    document.getElementById("trashPage").style.display = "none";
+    this.updateUI();
   }
 
   showTrashPage() {
     this.currentPage = "trash";
     document.getElementById("mainPage").style.display = "none";
+    document.getElementById("taskManagementPage").style.display = "none";
     document.getElementById("trashPage").style.display = "block";
     this.renderTrashList();
   }
 
   // Task management methods
-  toggleTaskList() {
-    this.taskListCollapsed = !this.taskListCollapsed;
-    const taskContent = document.getElementById("taskContent");
-    const indicator = document.getElementById("collapseIndicator");
-
-    if (this.taskListCollapsed) {
-      taskContent.style.display = "none";
-      indicator.textContent = "▼";
-    } else {
-      taskContent.style.display = "block";
-      indicator.textContent = "▲";
-    }
-  }
-
   showTaskInput() {
-    // First expand the task list if collapsed
-    if (this.taskListCollapsed) {
-      this.toggleTaskList();
-    }
-
     const container = document.getElementById("taskInputContainer");
-    const input = document.getElementById("taskInput");
+    const input = document.getElementById("taskInput2");
 
     container.style.display = "block";
     input.focus();
     input.value = "";
 
     // Reset form
-    document.getElementById("taskType").value = "oneoff";
-    document.getElementById("cooldownPeriod").value = "daily";
-    this.toggleCooldownOptions();
+    document.getElementById("taskType2").value = "oneoff";
+    document.getElementById("cooldownPeriod2").value = "daily";
+    this.toggleCooldownOptions2();
   }
 
   showTaskEdit(index) {
-    // First expand the task list if collapsed
-    if (this.taskListCollapsed) {
-      this.toggleTaskList();
+    // Navigate to task management page if not already there
+    if (this.currentPage !== "tasks") {
+      this.showTaskManagementPage();
     }
 
     const task = this.tasks[index];
@@ -343,6 +354,17 @@ class TaskRandomizer {
     }
   }
 
+  toggleCooldownOptions2() {
+    const taskType = document.getElementById("taskType2").value;
+    const cooldownContainer = document.getElementById("cooldownContainer2");
+
+    if (taskType === "repeatable") {
+      cooldownContainer.style.display = "block";
+    } else {
+      cooldownContainer.style.display = "none";
+    }
+  }
+
   toggleEditCooldownOptions() {
     const taskType = document.getElementById("editTaskType").value;
     const cooldownContainer = document.getElementById("editCooldownContainer");
@@ -359,6 +381,51 @@ class TaskRandomizer {
     const taskText = input.value.trim();
     const taskType = document.getElementById("taskType").value;
     const cooldownPeriod = document.getElementById("cooldownPeriod").value;
+
+    if (!taskText) {
+      this.showToast("Please enter a task", "error");
+      return;
+    }
+
+    if (taskText.length > 200) {
+      this.showToast("Task is too long (max 200 characters)", "error");
+      return;
+    }
+
+    if (this.tasks.some((task) => task.text === taskText)) {
+      this.showToast("This task already exists", "error");
+      return;
+    }
+
+    const newTask = {
+      id: this.nextTaskId++,
+      text: taskText,
+      type: taskType,
+      cooldown: cooldownPeriod,
+      executions: [],
+      completed: false,
+    };
+
+    this.tasks.push(newTask);
+    this.saveTasks();
+    this.updateUI();
+    this.updateStats();
+    this.updateRandomizeButton();
+
+    // Clear the main page form
+    document.getElementById("taskInput").value = "";
+    document.getElementById("taskType").value = "oneoff";
+    document.getElementById("cooldownPeriod").value = "daily";
+    this.toggleCooldownOptions();
+
+    this.showToast("Task added successfully", "success");
+  }
+
+  saveTask2() {
+    const input = document.getElementById("taskInput2");
+    const taskText = input.value.trim();
+    const taskType = document.getElementById("taskType2").value;
+    const cooldownPeriod = document.getElementById("cooldownPeriod2").value;
 
     if (!taskText) {
       this.showToast("Please enter a task", "error");

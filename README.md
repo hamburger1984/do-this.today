@@ -57,15 +57,16 @@ A mobile-first Progressive Web App that helps you decide what to do next by rand
   - `Space`: Randomize task (when not typing)
   - `Ctrl+Enter`: Save abandon reason
 - **Dark mode support** based on system preference
-- **Collapsible task list** - stays collapsed by default, focuses on the randomizer
-- **Trash page** - safely delete and restore tasks with separate trash management
+- **Multi-page interface** - separate pages for main randomizer, task management, and trash
+- **Prominent trash access** - clearly visible trash button in header for easy navigation
+- **Quick task entry** - add form directly on main page for immediate task creation
 - **Accessibility features** - ARIA labels, focus management, screen reader support
 
 ## 🚀 Getting Started
 
 ### Quick Start
 1. Open `index.html` in any modern web browser
-2. Start with the pre-loaded sample tasks or add your own
+2. Add your first task using the form on the main page
 3. Click "Pick Random Task" to get started!
 
 ### Local Development
@@ -87,18 +88,21 @@ Then visit `http://localhost:8000`
 ## 📖 How to Use
 
 ### Adding Tasks
-1. Click the **"+"** button in the task list header (this will expand the list if collapsed)
+**Quick Add (Main Page):**
+1. Use the form directly on the main page to quickly add new tasks
 2. Enter your task description
-3. Choose task type:
-   - **One-time task**: Complete once and it's done forever
-   - **Repeatable task**: Can be done multiple times with cooldown
-4. For repeatable tasks, select cooldown period
-5. Click **"Save"**
+3. Choose task type and cooldown period
+4. Click **"Add Task"**
+
+**Manage Tasks Page:**
+1. Click **"View & Manage Tasks"** to access the full task management page
+2. Use the **"+"** button to add more tasks with the same interface
+3. View, edit, and delete existing tasks
 
 ### Managing Tasks
-- **View Tasks**: Click the "My Tasks" header to expand/collapse the task list
-- **Add Tasks**: Click the **"+"** button (automatically expands the list)
-- **Edit Tasks**: Click the **pencil icon (✏️)** next to any task (automatically expands the list)
+- **Quick Access**: Add new tasks directly from the main page form
+- **Full Management**: Click "View & Manage Tasks" to access the complete task list
+- **Edit Tasks**: Click the **pencil icon (✏️)** next to any task to modify it
 - **Delete Tasks**: Click the **trash icon** to move tasks to trash (not permanently deleted)
 - **Convert Types**: Tasks can be switched between one-time and repeatable types
 
@@ -117,7 +121,7 @@ Then visit `http://localhost:8000`
 - **Completed**: Finished (one-time tasks only)
 
 ### Managing Deleted Tasks
-- **Access Trash**: Click the **trash icon** in the header to view deleted tasks
+- **Access Trash**: Click the prominent **"Trash"** button in the header to view deleted tasks
 - **Restore Tasks**: Click the **restore icon** to bring tasks back to your active list
 - **Delete Forever**: Click the **delete icon** to permanently remove tasks
 - **Clear All**: Remove all deleted tasks permanently with one click
@@ -221,9 +225,9 @@ Perfect for when you:
 - Have a list of tasks but can't decide what to do next
 - Want to gamify your productivity with random selection
 - Need to manage both daily routines and one-off tasks
-- Want a simple, distraction-free task management tool
-- Prefer mobile-first, touch-friendly interfaces
-- Value privacy and offline functionality
+- Want a simple, distraction-free task management tool with quick task entry
+- Prefer mobile-first, touch-friendly interfaces with clear navigation
+- Value privacy and offline functionality with safe task deletion
 
 ## 🤝 Contributing
 
