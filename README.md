@@ -57,8 +57,8 @@ A mobile-first Progressive Web App that helps you decide what to do next by rand
   - `Space`: Randomize task (when not typing)
   - `Ctrl+Enter`: Save abandon reason
 - **Dark mode support** based on system preference
-- **Multi-page interface** - separate pages for main randomizer, task management, and trash
-- **Contextual trash access** - trash button available on task management page where it's most relevant
+- **Single-page interface** - all functionality available on one page with collapsible sections
+- **Collapsible task list** - task management integrated into main page, starts collapsed for clean interface
 - **Quick task entry** - add form directly on main page for immediate task creation
 - **Accessibility features** - ARIA labels, focus management, screen reader support
 
@@ -88,20 +88,18 @@ Then visit `http://localhost:8000`
 ## 📖 How to Use
 
 ### Adding Tasks
-**Quick Add (Main Page):**
-1. Use the form directly on the main page to quickly add new tasks
+1. Use the **"Add New Task"** form to quickly add new tasks
 2. Enter your task description
 3. Choose task type and cooldown period
 4. Click **"Add Task"**
 
-**Manage Tasks Page:**
-1. Click **"View & Manage Tasks"** to access the full task management page
-2. Use the **"+"** button to add more tasks with the same interface
-3. View, edit, and delete existing tasks
+**Task List Management:**
+1. Click **"My Tasks"** section header to expand/collapse the task list
+2. View, edit, and delete existing tasks directly in the list
 
 ### Managing Tasks
-- **Quick Access**: Add new tasks directly from the main page form
-- **Full Management**: Click "View & Manage Tasks" to access the complete task list
+- **Add Tasks**: Use the "Add New Task" form located above the task list
+- **Collapsible List**: Click the "My Tasks" header to show/hide your task list (starts collapsed)
 - **Edit Tasks**: Click the **pencil icon (✏️)** next to any task to modify it
 - **Delete Tasks**: Click the **trash icon** to move tasks to trash (not permanently deleted)
 - **Convert Types**: Tasks can be switched between one-time and repeatable types
@@ -121,7 +119,7 @@ Then visit `http://localhost:8000`
 - **Completed**: Finished (one-time tasks only)
 
 ### Managing Deleted Tasks
-- **Access Trash**: Click the **"Trash"** button on the task management page to view deleted tasks
+- **Access Trash**: Click the **trash icon** in the "My Tasks" section header to view deleted tasks
 - **Restore Tasks**: Click the **restore icon** to bring tasks back to your active list
 - **Delete Forever**: Click the **delete icon** to permanently remove tasks
 - **Clear All**: Remove all deleted tasks permanently with one click

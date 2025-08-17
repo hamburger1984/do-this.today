@@ -34,51 +34,6 @@
       <main class="main-content">
         <!-- Main Page -->
         <div id="mainPage">
-          <!-- Quick Add Task Section -->
-          <section class="quick-add-section">
-            <div class="quick-add-card">
-              <h2>Add New Task</h2>
-              <div class="input-group">
-                <input
-                  type="text"
-                  id="taskInput"
-                  placeholder="Enter a new task..."
-                  maxlength="200"
-                />
-                <div class="task-options">
-                  <div class="option-group">
-                    <label for="taskType">Task Type:</label>
-                    <select id="taskType">
-                      <option value="oneoff">One-time task</option>
-                      <option value="repeatable">Repeatable task</option>
-                    </select>
-                  </div>
-                  <div
-                    class="option-group"
-                    id="cooldownContainer"
-                    style="display: none"
-                  >
-                    <label for="cooldownPeriod">Cooldown:</label>
-                    <select id="cooldownPeriod">
-                      <option value="daily">Daily (24h)</option>
-                      <option value="weekly">Weekly (7 days)</option>
-                      <option value="monthly">Monthly (30 days)</option>
-                      <option value="12">12 hours</option>
-                      <option value="6">6 hours</option>
-                      <option value="3">3 hours</option>
-                      <option value="1">1 hour</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="input-actions">
-                  <button class="btn-primary save-btn" id="saveTaskBtn">
-                    Add Task
-                  </button>
-                </div>
-              </div>
-            </div>
-          </section>
-
           <!-- Randomizer Section -->
           <section class="randomizer-section" id="randomizerSection">
             <div class="randomizer-card">
@@ -169,149 +124,141 @@
             </div>
           </section>
 
-          <!-- Quick Navigation -->
-          <div class="navigation-section">
-            <button class="btn-primary nav-btn" id="viewTasksBtn">
-              View & Manage Tasks
-            </button>
-          </div>
-        </div>
-
-        <!-- Task Management Page -->
-        <div id="taskManagementPage" style="display: none">
-          <div class="page-header">
-            <button
-              class="btn-icon back-btn"
-              id="backToMainFromTasks"
-              aria-label="Back to main"
-            >
-              <img src="img/arrow-left.svg" alt="Back" width="24" height="24" />
-            </button>
-            <h2>My Tasks</h2>
-            <div class="header-actions">
-              <button
-                class="btn-primary trash-btn"
-                id="trashBtn"
-                aria-label="View trash"
-              >
-                <img src="img/trash.svg" alt="Trash" width="20" height="20" />
-                Trash
-              </button>
-              <button
-                class="btn-icon add-task-btn"
-                id="addTaskBtn"
-                aria-label="Add new task"
-              >
-                <img src="img/plus.svg" alt="Add" width="24" height="24" />
-              </button>
-            </div>
-          </div>
-
-          <div
-            class="task-input-container"
-            id="taskInputContainer"
-            style="display: none"
-          >
-            <div class="input-group">
-              <input
-                type="text"
-                id="taskInput2"
-                placeholder="Enter a new task..."
-                maxlength="200"
-              />
-              <div class="task-options">
-                <div class="option-group">
-                  <label for="taskType2">Task Type:</label>
-                  <select id="taskType2">
-                    <option value="oneoff">One-time task</option>
-                    <option value="repeatable">Repeatable task</option>
-                  </select>
+          <!-- Add New Task Section -->
+          <section class="quick-add-section">
+            <div class="quick-add-card">
+              <h2>Add New Task</h2>
+              <div class="input-group">
+                <input
+                  type="text"
+                  id="taskInput"
+                  placeholder="Enter a new task..."
+                  maxlength="200"
+                />
+                <div class="task-options">
+                  <div class="option-group">
+                    <label for="taskType">Task Type:</label>
+                    <select id="taskType">
+                      <option value="oneoff">One-time task</option>
+                      <option value="repeatable">Repeatable task</option>
+                    </select>
+                  </div>
+                  <div
+                    class="option-group"
+                    id="cooldownContainer"
+                    style="display: none"
+                  >
+                    <label for="cooldownPeriod">Cooldown:</label>
+                    <select id="cooldownPeriod">
+                      <option value="daily">Daily (24h)</option>
+                      <option value="weekly">Weekly (7 days)</option>
+                      <option value="monthly">Monthly (30 days)</option>
+                      <option value="12">12 hours</option>
+                      <option value="6">6 hours</option>
+                      <option value="3">3 hours</option>
+                      <option value="1">1 hour</option>
+                    </select>
+                  </div>
                 </div>
+                <div class="input-actions">
+                  <button class="btn-primary save-btn" id="saveTaskBtn">
+                    Add Task
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Task List Section -->
+          <section class="task-section">
+            <div class="task-card">
+              <div class="section-header">
+                <div class="collapsible-header" id="taskListHeader">
+                  <h2>My Tasks</h2>
+                  <div class="header-actions">
+                    <button
+                      class="btn-icon trash-btn"
+                      id="trashBtn"
+                      aria-label="View trash"
+                    >
+                      <img
+                        src="img/trash.svg"
+                        alt="Trash"
+                        width="20"
+                        height="20"
+                      />
+                    </button>
+                    <div class="collapse-indicator" id="taskCollapseIndicator">
+                      ▼
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="task-content" id="taskContent" style="display: none">
                 <div
-                  class="option-group"
-                  id="cooldownContainer2"
+                  class="task-edit-container"
+                  id="taskEditContainer"
                   style="display: none"
                 >
-                  <label for="cooldownPeriod2">Cooldown:</label>
-                  <select id="cooldownPeriod2">
-                    <option value="daily">Daily (24h)</option>
-                    <option value="weekly">Weekly (7 days)</option>
-                    <option value="monthly">Monthly (30 days)</option>
-                    <option value="12">12 hours</option>
-                    <option value="6">6 hours</option>
-                    <option value="3">3 hours</option>
-                    <option value="1">1 hour</option>
-                  </select>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      id="editTaskInput"
+                      placeholder="Edit task..."
+                      maxlength="200"
+                    />
+                    <div class="task-options">
+                      <div class="option-group">
+                        <label for="editTaskType">Task Type:</label>
+                        <select id="editTaskType">
+                          <option value="oneoff">One-time task</option>
+                          <option value="repeatable">Repeatable task</option>
+                        </select>
+                      </div>
+                      <div
+                        class="option-group"
+                        id="editCooldownContainer"
+                        style="display: none"
+                      >
+                        <label for="editCooldownPeriod">Cooldown:</label>
+                        <select id="editCooldownPeriod">
+                          <option value="daily">Daily (24h)</option>
+                          <option value="weekly">Weekly (7 days)</option>
+                          <option value="monthly">Monthly (30 days)</option>
+                          <option value="12">12 hours</option>
+                          <option value="6">6 hours</option>
+                          <option value="3">3 hours</option>
+                          <option value="1">1 hour</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="input-actions">
+                      <button
+                        class="btn-secondary cancel-btn"
+                        id="cancelEditBtn"
+                      >
+                        Cancel
+                      </button>
+                      <button class="btn-primary save-btn" id="saveEditBtn">
+                        Update
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="input-actions">
-                <button class="btn-secondary cancel-btn" id="cancelTaskBtn">
-                  Cancel
-                </button>
-                <button class="btn-primary save-btn" id="saveTaskBtn2">
-                  Save
-                </button>
+
+                <div class="task-list" id="taskList">
+                  <!-- Tasks will be dynamically inserted here -->
+                </div>
+
+                <div class="empty-state" id="emptyState">
+                  <div class="empty-icon">📝</div>
+                  <h3>No tasks yet</h3>
+                  <p>Add some tasks to get started with randomization</p>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div
-            class="task-edit-container"
-            id="taskEditContainer"
-            style="display: none"
-          >
-            <div class="input-group">
-              <input
-                type="text"
-                id="editTaskInput"
-                placeholder="Edit task..."
-                maxlength="200"
-              />
-              <div class="task-options">
-                <div class="option-group">
-                  <label for="editTaskType">Task Type:</label>
-                  <select id="editTaskType">
-                    <option value="oneoff">One-time task</option>
-                    <option value="repeatable">Repeatable task</option>
-                  </select>
-                </div>
-                <div
-                  class="option-group"
-                  id="editCooldownContainer"
-                  style="display: none"
-                >
-                  <label for="editCooldownPeriod">Cooldown:</label>
-                  <select id="editCooldownPeriod">
-                    <option value="daily">Daily (24h)</option>
-                    <option value="weekly">Weekly (7 days)</option>
-                    <option value="monthly">Monthly (30 days)</option>
-                    <option value="12">12 hours</option>
-                    <option value="6">6 hours</option>
-                    <option value="3">3 hours</option>
-                    <option value="1">1 hour</option>
-                  </select>
-                </div>
-              </div>
-              <div class="input-actions">
-                <button class="btn-secondary cancel-btn" id="cancelEditBtn">
-                  Cancel
-                </button>
-                <button class="btn-primary save-btn" id="saveEditBtn">
-                  Update
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="task-list" id="taskList">
-            <!-- Tasks will be dynamically inserted here -->
-          </div>
-
-          <div class="empty-state" id="emptyState">
-            <div class="empty-icon">📝</div>
-            <h3>No tasks yet</h3>
-            <p>Add some tasks to get started with randomization</p>
-          </div>
+          </section>
         </div>
 
         <!-- Trash Page -->

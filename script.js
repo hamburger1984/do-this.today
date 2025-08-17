@@ -24,26 +24,14 @@ class TaskRandomizer {
   // Event binding
   bindEvents() {
     // Task management
-    document
-      .getElementById("addTaskBtn")
-      .addEventListener("click", () => this.showTaskInput());
-    document
-      .getElementById("cancelTaskBtn")
-      .addEventListener("click", () => this.hideTaskInput());
+
     document
       .getElementById("saveTaskBtn")
       .addEventListener("click", () => this.saveTask());
-    document
-      .getElementById("saveTaskBtn2")
-      .addEventListener("click", () => this.saveTask2());
+
     document.getElementById("taskInput").addEventListener("keypress", (e) => {
       if (e.key === "Enter") {
         this.saveTask();
-      }
-    });
-    document.getElementById("taskInput2").addEventListener("keypress", (e) => {
-      if (e.key === "Enter") {
-        this.saveTask2();
       }
     });
 
@@ -73,9 +61,6 @@ class TaskRandomizer {
     document
       .getElementById("taskType")
       .addEventListener("change", () => this.toggleCooldownOptions());
-    document
-      .getElementById("taskType2")
-      .addEventListener("change", () => this.toggleCooldownOptions2());
 
     // Task editing
     document
@@ -88,18 +73,17 @@ class TaskRandomizer {
       .getElementById("editTaskType")
       .addEventListener("change", () => this.toggleEditCooldownOptions());
 
+    // Task list collapse/expand
+    document
+      .getElementById("taskListHeader")
+      .addEventListener("click", () => this.toggleTaskList());
+
     // Navigation
     document
       .getElementById("trashBtn")
       .addEventListener("click", () => this.showTrashPage());
     document
       .getElementById("backToMainBtn")
-      .addEventListener("click", () => this.showMainPage());
-    document
-      .getElementById("viewTasksBtn")
-      .addEventListener("click", () => this.showTaskManagementPage());
-    document
-      .getElementById("backToMainFromTasks")
       .addEventListener("click", () => this.showMainPage());
 
     // Trash actions
@@ -273,14 +257,6 @@ class TaskRandomizer {
   showMainPage() {
     this.currentPage = "main";
     document.getElementById("mainPage").style.display = "block";
-    document.getElementById("taskManagementPage").style.display = "none";
-    document.getElementById("trashPage").style.display = "none";
-  }
-
-  showTaskManagementPage() {
-    this.currentPage = "tasks";
-    document.getElementById("mainPage").style.display = "none";
-    document.getElementById("taskManagementPage").style.display = "block";
     document.getElementById("trashPage").style.display = "none";
     this.updateUI();
   }
@@ -288,24 +264,23 @@ class TaskRandomizer {
   showTrashPage() {
     this.currentPage = "trash";
     document.getElementById("mainPage").style.display = "none";
-    document.getElementById("taskManagementPage").style.display = "none";
     document.getElementById("trashPage").style.display = "block";
     this.renderTrashList();
   }
 
-  // Task management methods
-  showTaskInput() {
-    const container = document.getElementById("taskInputContainer");
-    const input = document.getElementById("taskInput2");
+  toggleTaskList() {
+    this.taskListCollapsed = !this.taskListCollapsed;
+    const taskContent = document.getElementById("taskContent");
+    const collapseIndicator = document.getElementById("taskCollapseIndicator");
 
-    container.style.display = "block";
-    input.focus();
-    input.value = "";
-
-    // Reset form
-    document.getElementById("taskType2").value = "oneoff";
-    document.getElementById("cooldownPeriod2").value = "daily";
-    this.toggleCooldownOptions2();
+    if (this.taskListCollapsed) {
+      taskContent.style.display = "none";
+      collapseIndicator.textContent = "▼";
+    } else {
+      taskContent.style.display = "block";
+      collapseIndicator.textContent = "▲";
+      this.updateUI();
+    }
   }
 
   showTaskEdit(index) {
@@ -338,25 +313,9 @@ class TaskRandomizer {
     this.editingTaskIndex = null;
   }
 
-  hideTaskInput() {
-    const container = document.getElementById("taskInputContainer");
-    container.style.display = "none";
-  }
-
   toggleCooldownOptions() {
     const taskType = document.getElementById("taskType").value;
     const cooldownContainer = document.getElementById("cooldownContainer");
-
-    if (taskType === "repeatable") {
-      cooldownContainer.style.display = "block";
-    } else {
-      cooldownContainer.style.display = "none";
-    }
-  }
-
-  toggleCooldownOptions2() {
-    const taskType = document.getElementById("taskType2").value;
-    const cooldownContainer = document.getElementById("cooldownContainer2");
 
     if (taskType === "repeatable") {
       cooldownContainer.style.display = "block";
@@ -419,47 +378,6 @@ class TaskRandomizer {
     this.toggleCooldownOptions();
 
     this.showToast("Task added successfully", "success");
-  }
-
-  saveTask2() {
-    const input = document.getElementById("taskInput2");
-    const taskText = input.value.trim();
-    const taskType = document.getElementById("taskType2").value;
-    const cooldownPeriod = document.getElementById("cooldownPeriod2").value;
-
-    if (!taskText) {
-      this.showToast("Please enter a task", "error");
-      return;
-    }
-
-    if (taskText.length > 200) {
-      this.showToast("Task is too long (max 200 characters)", "error");
-      return;
-    }
-
-    if (this.tasks.some((task) => task.text === taskText)) {
-      this.showToast("This task already exists", "error");
-      return;
-    }
-
-    const newTask = {
-      id: this.nextTaskId++,
-      text: taskText,
-      type: taskType,
-      cooldown: cooldownPeriod,
-      executions: [],
-      completed: false,
-    };
-
-    this.tasks.push(newTask);
-    this.saveTasks();
-    this.updateUI();
-    this.updateStats();
-    this.hideTaskInput();
-    this.showToast("Task added successfully", "success");
-
-    // Enable randomize button if it was disabled
-    this.updateRandomizeButton();
   }
 
   saveTaskEdit() {
@@ -539,8 +457,11 @@ class TaskRandomizer {
 
   // UI update methods
   updateUI() {
-    this.renderTasks();
-    this.toggleEmptyState();
+    if (!this.taskListCollapsed || this.currentPage !== "main") {
+      this.renderTasks();
+      this.toggleEmptyState();
+    }
+    this.updateRandomizeButton();
   }
 
   renderTasks() {
@@ -710,8 +631,21 @@ class TaskRandomizer {
     this.setLoadingState(true);
 
     setTimeout(() => {
-      const randomIndex = Math.floor(Math.random() * availableTasks.length);
-      this.currentSelectedTask = availableTasks[randomIndex];
+      let selectedTask;
+
+      // If there are at least 2 tasks and we have a current selection, avoid repeating it
+      if (availableTasks.length >= 2 && this.currentSelectedTask) {
+        const filteredTasks = availableTasks.filter(
+          (task) => task.id !== this.currentSelectedTask.id,
+        );
+        const randomIndex = Math.floor(Math.random() * filteredTasks.length);
+        selectedTask = filteredTasks[randomIndex];
+      } else {
+        const randomIndex = Math.floor(Math.random() * availableTasks.length);
+        selectedTask = availableTasks[randomIndex];
+      }
+
+      this.currentSelectedTask = selectedTask;
       this.showSelectedTask();
       this.setLoadingState(false);
     }, 800); // Brief delay for effect
@@ -771,7 +705,7 @@ class TaskRandomizer {
   }
 
   nextTask() {
-    this.resetRandomizer();
+    this.randomizeTask();
   }
 
   completeActiveTask() {
