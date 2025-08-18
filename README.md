@@ -2,101 +2,114 @@
 
 A mobile-first Progressive Web App that helps you decide what to do next by randomly selecting from your personal task list. Perfect for managing both one-time tasks and daily routines with smart cooldown periods.
 
-## 🌟 Key Features
+## 🌟 What It Does
 
-- **Two task types:** One-time tasks (complete once) and repeatable tasks (with customizable cooldowns)
-- **Smart randomization** - intelligently selects from available tasks
-- **8-hour active task system** with real-time countdown timer
-- **Mobile-first design** with PWA capabilities for offline use
-- **Execution tracking** - view completion stats and abandon reasons
-- **Trash system** - safe deletion with recovery options
-- **Data integrity** - automatic corruption detection and recovery
+- **Random task selection** - Can't decide what to do? Let the app pick for you!
+- **Two task types** - One-time tasks you complete once, or repeatable tasks with cooldowns
+- **8-hour focus timer** - When you accept a task, you get 8 hours to complete it
+- **Works offline** - Install as an app on your phone and use anywhere
+- **Privacy-first** - All your data stays on your device, no accounts needed
 
 ## 🚀 Quick Start
 
-1. Open `index.html` in any modern web browser
-2. Click "My Tasks" to expand and add your first task
-3. Click "Pick Random Task" to get started!
+1. Open the app in your web browser
+2. Click "My Tasks" to add your first task
+3. Choose between one-time or repeatable (with cooldown options)
+4. Click "Pick Random Task" to get started!
+5. Accept the task to start your 8-hour timer
 
-For PWA features, serve locally:
-```bash
-python -m http.server 8000  # or npx serve
-```
+## 📱 Installation
 
-## 📖 How to Use
+### On Mobile (iPhone/Android)
+1. Open the app in Safari (iOS) or Chrome (Android)
+2. Look for "Add to Home Screen" or install prompt
+3. Add it to your home screen like any other app
 
-### Managing Tasks
-- **Add Tasks**: Expand "My Tasks" section and use the form at the top
-- **Edit Tasks**: Click the pencil icon to edit tasks inline
-- **Delete Tasks**: Click the trash icon (tasks go to recoverable trash)
-- **Task Types**: Choose between one-time or repeatable with cooldown options
+### On Desktop
+1. Open in Chrome, Edge, or Firefox
+2. Look for the install button in the address bar
+3. Click to install as a desktop app
+
+## 🎯 How to Use
+
+### Managing Your Tasks
+- **Add tasks** - Expand "My Tasks" and use the form at the top
+- **Edit tasks** - Click the pencil icon to edit any task
+- **Delete tasks** - Click the trash icon (they go to recoverable trash)
+- **Choose types** - One-time tasks or repeatable with cooldown periods
+
+### Task Types & Cooldowns
+- **One-time tasks** - Complete once and they're done (like "Buy groceries")
+- **Repeatable tasks** - Can be done multiple times with cooldowns:
+
+  - No cooldown (always available)
+  - 1, 3, 6, or 12 hours
+  - Daily (24 hours)
+  - Weekly (7 days)
+  - Monthly (30 days)
 
 ### Working with Tasks
-1. **Pick Random**: Click "Pick Random Task" for an available task
-2. **Accept**: Click "Let's Do It!" to start the 8-hour timer
-3. **Complete**: Mark as done or abandon with a reason
-4. **Repeat**: Pick another task when ready
+1. **Pick a random task** - Click the big dice button
+2. **Try another** - Don't like it? Pick again
+3. **Accept it** - Click "Let's Do It!" to start the timer
+4. **Complete or abandon** - Mark done when finished, or give up with a reason
 
-### Settings & Data
-- **Export Data**: Download tasks as JSON backup
-- **View Trash**: Restore or permanently delete tasks
-- **Debug Tools**: Check data integrity and clean corrupted entries
-- **Reset**: Nuclear option to start fresh
+### Task Status
+- ✅ **Available** (green) - Ready to be picked
+- ⏰ **Cooldown** (orange) - Waiting for cooldown to end
+- 🏁 **Completed** (blue) - One-time task finished
+- 🔄 **Repeatable** - Shows cooldown period
 
-## 🏗️ Technical Details
+## ⚙️ Settings & Data
 
-- **Stack**: Vanilla HTML5, CSS3, JavaScript (ES6+)
-- **Storage**: Browser localStorage
-- **PWA**: Service Worker for offline support
-- **No dependencies** - works completely offline
+### Export Your Data
+- Go to Settings → "Export Tasks as JSON"
+- Downloads a backup file you can save
+- Includes all tasks, stats, and completion history
 
-### File Structure
-```
-/
-├── index.html          # Main application
-├── styles.css          # Mobile-first styles
-├── script.js           # Core logic
-├── manifest.json       # PWA manifest
-├── sw.js              # Service Worker
-├── debug-test.html     # Debug tool
-└── img/               # SVG icons
-    ├── arrow-left.svg  # Back navigation
-    ├── check.svg       # Complete/accept
-    ├── clock.svg       # Timer/cooldown
-    ├── dice.svg        # Randomize
-    ├── download.svg    # Export data
-    ├── edit.svg        # Edit task
-    ├── info.svg        # Debug info
-    ├── refresh.svg     # Try another
-    ├── trash.svg       # Delete task
-    └── x.svg           # Cancel/close
-```
+### Recover Deleted Tasks
+- Go to Settings → "View Trash"
+- Restore tasks you deleted by mistake
+- Or permanently delete them forever
 
-## 🔒 Privacy
+### Troubleshooting
+- **Data problems?** Use Settings → "Debug Data" or "Cleanup Corrupted Data"
+- **Need help?** Check the debug tool at `debug-test.html`
+- **Want to start over?** Settings → "Reset Everything"
 
-- **Local-first**: All data stays on your device
-- **No tracking**: No analytics or data collection
-- **No accounts**: No registration required
-- **Open source**: Full code available for inspection
+## 🔒 Privacy & Security
 
-## 🔧 Customization
+- **Your data stays with you** - Everything is stored on your device only
+- **No tracking** - We don't collect any information about you
+- **No accounts** - No sign-up, passwords, or personal info required
+- **Open source** - You can see exactly how it works
+- **Works offline** - No internet connection needed after first load
 
-Easily customize colors, icons, cooldown options, and add new features through the modular JavaScript class structure.
+## 🌟 Why Use This?
 
-## 🛠️ Troubleshooting
+Perfect for when you:
+- Have a to-do list but can't decide what to tackle first
+- Want to gamify your productivity with random selection
+- Need to manage both daily habits and one-time tasks
+- Prefer simple, distraction-free tools
+- Value privacy and want your data to stay private
+- Like mobile-first apps that work offline
 
-### Common Issues
-- **Data corruption**: Use Settings → "Debug Data" or "Cleanup Corrupted Data"
-- **Tasks not showing**: Check console with `app.debugData()`
-- **Need help**: Use the debug tool at `debug-test.html`
+## 🛠️ Technical Details
 
-### Debug Commands
-```javascript
-app.debugData()           // Inspect current data
-app.cleanupCorruptedData() // Fix corrupted entries  
-app.exportTasksAsJson()   // Export data
-app.resetEverything()     // Reset all data
-```
+For developers and technical users, see [Technical Documentation](docs/technical-details.md) for:
+- Architecture and code structure
+- Data storage format and schemas
+- PWA implementation details
+- Development and deployment info
+
+## 🤝 Contributing
+
+This is an open source project! Feel free to:
+- Report bugs or suggest features
+- Submit pull requests
+- Fork and customize for your own needs
+- Share improvements with the community
 
 ---
 
