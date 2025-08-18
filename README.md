@@ -28,6 +28,7 @@ A mobile-first Progressive Web App that helps you decide what to do next by rand
 - **Robust data integrity** - automatic corruption detection and recovery
 - **Trash system** - deleted tasks move to trash for recovery or permanent deletion
 - **Execution tracking** - keeps history of when tasks were completed
+- **Detailed execution statistics** - view completion counts, abandon counts, and last completion time
 
 ### 🎲 Intelligent Randomization
 - **Smart filtering** - only shows available tasks for selection
@@ -47,6 +48,8 @@ A mobile-first Progressive Web App that helps you decide what to do next by rand
 - **Completion statistics** - track total tasks and completed count
 - **Individual execution history** for repeatable tasks
 - **Cooldown management** - see exactly when tasks become available again
+- **Per-task execution stats** - see successful completions (✓), abandoned attempts (✗), and time since last completion (🕒)
+- **Smart statistics display** - execution stats only appear when tasks have been attempted
 
 ### 🎨 User Experience
 - **Beautiful gradient design** with consistent branding
@@ -64,6 +67,7 @@ A mobile-first Progressive Web App that helps you decide what to do next by rand
 - **Accessibility features** - ARIA labels, focus management, screen reader support
 - **Error recovery** - automatic detection and fixing of corrupted data
 - **Debug tools** - built-in data integrity checking and cleanup functions
+- **Settings panel** - collapsible settings section with data management tools
 
 ## 🚀 Getting Started
 
@@ -101,11 +105,15 @@ Then visit `http://localhost:8000`
 2. View, edit, and delete existing tasks directly in the list
 
 ### Managing Tasks
-- **Add Tasks**: Use the "Add New Task" form located above the task list
+- **Add Tasks**: Use the "Add New Task" form to quickly add new tasks
 - **Collapsible List**: Click the "My Tasks" header to show/hide your task list (starts collapsed)
 - **Edit Tasks**: Click the **pencil icon (✏️)** next to any task to modify it
 - **Delete Tasks**: Click the **trash icon** to move tasks to trash (not permanently deleted)
 - **Convert Types**: Tasks can be switched between one-time and repeatable types
+- **View Statistics**: Each task shows execution stats when available:
+  - ✓ **Successful completions** count
+  - ✗ **Abandoned attempts** count  
+  - 🕒 **Time since last completion** (e.g., "2h ago", "3d ago")
 
 ### Working with Tasks
 1. **Pick a Task**: Click "Pick Random Task" to get a random available task (avoids repeating the same task)
@@ -127,6 +135,13 @@ Then visit `http://localhost:8000`
 - **Delete Forever**: Click the **delete icon** to permanently remove tasks
 - **Clear All**: Remove all deleted tasks permanently with one click
 - **Safe Deletion**: Tasks are moved to trash first, giving you a chance to recover them
+
+### Settings & Data Management
+- **Access Settings**: Click the "Settings" header (below task list) to expand options
+- **Export Data**: Download all your tasks as pretty-printed JSON with metadata
+- **Reset Everything**: Nuclear option to clear all data with double confirmation
+- **Debug Tools**: Access data integrity checking and corruption cleanup
+- **Collapsible Interface**: Settings section starts collapsed to keep interface clean
 
 ## 🏗️ Technical Details
 
@@ -161,7 +176,9 @@ Then visit `http://localhost:8000`
 │   ├── trash.svg      # Delete task icon
 │   ├── arrow-left.svg # Back navigation icon
 │   ├── x.svg          # Cancel/close icon
-│   └── clock.svg      # Timer/cooldown icon
+│   ├── clock.svg      # Timer/cooldown icon
+│   ├── download.svg   # Export data icon
+│   └── info.svg       # Debug info icon
 └── README.md          # This documentation
 ```
 
@@ -249,14 +266,23 @@ Perfect for when you:
 - **Tasks not showing**: Check browser console or use `app.debugData()`
 - **Edit button not working**: Ensure task list is expanded
 - **Data corruption**: Use `debug-test.html` for diagnosis and repair
+- **Settings not visible**: Click "Settings" header to expand the section
 
 ### Debug Commands
 Open browser console and try:
 ```javascript
-app.debugData()           // Inspect current data
+app.debugData()           // Inspect current data with execution stats
 app.cleanupCorruptedData() // Fix corrupted entries  
-app.clearAllData()        // Nuclear reset option
+app.exportTasksAsJson()   // Export data programmatically
+app.resetEverything()     // Nuclear reset option (with confirmations)
 ```
+
+### Using the Settings Panel
+1. **Expand Settings**: Click the "Settings" header (below task list)
+2. **Export Tasks**: Click "Export Tasks as JSON" to download your data
+3. **Debug Data**: Click "Debug Data" to inspect your data in console
+4. **Clean Data**: Click "Cleanup Corrupted Data" to fix any issues
+5. **Reset All**: Click "Reset Everything" to start completely fresh (with confirmations)
 
 ## 🤝 Contributing
 

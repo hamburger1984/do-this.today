@@ -239,6 +239,72 @@
               </div>
             </div>
           </section>
+
+          <!-- Settings Section -->
+          <section class="settings-section">
+            <div class="section-header">
+              <div class="collapsible-header" id="settingsHeader">
+                <h2>Settings</h2>
+                <div class="collapse-indicator" id="settingsCollapseIndicator">
+                  ▼
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="settings-content"
+              id="settingsContent"
+              style="display: none"
+            >
+              <div class="settings-group">
+                <h3>Data Management</h3>
+                <div class="settings-actions">
+                  <button class="btn-secondary" id="exportDataBtn">
+                    <img
+                      src="img/download.svg"
+                      alt="Export"
+                      width="16"
+                      height="16"
+                    />
+                    Export Tasks as JSON
+                  </button>
+                  <button class="btn-secondary danger" id="resetAllBtn">
+                    <img
+                      src="img/trash.svg"
+                      alt="Reset"
+                      width="16"
+                      height="16"
+                    />
+                    Reset Everything
+                  </button>
+                </div>
+              </div>
+
+              <div class="settings-group">
+                <h3>Debug Information</h3>
+                <div class="settings-actions">
+                  <button class="btn-secondary" id="debugDataBtn">
+                    <img
+                      src="img/info.svg"
+                      alt="Debug"
+                      width="16"
+                      height="16"
+                    />
+                    Debug Data
+                  </button>
+                  <button class="btn-secondary" id="cleanupDataBtn">
+                    <img
+                      src="img/refresh.svg"
+                      alt="Cleanup"
+                      width="16"
+                      height="16"
+                    />
+                    Cleanup Corrupted Data
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
 
         <!-- Trash Page -->

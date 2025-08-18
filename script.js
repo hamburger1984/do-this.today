@@ -8,6 +8,7 @@ class TaskRandomizer {
     this.activeTaskTimer = null;
     this.nextTaskId = 1;
     this.taskListCollapsed = true;
+    this.settingsCollapsed = true;
     this.currentPage = "main";
     this.editingTaskIndex = null;
     this.init();
@@ -136,6 +137,25 @@ class TaskRandomizer {
     document
       .getElementById("taskListHeader")
       .addEventListener("click", () => this.toggleTaskList());
+
+    // Settings collapse/expand
+    document
+      .getElementById("settingsHeader")
+      .addEventListener("click", () => this.toggleSettings());
+
+    // Settings actions
+    document
+      .getElementById("exportDataBtn")
+      .addEventListener("click", () => this.exportTasksAsJson());
+    document
+      .getElementById("resetAllBtn")
+      .addEventListener("click", () => this.resetEverything());
+    document
+      .getElementById("debugDataBtn")
+      .addEventListener("click", () => this.debugDataConsole());
+    document
+      .getElementById("cleanupDataBtn")
+      .addEventListener("click", () => this.cleanupCorruptedData());
 
     // Navigation
     document
@@ -424,6 +444,22 @@ class TaskRandomizer {
     }
   }
 
+  toggleSettings() {
+    this.settingsCollapsed = !this.settingsCollapsed;
+    const settingsContent = document.getElementById("settingsContent");
+    const collapseIndicator = document.getElementById(
+      "settingsCollapseIndicator",
+    );
+
+    if (this.settingsCollapsed) {
+      settingsContent.style.display = "none";
+      collapseIndicator.textContent = "▼";
+    } else {
+      settingsContent.style.display = "block";
+      collapseIndicator.textContent = "▲";
+    }
+  }
+
   showTaskEdit(index) {
     const task = this.tasks[index];
     if (!task) {
@@ -696,6 +732,10 @@ class TaskRandomizer {
           ? ` - ${this.formatCooldown(task.cooldown)}`
           : "";
 
+      // Calculate execution statistics
+      const execStats = this.getExecutionStats(task);
+      const execStatsHtml = execStats.html;
+
       taskItem.innerHTML = `
                 <div class="task-content">
                     <div class="task-text">${this.escapeHtml(task.text)}</div>
@@ -703,6 +743,7 @@ class TaskRandomizer {
                         <span class="task-type" title="${this.escapeHtml(task.type || "oneoff")}">${typeIcon}${cooldownText}</span>
                         <span class="task-status ${status.type}" title="${this.escapeHtml(statusText)}">${statusIcon} ${statusText}</span>
                     </div>
+                    ${execStatsHtml}
                 </div>
                 <div class="task-actions">
                     <button class="edit-btn" onclick="app.showTaskEdit(${index})" aria-label="Edit task">
@@ -738,6 +779,62 @@ class TaskRandomizer {
     }
 
     return { type: "available" };
+  }
+
+  getExecutionStats(task) {
+    if (!task.executions || task.executions.length === 0) {
+      return {
+        successful: 0,
+        abandoned: 0,
+        lastSuccessful: null,
+        html: "",
+      };
+    }
+
+    const successful = task.executions.filter((exec) => !exec.abandoned);
+    const abandoned = task.executions.filter((exec) => exec.abandoned);
+    const lastSuccessful =
+      successful.length > 0
+        ? Math.max(...successful.map((exec) => exec.timestamp))
+        : null;
+
+    let statsHtml = '<div class="task-execution-stats">';
+
+    if (successful.length > 0) {
+      statsHtml += `<span class="exec-stat success" title="Successful completions">✓ ${successful.length}</span>`;
+    }
+
+    if (abandoned.length > 0) {
+      statsHtml += `<span class="exec-stat abandoned" title="Abandoned attempts">✗ ${abandoned.length}</span>`;
+    }
+
+    if (lastSuccessful) {
+      const lastDate = new Date(lastSuccessful);
+      const timeAgo = this.getTimeAgo(lastSuccessful);
+      statsHtml += `<span class="exec-stat last-completed" title="Last completed: ${lastDate.toLocaleString()}">🕒 ${timeAgo}</span>`;
+    }
+
+    statsHtml += "</div>";
+
+    return {
+      successful: successful.length,
+      abandoned: abandoned.length,
+      lastSuccessful,
+      html: statsHtml,
+    };
+  }
+
+  getTimeAgo(timestamp) {
+    const now = Date.now();
+    const diff = now - timestamp;
+    const minutes = Math.floor(diff / (1000 * 60));
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+    if (days > 0) return `${days}d ago`;
+    if (hours > 0) return `${hours}h ago`;
+    if (minutes > 0) return `${minutes}m ago`;
+    return "just now";
   }
 
   getCooldownMs(cooldown) {
@@ -1157,6 +1254,23 @@ class TaskRandomizer {
     console.log("Active Task:", this.activeTask);
     console.log("Next Task ID:", this.nextTaskId);
 
+    // Detailed execution statistics
+    console.group("Execution Statistics");
+    this.tasks.forEach((task, index) => {
+      const stats = this.getExecutionStats(task);
+      if (stats.successful > 0 || stats.abandoned > 0) {
+        console.log(`Task ${index} (${task.text.substring(0, 30)}...):`, {
+          successful: stats.successful,
+          abandoned: stats.abandoned,
+          lastCompleted: stats.lastSuccessful
+            ? new Date(stats.lastSuccessful).toLocaleString()
+            : "Never",
+          totalAttempts: task.executions?.length || 0,
+        });
+      }
+    });
+    console.groupEnd();
+
     // Check for data integrity issues
     const taskIssues = [];
     this.tasks.forEach((task, index) => {
@@ -1200,6 +1314,107 @@ class TaskRandomizer {
       activeTask: this.activeTask,
       issues: taskIssues,
     };
+  }
+
+  // Public method to export tasks as pretty-printed JSON
+  exportTasksAsJson() {
+    try {
+      const exportData = {
+        metadata: {
+          exportDate: new Date().toISOString(),
+          version: "1.0",
+          totalTasks: this.tasks.length,
+          completedTasks: this.completedTasks,
+        },
+        tasks: this.tasks,
+        deletedTasks: this.deletedTasks,
+        statistics: {
+          completedTasks: this.completedTasks,
+          activeTask: this.activeTask,
+        },
+      };
+
+      const jsonString = JSON.stringify(exportData, null, 2);
+      const blob = new Blob([jsonString], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `nowwhat-tasks-${new Date().toISOString().split("T")[0]}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      this.showToast("Tasks exported successfully", "success");
+    } catch (error) {
+      console.error("Error exporting tasks:", error);
+      this.showToast("Error exporting tasks", "error");
+    }
+  }
+
+  // Public method to reset everything
+  resetEverything() {
+    if (
+      !confirm(
+        "⚠️ WARNING: This will permanently delete ALL your tasks, progress, and settings. Are you absolutely sure?",
+      )
+    ) {
+      return;
+    }
+
+    if (
+      !confirm(
+        "This action cannot be undone. You will lose all tasks, completion history, and statistics. Please confirm you want to reset everything.",
+      )
+    ) {
+      return;
+    }
+
+    try {
+      // Clear all localStorage data
+      localStorage.removeItem("nowwhat-tasks");
+      localStorage.removeItem("nowwhat-deleted");
+      localStorage.removeItem("nowwhat-completed");
+      localStorage.removeItem("nowwhat-active");
+      localStorage.removeItem("nowwhat-nextid");
+
+      // Reset all app state
+      this.tasks = [];
+      this.deletedTasks = [];
+      this.completedTasks = 0;
+      this.currentSelectedTask = null;
+      this.activeTask = null;
+      this.nextTaskId = 1;
+      this.editingTaskIndex = null;
+
+      // Clear any active timers
+      this.clearActiveTaskTimer();
+
+      // Update UI
+      this.updateUI();
+      this.updateStats();
+      this.resetRandomizer();
+
+      // Collapse settings after reset
+      if (!this.settingsCollapsed) {
+        this.toggleSettings();
+      }
+
+      this.showToast("Everything has been reset successfully", "success");
+    } catch (error) {
+      console.error("Error during reset:", error);
+      this.showToast("Error during reset", "error");
+    }
+  }
+
+  // Debug data in console
+  debugDataConsole() {
+    console.clear();
+    console.log("📊 Now What? Debug Information");
+    console.log("===============================");
+    const debugInfo = this.debugData();
+    this.showToast("Debug information logged to console", "default");
+    return debugInfo;
   }
 
   // Public method to clear all data (useful for testing/reset)

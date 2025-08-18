@@ -55,6 +55,21 @@
 
   /* Focus */
   --focus-ring: 0 0 0 3px rgba(102, 126, 234, 0.1);
+
+  /* Alpha/Opacity Colors */
+  --primary-alpha-10: rgba(102, 126, 234, 0.1);
+  --primary-alpha-30: rgba(102, 126, 234, 0.3);
+  --primary-alpha-50: rgba(102, 126, 234, 0.5);
+  --success-alpha-10: rgba(56, 161, 105, 0.1);
+  --success-alpha-30: rgba(56, 161, 105, 0.3);
+  --error-alpha-10: rgba(229, 62, 62, 0.1);
+  --error-alpha-30: rgba(229, 62, 62, 0.3);
+  --completed-alpha-10: rgba(66, 153, 225, 0.1);
+  --completed-alpha-30: rgba(66, 153, 225, 0.3);
+  --secondary-alpha-10: rgba(74, 85, 104, 0.1);
+  --black-alpha-10: rgba(0, 0, 0, 0.1);
+  --black-alpha-50: rgba(0, 0, 0, 0.5);
+  --modal-overlay: rgba(0, 0, 0, 0.5);
 }
 
 /* Reset and base styles */
@@ -86,7 +101,7 @@ body {
   margin: 0 auto;
   min-height: 100vh;
   background: var(--bg-white);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 20px var(--black-alpha-10);
   display: flex;
   flex-direction: column;
 }
@@ -227,22 +242,9 @@ body {
   text-align: center;
 }
 
+.settings-section,
 .task-section {
   margin-bottom: 1rem;
-}
-
-.task-card {
-  background: white;
-  border-radius: 12px;
-  padding: 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.quick-add-card {
-  background: white;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 /* Navigation section */
@@ -334,7 +336,7 @@ body {
 }
 
 .btn-icon:hover {
-  background: rgba(102, 126, 234, 0.1);
+  background: var(--primary-alpha-10);
 }
 
 /* SVG styling */
@@ -543,7 +545,7 @@ body {
 }
 
 .edit-btn:hover {
-  background: rgba(74, 85, 104, 0.1);
+  background: var(--secondary-alpha-10);
 }
 
 .delete-btn {
@@ -562,7 +564,7 @@ body {
 }
 
 .delete-btn:hover {
-  background: rgba(229, 62, 62, 0.1);
+  background: var(--error-alpha-10);
 }
 
 .restore-btn {
@@ -581,7 +583,7 @@ body {
 }
 
 .restore-btn:hover {
-  background: rgba(56, 161, 105, 0.1);
+  background: var(--success-alpha-10);
 }
 
 .delete-forever-btn {
@@ -600,7 +602,7 @@ body {
 }
 
 .delete-forever-btn:hover {
-  background: rgba(229, 62, 62, 0.1);
+  background: var(--error-alpha-10);
 }
 
 /* Empty state */
@@ -630,14 +632,6 @@ body {
 .randomizer-section {
   margin-bottom: 1rem;
   text-align: center;
-}
-
-.randomizer-card {
-  background: white;
-  border-radius: 12px;
-  padding: 1.5rem;
-  text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .randomizer-icon {
@@ -871,7 +865,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--modal-overlay);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -996,6 +990,103 @@ body {
   background: var(--status-warning);
 }
 
+/* Settings section */
+.settings-content {
+  overflow: hidden;
+  animation: fadeIn 0.3s ease;
+  padding: 0.75rem;
+}
+
+.settings-group {
+  margin-bottom: 2rem;
+}
+
+.settings-group:last-child {
+  margin-bottom: 0;
+}
+
+.settings-group h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.settings-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+@media (min-width: 481px) {
+  .settings-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .settings-actions button {
+    flex: 1;
+    min-width: 180px;
+  }
+}
+
+.settings-actions button {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.btn-secondary.danger {
+  color: var(--status-error);
+  border-color: var(--error-alpha-30);
+}
+
+.btn-secondary.danger:hover {
+  background: var(--error-alpha-10);
+  border-color: var(--status-error);
+}
+
+.btn-secondary.danger img {
+  filter: brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%)
+    hue-rotate(346deg) brightness(104%) contrast(97%);
+}
+
+/* Task execution statistics */
+.task-execution-stats {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+}
+
+.exec-stat {
+  padding: 0.2rem 0.4rem;
+  border-radius: 8px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  font-size: 0.65rem;
+}
+
+.exec-stat.success {
+  background: var(--success-alpha-10);
+  color: var(--status-success);
+  border: 1px solid var(--success-alpha-30);
+}
+
+.exec-stat.abandoned {
+  background: var(--error-alpha-10);
+  color: var(--status-error);
+  border: 1px solid var(--error-alpha-30);
+}
+
+.exec-stat.last-completed {
+  background: var(--completed-alpha-10);
+  color: var(--status-completed);
+  border: 1px solid var(--completed-alpha-30);
+}
+
 /* Animations */
 @keyframes fadeIn {
   from {
@@ -1037,6 +1128,10 @@ body {
     max-width: 400px;
     margin: 0 auto;
   }
+
+  .exec-stat {
+    font-size: 0.7rem;
+  }
 }
 
 @media (min-width: 768px) {
@@ -1050,6 +1145,15 @@ body {
 
   .task-item {
     padding: 1rem 0.75rem;
+  }
+
+  .task-execution-stats {
+    margin-top: 0.75rem;
+  }
+
+  .exec-stat {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
   }
 }
 
@@ -1149,9 +1253,9 @@ html {
 
 /* Selection styles */
 ::selection {
-  background: rgba(102, 126, 234, 0.3);
+  background: var(--primary-alpha-30);
 }
 
 ::-moz-selection {
-  background: rgba(102, 126, 234, 0.3);
+  background: var(--primary-alpha-30);
 }
