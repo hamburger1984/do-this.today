@@ -99,7 +99,6 @@ Each task is stored as a JavaScript object with the following schema:
     }
   ],
   completed: false,         // Completion status for one-off tasks (boolean)
-  completedAt: null,        // Completion timestamp for one-off tasks (number, null if not completed)
   deletedAt: 1234567890     // Deletion timestamp (number, deleted tasks only)
 }
 ```
@@ -178,8 +177,8 @@ Tasks have four possible states:
 
 3. **Completed**: Finished (one-off only)
    - `completed` property set to `true`
-   - `completedAt` timestamp recorded
-   - Visible in task list for 24 hours, then auto-moved to trash
+   - Completion timestamp recorded in `executions` array
+   - Visible in task list for 24 hours after last successful execution, then auto-moved to trash
 
 4. **Active**: Currently being worked on
    - Referenced in `activeTask` localStorage entry
@@ -259,11 +258,11 @@ Cache-first strategy for offline support:
 
 One-off tasks follow a specific lifecycle:
 1. **Created**: Available for randomization
-2. **Completed**: Marked as done with `completedAt` timestamp
+2. **Completed**: Marked as done with execution timestamp in `executions` array
 3. **24h Grace Period**: Remains visible in task list
-4. **Auto-Trash**: Automatically moved to trash after 24 hours
+4. **Auto-Trash**: Automatically moved to trash 24 hours after last successful execution
 
-This prevents task list clutter while giving users time to see their accomplishments.
+The cleanup process uses the most recent non-abandoned execution timestamp to determine when to move completed one-off tasks to trash. This prevents task list clutter while giving users time to see their accomplishments.
 
 ### App Installation
 

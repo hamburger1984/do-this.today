@@ -211,7 +211,6 @@ class TaskRandomizer {
               cooldown: "daily",
               executions: [],
               completed: false,
-              completedAt: null,
             };
           }
 
@@ -242,7 +241,6 @@ class TaskRandomizer {
             cooldown: task.cooldown || "daily",
             executions: Array.isArray(task.executions) ? task.executions : [],
             completed: Boolean(task.completed),
-            completedAt: task.completedAt || null,
           };
 
           return validTask;
@@ -266,7 +264,6 @@ class TaskRandomizer {
           cooldown: "daily",
           executions: [],
           completed: false,
-          completedAt: null,
         },
         {
           id: this.nextTaskId++,
@@ -275,7 +272,6 @@ class TaskRandomizer {
           cooldown: "daily",
           executions: [],
           completed: false,
-          completedAt: null,
         },
         {
           id: this.nextTaskId++,
@@ -284,7 +280,6 @@ class TaskRandomizer {
           cooldown: "weekly",
           executions: [],
           completed: false,
-          completedAt: null,
         },
         {
           id: this.nextTaskId++,
@@ -293,7 +288,6 @@ class TaskRandomizer {
           cooldown: "weekly",
           executions: [],
           completed: false,
-          completedAt: null,
         },
         {
           id: this.nextTaskId++,
@@ -302,7 +296,6 @@ class TaskRandomizer {
           cooldown: "daily",
           executions: [],
           completed: false,
-          completedAt: null,
         },
         {
           id: this.nextTaskId++,
@@ -311,7 +304,6 @@ class TaskRandomizer {
           cooldown: "daily",
           executions: [],
           completed: false,
-          completedAt: null,
         },
         {
           id: this.nextTaskId++,
@@ -320,7 +312,6 @@ class TaskRandomizer {
           cooldown: "daily",
           executions: [],
           completed: false,
-          completedAt: null,
         },
         {
           id: this.nextTaskId++,
@@ -329,7 +320,6 @@ class TaskRandomizer {
           cooldown: "daily",
           executions: [],
           completed: false,
-          completedAt: null,
         },
       ];
       this.saveTasks();
@@ -346,7 +336,6 @@ class TaskRandomizer {
               cooldown: "daily",
               executions: [],
               completed: false,
-              completedAt: null,
               deletedAt: Date.now(),
             };
           }
@@ -361,7 +350,6 @@ class TaskRandomizer {
               cooldown: "daily",
               executions: [],
               completed: false,
-              completedAt: null,
               deletedAt: Date.now(),
             };
           }
@@ -379,7 +367,6 @@ class TaskRandomizer {
             cooldown: task.cooldown || "daily",
             executions: Array.isArray(task.executions) ? task.executions : [],
             completed: Boolean(task.completed),
-            completedAt: task.completedAt || null,
             deletedAt: task.deletedAt || Date.now(),
           };
 
@@ -551,7 +538,6 @@ class TaskRandomizer {
       cooldown: cooldownPeriod,
       executions: [],
       completed: false,
-      completedAt: null,
     };
 
     this.tasks.push(newTask);
@@ -638,13 +624,11 @@ class TaskRandomizer {
     if (oldType === "repeatable" && taskType === "oneoff") {
       task.executions = [];
       task.completed = false;
-      task.completedAt = null;
     }
 
     // If changing from oneoff to repeatable, ensure proper structure
     if (oldType === "oneoff" && taskType === "repeatable") {
       task.completed = false;
-      task.completedAt = null;
       // Keep executions array as is
     }
 
@@ -806,14 +790,6 @@ class TaskRandomizer {
 
   getTaskStatus(task) {
     if (task.type === "oneoff" && task.completed) {
-      // Check if 24 hours have passed since completion
-      if (
-        task.completedAt &&
-        Date.now() - task.completedAt >= 24 * 60 * 60 * 1000
-      ) {
-        // Task should be auto-moved to trash - this will be handled by cleanup
-        return { type: "completed" };
-      }
       return { type: "completed" };
     }
 
@@ -1077,10 +1053,9 @@ class TaskRandomizer {
           duration: Date.now() - this.activeTask.startTime,
         });
 
-        // Mark one-off tasks as completed with timestamp
+        // Mark one-off tasks as completed
         if (task.type === "oneoff") {
           task.completed = true;
-          task.completedAt = Date.now();
         }
       }
 
@@ -1492,10 +1467,18 @@ class TaskRandomizer {
       if (
         task.type === "oneoff" &&
         task.completed &&
-        task.completedAt &&
-        now - task.completedAt >= twentyFourHours
+        task.executions.length > 0
       ) {
-        tasksToMove.push(index);
+        // Find the most recent completion time from executions
+        const lastExecution = Math.max(
+          ...task.executions
+            .filter((exec) => !exec.abandoned)
+            .map((exec) => exec.timestamp),
+        );
+
+        if (lastExecution && now - lastExecution >= twentyFourHours) {
+          tasksToMove.push(index);
+        }
       }
     });
 
