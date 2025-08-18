@@ -2,19 +2,6 @@
 
 This document contains detailed technical information about the implementation, architecture, and data structures of the Task Dice app.
 
-## 📱 App Screenshots
-
-<p align="center">
-  <img src="screenshots/main-screen.svg" alt="Main Screen" width="250"/>
-  <img src="screenshots/task-selected.svg" alt="Task Selected" width="250"/>
-  <img src="screenshots/active-task.svg" alt="Active Task" width="250"/>
-</p>
-
-<p align="center">
-  <img src="screenshots/task-list.svg" alt="Task Management" width="250"/>
-  <img src="screenshots/pwa-install.svg" alt="PWA Installation" width="250"/>
-</p>
-
 ## 🏗️ Architecture Overview
 
 ### Technology Stack
@@ -112,6 +99,7 @@ Each task is stored as a JavaScript object with the following schema:
     }
   ],
   completed: false,         // Completion status for one-off tasks (boolean)
+  completedAt: null,        // Completion timestamp for one-off tasks (number, null if not completed)
   deletedAt: 1234567890     // Deletion timestamp (number, deleted tasks only)
 }
 ```
@@ -171,10 +159,11 @@ The main application is implemented as an ES6 class with the following key metho
 - `completeActiveTask()`: Records completion and updates stats
 - `abandonActiveTask()`: Records abandonment with reason
 
-#### Data Integrity
+### Data Integrity
 - `validateDataIntegrity()`: Checks for corrupted task objects
 - `cleanupCorruptedData()`: Removes invalid entries
 - `handleInitializationError()`: Recovers from startup failures
+- `cleanupCompletedOneOffTasks()`: Auto-moves completed one-off tasks to trash after 24h
 
 ### Task Status Calculation
 
@@ -189,6 +178,8 @@ Tasks have four possible states:
 
 3. **Completed**: Finished (one-off only)
    - `completed` property set to `true`
+   - `completedAt` timestamp recorded
+   - Visible in task list for 24 hours, then auto-moved to trash
 
 4. **Active**: Currently being worked on
    - Referenced in `activeTask` localStorage entry
@@ -263,6 +254,16 @@ Cache-first strategy for offline support:
 - Main application files (HTML, CSS, JS)
 - All SVG icons
 - Google Fonts (Inter font family)
+
+### Automatic Task Cleanup
+
+One-off tasks follow a specific lifecycle:
+1. **Created**: Available for randomization
+2. **Completed**: Marked as done with `completedAt` timestamp
+3. **24h Grace Period**: Remains visible in task list
+4. **Auto-Trash**: Automatically moved to trash after 24 hours
+
+This prevents task list clutter while giving users time to see their accomplishments.
 
 ### App Installation
 
