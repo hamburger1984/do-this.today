@@ -205,21 +205,23 @@ The styling system uses CSS custom properties for consistent theming:
 
 ```css
 :root {
+  /* Color Palette */
+  --teal: #2d8486;
+  --sandy-brown: #fcaa67;
+  --redwood: #b0413e;
+  --cream: #ffffc7;
+  --van-dyke: #473335;
+  
   /* Primary Colors */
-  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --primary-color: #667eea;
-  --secondary-color: #764ba2;
+  --primary-gradient: linear-gradient(135deg, var(--teal) 0%, var(--sandy-brown) 100%);
+  --primary-color: var(--teal);
+  --secondary-color: var(--sandy-brown);
   
   /* Status Colors */
-  --status-available: #38a169;
-  --status-cooldown: #ed8936;
-  --status-completed: #4299e1;
-  --status-error: #e53e3e;
-  
-  /* Layout */
-  --shadow-light: 0 2px 4px rgba(0, 0, 0, 0.05);
-  --shadow-heavy: 0 10px 25px rgba(0, 0, 0, 0.2);
-  --focus-ring: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  --status-available: var(--teal);
+  --status-cooldown: var(--sandy-brown);
+  --status-completed: var(--redwood);
+  --status-error: var(--redwood);
 }
 ```
 

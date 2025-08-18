@@ -5,28 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Task Dice Debug Test</title>
     <style>
+      :root {
+        /* Color Palette */
+        --teal: #2d8486;
+        --sandy-brown: #fcaa67;
+        --redwood: #b0413e;
+        --cream: #ffffc7;
+        --van-dyke: #473335;
+
+        /* Additional Colors */
+        --white: #ffffff;
+        --black: #000000;
+
+        /* Background Colors */
+        --bg-light: #fefef3;
+        --bg-lighter: var(--cream);
+
+        /* Border Colors */
+        --border-light: #f0e6b3;
+        --border-medium: #e6d999;
+
+        /* Text Colors */
+        --text-secondary: #6b4d4f;
+        --text-muted: #8a6e71;
+
+        /* Alpha/Opacity Colors */
+        --primary-alpha-10: rgba(45, 132, 134, 0.1);
+        --primary-alpha-40: rgba(45, 132, 134, 0.4);
+        --success-alpha-10: rgba(45, 132, 134, 0.1);
+        --error-alpha-10: rgba(176, 65, 62, 0.1);
+        --secondary-alpha-10: rgba(252, 170, 103, 0.1);
+        --black-alpha-10: rgba(71, 51, 53, 0.1);
+        --black-alpha-30: rgba(0, 0, 0, 0.2);
+      }
       body {
         font-family: system-ui, sans-serif;
         max-width: 800px;
         margin: 0 auto;
         padding: 20px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(
+          135deg,
+          var(--teal, #2d8486) 0%,
+          var(--sandy-brown, #fcaa67) 100%
+        );
         min-height: 100vh;
       }
       .container {
-        background: white;
+        background: var(--white, white);
         border-radius: 12px;
         padding: 2rem;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 10px 25px var(--black-alpha-30, rgba(0, 0, 0, 0.2));
       }
       h1 {
-        color: #667eea;
+        color: var(--teal, #2d8486);
         text-align: center;
         margin-bottom: 2rem;
       }
       .button {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
+        background: linear-gradient(
+          135deg,
+          var(--teal, #2d8486) 0%,
+          var(--sandy-brown, #fcaa67) 100%
+        );
+        color: var(--white, white);
         border: none;
         padding: 12px 24px;
         border-radius: 8px;
@@ -36,11 +77,11 @@
       }
       .button:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        box-shadow: 0 4px 12px var(--primary-alpha-40, rgba(45, 132, 134, 0.4));
       }
       .output {
-        background: #f8f9fa;
-        border: 1px solid #e9ecef;
+        background: var(--bg-light, #fefef3);
+        border: 1px solid var(--border-light, #f0e6b3);
         border-radius: 8px;
         padding: 1rem;
         margin: 1rem 0;
@@ -56,20 +97,20 @@
         font-weight: 500;
       }
       .status.ok {
-        background: #d4edda;
-        color: #155724;
+        background: var(--success-alpha-10, rgba(45, 132, 134, 0.1));
+        color: var(--teal, #2d8486);
       }
       .status.warning {
-        background: #fff3cd;
-        color: #856404;
+        background: var(--secondary-alpha-10, rgba(252, 170, 103, 0.1));
+        color: var(--sandy-brown, #fcaa67);
       }
       .status.error {
-        background: #f8d7da;
-        color: #721c24;
+        background: var(--error-alpha-10, rgba(176, 65, 62, 0.1));
+        color: var(--redwood, #b0413e);
       }
       .info {
-        background: #e3f2fd;
-        border-left: 4px solid #2196f3;
+        background: var(--bg-light, #fefef3);
+        border-left: 4px solid var(--teal, #2d8486);
         padding: 1rem;
         margin: 1rem 0;
       }

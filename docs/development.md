@@ -98,9 +98,11 @@ The app uses CSS variables for consistent theming:
 
 ```css
 :root {
-  --primary-color: #667eea;
-  --status-available: #38a169;
-  --status-cooldown: #ed8936;
+  --teal: #2d8486;
+  --sandy-brown: #fcaa67;
+  --redwood: #b0413e;
+  --cream: #ffffc7;
+  --van-dyke: #473335;
   /* ... more variables */
 }
 ```
@@ -134,8 +136,11 @@ Mobile-first approach with breakpoints:
 Modify CSS custom properties in `:root`:
 ```css
 :root {
-  --primary-color: #your-color;
-  --status-available: #your-color;
+  --teal: #your-teal-color;
+  --sandy-brown: #your-accent-color;
+  --redwood: #your-error-color;
+  --cream: #your-light-bg;
+  --van-dyke: #your-text-color;
 }
 ```
 
