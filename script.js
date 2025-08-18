@@ -9,16 +9,75 @@ class TaskRandomizer {
     this.nextTaskId = 1;
     this.taskListCollapsed = true;
     this.currentPage = "main";
+    this.editingTaskIndex = null;
     this.init();
   }
 
   init() {
-    this.loadTasks();
-    this.bindEvents();
-    this.updateUI();
-    this.updateStats();
-    this.updateRandomizeButton();
-    this.checkActiveTask();
+    try {
+      this.loadTasks();
+      this.bindEvents();
+      this.updateUI();
+      this.updateStats();
+      this.updateRandomizeButton();
+      this.checkActiveTask();
+
+      // Run a quick data integrity check on startup
+      this.validateDataIntegrity();
+    } catch (error) {
+      console.error("Error during app initialization:", error);
+      this.handleInitializationError(error);
+    }
+  }
+
+  validateDataIntegrity() {
+    let hasIssues = false;
+
+    this.tasks.forEach((task, index) => {
+      if (!task || typeof task !== "object" || typeof task.text !== "string") {
+        hasIssues = true;
+        console.warn(`Invalid task detected at index ${index}:`, task);
+      }
+    });
+
+    if (hasIssues) {
+      console.warn(
+        "Data integrity issues detected. Consider running app.cleanupCorruptedData() from console.",
+      );
+    }
+  }
+
+  handleInitializationError(error) {
+    // Try to recover from initialization errors
+    try {
+      console.warn("Attempting recovery from initialization error...");
+      this.tasks = [];
+      this.deletedTasks = [];
+      this.completedTasks = 0;
+      this.activeTask = null;
+      this.nextTaskId = 1;
+
+      // Clear potentially corrupted data
+      localStorage.removeItem("nowwhat-tasks");
+      localStorage.removeItem("nowwhat-deleted");
+
+      // Initialize with default tasks
+      this.loadTasks();
+      this.updateUI();
+      this.updateStats();
+      this.updateRandomizeButton();
+
+      this.showToast(
+        "App recovered from data corruption. Some tasks may have been lost.",
+        "warning",
+      );
+    } catch (recoveryError) {
+      console.error("Recovery failed:", recoveryError);
+      this.showToast(
+        "App failed to initialize properly. Please refresh the page.",
+        "error",
+      );
+    }
   }
 
   // Event binding
@@ -128,21 +187,61 @@ class TaskRandomizer {
     const nextIdSaved = localStorage.getItem("nowwhat-nextid");
 
     if (saved) {
-      this.tasks = JSON.parse(saved);
-      // Migrate old string tasks to new object format
-      this.tasks = this.tasks.map((task) => {
-        if (typeof task === "string") {
-          return {
-            id: this.nextTaskId++,
-            text: task,
-            type: "oneoff",
-            cooldown: "daily",
-            executions: [],
-            completed: false,
+      try {
+        this.tasks = JSON.parse(saved);
+        // Migrate and validate task objects
+        this.tasks = this.tasks.map((task, index) => {
+          if (typeof task === "string") {
+            return {
+              id: this.nextTaskId++,
+              text: task,
+              type: "oneoff",
+              cooldown: "daily",
+              executions: [],
+              completed: false,
+            };
+          }
+
+          // Validate and fix corrupted task objects
+          if (!task || typeof task !== "object") {
+            console.warn(`Invalid task at index ${index}:`, task);
+            return {
+              id: this.nextTaskId++,
+              text: "Corrupted task (please edit)",
+              type: "oneoff",
+              cooldown: "daily",
+              executions: [],
+              completed: false,
+            };
+          }
+
+          // Ensure all required properties exist and are valid
+          const validTask = {
+            id: task.id || this.nextTaskId++,
+            text:
+              typeof task.text === "string"
+                ? task.text
+                : String(task.text || "Corrupted task (please edit)"),
+            type:
+              task.type === "repeatable" || task.type === "oneoff"
+                ? task.type
+                : "oneoff",
+            cooldown: task.cooldown || "daily",
+            executions: Array.isArray(task.executions) ? task.executions : [],
+            completed: Boolean(task.completed),
           };
-        }
-        return task;
-      });
+
+          return validTask;
+        });
+
+        // Filter out any null/undefined tasks
+        this.tasks = this.tasks.filter((task) => task && task.text);
+      } catch (error) {
+        console.error("Error loading tasks from localStorage:", error);
+        this.tasks = [];
+        // Clear corrupted data
+        localStorage.removeItem("nowwhat-tasks");
+      }
     } else {
       // Add some sample tasks for first-time users
       this.tasks = [
@@ -215,20 +314,62 @@ class TaskRandomizer {
     }
 
     if (deletedSaved) {
-      this.deletedTasks = JSON.parse(deletedSaved).map((task) => {
-        if (typeof task === "string") {
-          return {
-            id: this.nextTaskId++,
-            text: task,
-            type: "oneoff",
-            cooldown: "daily",
-            executions: [],
-            completed: false,
-            deletedAt: Date.now(),
+      try {
+        this.deletedTasks = JSON.parse(deletedSaved).map((task, index) => {
+          if (typeof task === "string") {
+            return {
+              id: this.nextTaskId++,
+              text: task,
+              type: "oneoff",
+              cooldown: "daily",
+              executions: [],
+              completed: false,
+              deletedAt: Date.now(),
+            };
+          }
+
+          // Validate deleted task objects
+          if (!task || typeof task !== "object") {
+            console.warn(`Invalid deleted task at index ${index}:`, task);
+            return {
+              id: this.nextTaskId++,
+              text: "Corrupted deleted task",
+              type: "oneoff",
+              cooldown: "daily",
+              executions: [],
+              completed: false,
+              deletedAt: Date.now(),
+            };
+          }
+
+          const validTask = {
+            id: task.id || this.nextTaskId++,
+            text:
+              typeof task.text === "string"
+                ? task.text
+                : String(task.text || "Corrupted deleted task"),
+            type:
+              task.type === "repeatable" || task.type === "oneoff"
+                ? task.type
+                : "oneoff",
+            cooldown: task.cooldown || "daily",
+            executions: Array.isArray(task.executions) ? task.executions : [],
+            completed: Boolean(task.completed),
+            deletedAt: task.deletedAt || Date.now(),
           };
-        }
-        return { ...task, deletedAt: task.deletedAt || Date.now() };
-      });
+
+          return validTask;
+        });
+
+        // Filter out any null/undefined tasks
+        this.deletedTasks = this.deletedTasks.filter(
+          (task) => task && task.text,
+        );
+      } catch (error) {
+        console.error("Error loading deleted tasks from localStorage:", error);
+        this.deletedTasks = [];
+        localStorage.removeItem("nowwhat-deleted");
+      }
     }
 
     if (completedSaved) {
@@ -284,18 +425,39 @@ class TaskRandomizer {
   }
 
   showTaskEdit(index) {
-    // Navigate to task management page if not already there
-    if (this.currentPage !== "tasks") {
-      this.showTaskManagementPage();
+    const task = this.tasks[index];
+    if (!task) {
+      console.error("Task not found at index:", index);
+      this.showToast("Error: Task not found", "error");
+      return;
     }
 
-    const task = this.tasks[index];
+    // Ensure task list is expanded
+    if (this.taskListCollapsed) {
+      this.toggleTaskList();
+    }
+
     const container = document.getElementById("taskEditContainer");
+    if (!container) {
+      console.error("Task edit container not found");
+      this.showToast("Error: Edit form container not found", "error");
+      return;
+    }
 
     // Populate form with task data
-    document.getElementById("editTaskInput").value = task.text;
-    document.getElementById("editTaskType").value = task.type;
-    document.getElementById("editCooldownPeriod").value = task.cooldown;
+    const editTaskInput = document.getElementById("editTaskInput");
+    const editTaskType = document.getElementById("editTaskType");
+    const editCooldownPeriod = document.getElementById("editCooldownPeriod");
+
+    if (!editTaskInput || !editTaskType || !editCooldownPeriod) {
+      console.error("Edit form elements not found");
+      this.showToast("Error: Edit form not available", "error");
+      return;
+    }
+
+    editTaskInput.value = task.text;
+    editTaskType.value = task.type;
+    editCooldownPeriod.value = task.cooldown;
 
     // Show/hide cooldown options based on task type
     this.toggleEditCooldownOptions();
@@ -304,7 +466,10 @@ class TaskRandomizer {
     this.editingTaskIndex = index;
 
     container.style.display = "block";
-    document.getElementById("editTaskInput").focus();
+    editTaskInput.focus();
+
+    // Scroll to the edit form if needed
+    container.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   hideTaskEdit() {
@@ -381,12 +546,35 @@ class TaskRandomizer {
   }
 
   saveTaskEdit() {
-    if (this.editingTaskIndex === null) return;
+    if (this.editingTaskIndex === null) {
+      console.warn("No task being edited");
+      return;
+    }
 
     const input = document.getElementById("editTaskInput");
+    const taskTypeSelect = document.getElementById("editTaskType");
+    const cooldownSelect = document.getElementById("editCooldownPeriod");
+
+    if (!input || !taskTypeSelect || !cooldownSelect) {
+      console.error("Edit form elements not found");
+      this.showToast("Error: Edit form not available", "error");
+      return;
+    }
+
     const taskText = input.value.trim();
-    const taskType = document.getElementById("editTaskType").value;
-    const cooldownPeriod = document.getElementById("editCooldownPeriod").value;
+    const taskType = taskTypeSelect.value;
+    const cooldownPeriod = cooldownSelect.value;
+
+    // Validate task index
+    if (
+      this.editingTaskIndex < 0 ||
+      this.editingTaskIndex >= this.tasks.length
+    ) {
+      console.error("Invalid editing task index:", this.editingTaskIndex);
+      this.showToast("Error: Invalid task to edit", "error");
+      this.hideTaskEdit();
+      return;
+    }
 
     if (!taskText) {
       this.showToast("Please enter a task", "error");
@@ -469,6 +657,17 @@ class TaskRandomizer {
     taskList.innerHTML = "";
 
     this.tasks.forEach((task, index) => {
+      // Debug logging for problematic tasks
+      if (!task || typeof task !== "object" || typeof task.text !== "string") {
+        console.warn(`Problematic task at index ${index}:`, task);
+      }
+
+      // Skip invalid tasks
+      if (!task || !task.text) {
+        console.warn(`Skipping invalid task at index ${index}:`, task);
+        return;
+      }
+
       const taskItem = document.createElement("div");
       const status = this.getTaskStatus(task);
       taskItem.className = `task-item task-${status.type}`;
@@ -501,8 +700,8 @@ class TaskRandomizer {
                 <div class="task-content">
                     <div class="task-text">${this.escapeHtml(task.text)}</div>
                     <div class="task-meta">
-                        <span class="task-type" title="${task.type}">${typeIcon}${cooldownText}</span>
-                        <span class="task-status ${status.type}" title="${statusText}">${statusIcon} ${statusText}</span>
+                        <span class="task-type" title="${this.escapeHtml(task.type || "oneoff")}">${typeIcon}${cooldownText}</span>
+                        <span class="task-status ${status.type}" title="${this.escapeHtml(statusText)}">${statusIcon} ${statusText}</span>
                     </div>
                 </div>
                 <div class="task-actions">
@@ -901,9 +1100,106 @@ class TaskRandomizer {
   }
 
   escapeHtml(text) {
+    // Ensure text is a string
+    if (typeof text !== "string") {
+      console.warn("escapeHtml received non-string input:", text);
+      text = String(text || "");
+    }
     const div = document.createElement("div");
     div.textContent = text;
     return div.innerHTML;
+  }
+
+  // Public method to clean up corrupted data
+  cleanupCorruptedData() {
+    let cleaned = false;
+
+    // Clean up tasks
+    const originalTaskCount = this.tasks.length;
+    this.tasks = this.tasks.filter((task) => {
+      if (!task || typeof task !== "object" || typeof task.text !== "string") {
+        cleaned = true;
+        return false;
+      }
+      return true;
+    });
+
+    // Clean up deleted tasks
+    const originalDeletedCount = this.deletedTasks.length;
+    this.deletedTasks = this.deletedTasks.filter((task) => {
+      if (!task || typeof task !== "object" || typeof task.text !== "string") {
+        cleaned = true;
+        return false;
+      }
+      return true;
+    });
+
+    if (cleaned) {
+      this.saveTasks();
+      this.updateUI();
+      this.updateStats();
+      const removedTasks =
+        originalTaskCount -
+        this.tasks.length +
+        (originalDeletedCount - this.deletedTasks.length);
+      this.showToast(`Cleaned up ${removedTasks} corrupted tasks`, "success");
+    } else {
+      this.showToast("No corrupted data found", "default");
+    }
+  }
+
+  // Public method to debug and inspect data (useful for troubleshooting)
+  debugData() {
+    console.group("Now What? Debug Information");
+    console.log("Tasks:", this.tasks);
+    console.log("Deleted Tasks:", this.deletedTasks);
+    console.log("Completed Tasks:", this.completedTasks);
+    console.log("Active Task:", this.activeTask);
+    console.log("Next Task ID:", this.nextTaskId);
+
+    // Check for data integrity issues
+    const taskIssues = [];
+    this.tasks.forEach((task, index) => {
+      if (!task || typeof task !== "object") {
+        taskIssues.push(`Task ${index}: Not an object`);
+      } else {
+        if (typeof task.text !== "string") {
+          taskIssues.push(
+            `Task ${index}: text is not a string (${typeof task.text})`,
+          );
+        }
+        if (!["oneoff", "repeatable"].includes(task.type)) {
+          taskIssues.push(`Task ${index}: invalid type (${task.type})`);
+        }
+        if (!Array.isArray(task.executions)) {
+          taskIssues.push(`Task ${index}: executions is not an array`);
+        }
+      }
+    });
+
+    if (taskIssues.length > 0) {
+      console.warn("Task Issues Found:", taskIssues);
+    } else {
+      console.log("✅ All tasks appear valid");
+    }
+
+    // Check localStorage data
+    console.log("Raw localStorage data:");
+    console.log("- tasks:", localStorage.getItem("nowwhat-tasks"));
+    console.log("- deleted:", localStorage.getItem("nowwhat-deleted"));
+    console.log("- completed:", localStorage.getItem("nowwhat-completed"));
+    console.log("- active:", localStorage.getItem("nowwhat-active"));
+    console.log("- nextid:", localStorage.getItem("nowwhat-nextid"));
+
+    console.groupEnd();
+
+    return {
+      tasks: this.tasks,
+      deletedTasks: this.deletedTasks,
+      completedTasks: this.completedTasks,
+      activeTask: this.activeTask,
+      issues: taskIssues,
+    };
   }
 
   // Public method to clear all data (useful for testing/reset)
@@ -1038,7 +1334,7 @@ document.addEventListener("keydown", (e) => {
   // ESC to close task input
   if (e.key === "Escape") {
     const container = document.getElementById("taskInputContainer");
-    if (container.style.display !== "none") {
+    if (container && container.style.display !== "none") {
       window.app.hideTaskInput();
     }
   }
@@ -1063,6 +1359,20 @@ document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "hidden" && window.app) {
     window.app.saveTasks();
   }
+});
+
+// Add error handling for uncaught errors
+window.addEventListener("error", (event) => {
+  console.error("Uncaught error:", event.error);
+  if (window.app && event.error.message.includes("Object")) {
+    console.warn("Possible data corruption detected, attempting cleanup...");
+    window.app.cleanupCorruptedData();
+  }
+});
+
+// Add error handling for unhandled promise rejections
+window.addEventListener("unhandledrejection", (event) => {
+  console.error("Unhandled promise rejection:", event.reason);
 });
 
 // Prevent zoom on double tap for mobile

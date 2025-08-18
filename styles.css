@@ -446,7 +446,9 @@ body {
 }
 
 .task-item {
-  background: #f7fafc;
+  background: var(--bg-light);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-light);
   padding: 0.5rem;
   display: flex;
   justify-content: space-between;
@@ -454,13 +456,12 @@ body {
   transition: all 0.2s ease;
   animation: slideIn 0.3s ease;
   border-radius: 12px;
-  border: 1px solid #abc;
   margin: 3px 0 0 0;
 }
 
 .task-item:hover {
-  background: #edf2f7;
-  border-color: #cbd5e0;
+  background: var(--bg-lighter);
+  border-color: var(--bg-medium);
   transform: translateY(-1px);
 }
 
@@ -989,6 +990,10 @@ body {
 
 .toast.error {
   background: var(--status-error);
+}
+
+.toast.warning {
+  background: var(--status-warning);
 }
 
 /* Animations */

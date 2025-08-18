@@ -25,6 +25,7 @@ A mobile-first Progressive Web App that helps you decide what to do next by rand
   - ⏰ Cooldown (orange) - waiting for cooldown to expire
   - 🏁 Completed (blue) - one-time task finished
 - **Full task editing** - modify text, type, and cooldown periods after creation
+- **Robust data integrity** - automatic corruption detection and recovery
 - **Trash system** - deleted tasks move to trash for recovery or permanent deletion
 - **Execution tracking** - keeps history of when tasks were completed
 
@@ -61,6 +62,8 @@ A mobile-first Progressive Web App that helps you decide what to do next by rand
 - **Collapsible task list** - task management integrated into main page, starts collapsed for clean interface
 - **Quick task entry** - add form directly on main page for immediate task creation
 - **Accessibility features** - ARIA labels, focus management, screen reader support
+- **Error recovery** - automatic detection and fixing of corrupted data
+- **Debug tools** - built-in data integrity checking and cleanup functions
 
 ## 🚀 Getting Started
 
@@ -167,21 +170,32 @@ Tasks are stored as objects with the following structure:
 ```javascript
 {
   id: 1,                    // Unique identifier
-  text: "Clean kitchen",    # Task description
-  type: "repeatable",       # "oneoff" or "repeatable"
-  cooldown: "daily",        # Cooldown period
-  executions: [             # History of completions and abandons
+  text: "Clean kitchen",    // Task description
+  type: "repeatable",       // "oneoff" or "repeatable"
+  cooldown: "daily",        // Cooldown period
+  executions: [             // History of completions and abandons
     {
-      timestamp: 1234567890,  # When completed/abandoned
-      duration: 7200000,      # How long it took
-      abandoned: false,       # Whether task was abandoned
-      reason: "Too difficult" # Abandon reason (if abandoned)
+      timestamp: 1234567890,  // When completed/abandoned
+      duration: 7200000,      // How long it took
+      abandoned: false,       // Whether task was abandoned
+      reason: "Too difficult" // Abandon reason (if abandoned)
     }
   ],
-  completed: false,         # For one-off tasks
-  deletedAt: 1234567890     # When moved to trash (deleted tasks only)
+  completed: false,         // For one-off tasks
+  deletedAt: 1234567890     // When moved to trash (deleted tasks only)
 }
 ```
+
+### 🛠️ Data Integrity & Recovery
+The app includes robust data protection:
+- **Automatic validation** - checks data integrity on startup
+- **Corruption recovery** - fixes malformed task objects automatically  
+- **Safe migration** - converts old data formats seamlessly
+- **Debug console commands**:
+  - `app.debugData()` - inspect current data state
+  - `app.cleanupCorruptedData()` - manually clean corrupted entries
+  - `app.clearAllData()` - reset everything (with confirmation)
+- **Standalone debug tool** - `debug-test.html` for advanced troubleshooting
 
 ## 🔧 Customization
 
@@ -226,6 +240,23 @@ Perfect for when you:
 - Want a simple, distraction-free task management tool with quick task entry
 - Prefer mobile-first, touch-friendly interfaces with clear navigation
 - Value privacy and offline functionality with safe task deletion
+- Need reliable data integrity and automatic error recovery
+
+## 🔧 Troubleshooting
+
+### Common Issues
+- **"[object Object]" in task list**: Fixed automatically with data validation
+- **Tasks not showing**: Check browser console or use `app.debugData()`
+- **Edit button not working**: Ensure task list is expanded
+- **Data corruption**: Use `debug-test.html` for diagnosis and repair
+
+### Debug Commands
+Open browser console and try:
+```javascript
+app.debugData()           // Inspect current data
+app.cleanupCorruptedData() // Fix corrupted entries  
+app.clearAllData()        // Nuclear reset option
+```
 
 ## 🤝 Contributing
 
