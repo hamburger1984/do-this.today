@@ -468,33 +468,53 @@ body {
   flex-wrap: wrap;
 }
 
-.task-type,
-.task-status {
+.task-stat {
   font-size: 0.7rem;
   padding: 0.25rem 0.5rem;
   border-radius: 12px;
   font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
 }
 
-.task-type {
+.task-stat.task-type {
   background: var(--border-light);
   color: var(--text-secondary);
 }
 
-.task-status {
+.task-stat.task-status {
   color: var(--text-white);
 }
 
-.task-status.available {
+.task-stat.task-status.available {
   background: var(--status-available);
 }
 
-.task-status.cooldown {
+.task-stat.task-status.cooldown {
   background: var(--status-cooldown);
 }
 
-.task-status.completed {
+.task-stat.task-status.completed {
   background: var(--status-completed);
+}
+
+.task-stat.success {
+  background: var(--success-alpha-10);
+  color: var(--status-success);
+  border: 1px solid var(--success-alpha-30);
+}
+
+.task-stat.abandoned {
+  background: var(--error-alpha-10);
+  color: var(--status-error);
+  border: 1px solid var(--error-alpha-30);
+}
+
+.task-stat.last-completed {
+  background: var(--completed-alpha-10);
+  color: var(--status-completed);
+  border: 1px solid var(--completed-alpha-30);
 }
 
 .task-actions {
@@ -1023,43 +1043,6 @@ body {
     hue-rotate(346deg) brightness(104%) contrast(97%);
 }
 
-/* Task execution statistics */
-.task-execution-stats {
-  margin-top: 0.5rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  font-size: 0.7rem;
-}
-
-.exec-stat {
-  padding: 0.2rem 0.4rem;
-  border-radius: 8px;
-  font-weight: 500;
-  display: inline-flex;
-  align-items: center;
-  white-space: nowrap;
-  font-size: 0.65rem;
-}
-
-.exec-stat.success {
-  background: var(--success-alpha-10);
-  color: var(--status-success);
-  border: 1px solid var(--success-alpha-30);
-}
-
-.exec-stat.abandoned {
-  background: var(--error-alpha-10);
-  color: var(--status-error);
-  border: 1px solid var(--error-alpha-30);
-}
-
-.exec-stat.last-completed {
-  background: var(--completed-alpha-10);
-  color: var(--status-completed);
-  border: 1px solid var(--completed-alpha-30);
-}
-
 /* Inline task editing */
 .task-edit-form {
   background: var(--bg-white);
@@ -1183,7 +1166,7 @@ body {
     margin: 0 auto;
   }
 
-  .exec-stat {
+  .task-stat {
     font-size: 0.7rem;
   }
 
@@ -1210,11 +1193,7 @@ body {
     padding: 1rem 0.75rem;
   }
 
-  .task-execution-stats {
-    margin-top: 0.75rem;
-  }
-
-  .exec-stat {
+  .task-stat {
     font-size: 0.75rem;
     padding: 0.25rem 0.5rem;
   }

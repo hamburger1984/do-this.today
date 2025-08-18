@@ -65,8 +65,9 @@ A mobile-first Progressive Web App that helps you decide what to do next by rand
 - **Single-page interface** - all functionality available on one page with collapsible sections
 - **Collapsible task list** - task management integrated into main page, starts collapsed for clean interface
 - **Quick task entry** - add form directly on main page for immediate task creation
-- **Inline editing** - edit tasks in place with auto-focus and clean styling
-- **Clean UI design** - minimal visual clutter, icons only shown when needed
+- **Inline editing** - edit tasks in place with auto-focus and clean, borderless styling
+- **Clean UI design** - minimal visual clutter, unified styling, icons only shown when needed
+- **Unified task metadata** - consistent styling for all task information and statistics
 - **Accessibility features** - ARIA labels, focus management, screen reader support
 - **Error recovery** - automatic detection and fixing of corrupted data
 - **Debug tools** - built-in data integrity checking and cleanup functions
@@ -115,10 +116,11 @@ Then visit `http://localhost:8000`
 - **Task Types**: Switch between one-time and repeatable tasks
 - **Cooldown Options**: Choose from no cooldown to monthly intervals for repeatable tasks
 - **View Statistics**: Each task shows execution stats when available:
-  - ✓ **Successful completions** count (green)
-  - ✗ **Abandoned attempts** count (red)
-  - 🕒 **Time since last completion** (blue, e.g., "2h ago", "3d ago")
-- **Clean Display**: Repeatable tasks show 🔄 with cooldown info, one-time tasks have no icon
+  - ✓ **Successful completions** count (green badge)
+  - ✗ **Abandoned attempts** count (red badge)
+  - 🕒 **Time since last completion** (blue badge, e.g., "2h ago", "3d ago")
+- **Clean Display**: Repeatable tasks show 🔄 with cooldown info, one-time tasks have minimal visual footprint
+- **Unified Styling**: All task metadata uses consistent badge styling for a polished look
 
 ### Working with Tasks
 1. **Pick a Task**: Click "Pick Random Task" to get a random available task (avoids repeating the same task)
@@ -235,7 +237,8 @@ The app is designed to be easily customizable:
 - **Cooldown options**: Add/modify options including zero cooldown support
 - **Active task duration**: Change the 8-hour limit in `acceptTask()` method
 - **Timer intervals**: Adjust countdown update frequency
-- **Edit form styling**: Customize inline editing appearance and behavior
+- **Edit form styling**: Customize borderless inline editing appearance and behavior
+- **Task metadata styling**: Modify unified badge system for task information display
 
 ### Adding New Features
 The modular JavaScript class structure makes it easy to:
@@ -274,6 +277,7 @@ Perfect for when you:
 - **Edit button not working**: Ensure task list is expanded
 - **Data corruption**: Use `debug-test.html` for diagnosis and repair
 - **Settings not visible**: Click "Settings" header to expand the section
+- **Empty spaces in task list**: Fixed - no more empty spans for one-off tasks
 
 ### Debug Commands
 Open browser console and try:

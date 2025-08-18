@@ -705,10 +705,9 @@ class TaskRandomizer {
           break;
       }
 
-      const typeIcon = task.type === "repeatable" ? "🔄" : "";
-      const cooldownText =
+      const typeDisplay =
         task.type === "repeatable"
-          ? ` ${this.formatCooldown(task.cooldown)}`
+          ? `🔄 ${this.formatCooldown(task.cooldown)}`
           : "";
 
       // Calculate execution statistics
@@ -768,10 +767,10 @@ class TaskRandomizer {
           <div class="task-content">
               <div class="task-text">${this.escapeHtml(task.text)}</div>
               <div class="task-meta">
-                  <span class="task-type" title="${this.escapeHtml(task.type || "oneoff")}">${typeIcon}${cooldownText}</span>
-                  <span class="task-status ${status.type}" title="${this.escapeHtml(statusText)}">${statusIcon} ${statusText}</span>
+                  ${typeDisplay ? `<span class="task-stat task-type" title="${this.escapeHtml(task.type)}">${typeDisplay}</span>` : ""}
+                  <span class="task-stat task-status ${status.type}" title="${this.escapeHtml(statusText)}">${statusIcon} ${statusText}</span>
+                  ${execStatsHtml}
               </div>
-              ${execStatsHtml}
           </div>
           <div class="task-actions">
               <button class="edit-btn" onclick="app.showTaskEdit(${index})" aria-label="Edit task">
@@ -834,23 +833,21 @@ class TaskRandomizer {
         ? Math.max(...successful.map((exec) => exec.timestamp))
         : null;
 
-    let statsHtml = '<div class="task-execution-stats">';
+    let statsHtml = "";
 
     if (successful.length > 0) {
-      statsHtml += `<span class="exec-stat success" title="Successful completions">✓ ${successful.length}</span>`;
+      statsHtml += `<span class="task-stat success" title="Successful completions">✓ ${successful.length}</span>`;
     }
 
     if (abandoned.length > 0) {
-      statsHtml += `<span class="exec-stat abandoned" title="Abandoned attempts">✗ ${abandoned.length}</span>`;
+      statsHtml += `<span class="task-stat abandoned" title="Abandoned attempts">✗ ${abandoned.length}</span>`;
     }
 
     if (lastSuccessful) {
       const lastDate = new Date(lastSuccessful);
       const timeAgo = this.getTimeAgo(lastSuccessful);
-      statsHtml += `<span class="exec-stat last-completed" title="Last completed: ${lastDate.toLocaleString()}">🕒 ${timeAgo}</span>`;
+      statsHtml += `<span class="task-stat last-completed" title="Last completed: ${lastDate.toLocaleString()}">🕒 ${timeAgo}</span>`;
     }
-
-    statsHtml += "</div>";
 
     return {
       successful: successful.length,
