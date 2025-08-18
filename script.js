@@ -122,16 +122,7 @@ class TaskRandomizer {
       .getElementById("taskType")
       .addEventListener("change", () => this.toggleCooldownOptions());
 
-    // Task editing
-    document
-      .getElementById("saveEditBtn")
-      .addEventListener("click", () => this.saveTaskEdit());
-    document
-      .getElementById("cancelEditBtn")
-      .addEventListener("click", () => this.hideTaskEdit());
-    document
-      .getElementById("editTaskType")
-      .addEventListener("change", () => this.toggleEditCooldownOptions());
+    // Task editing is now handled inline, no global event listeners needed
 
     // Task list collapse/expand
     document
@@ -473,45 +464,25 @@ class TaskRandomizer {
       this.toggleTaskList();
     }
 
-    const container = document.getElementById("taskEditContainer");
-    if (!container) {
-      console.error("Task edit container not found");
-      this.showToast("Error: Edit form container not found", "error");
-      return;
-    }
-
-    // Populate form with task data
-    const editTaskInput = document.getElementById("editTaskInput");
-    const editTaskType = document.getElementById("editTaskType");
-    const editCooldownPeriod = document.getElementById("editCooldownPeriod");
-
-    if (!editTaskInput || !editTaskType || !editCooldownPeriod) {
-      console.error("Edit form elements not found");
-      this.showToast("Error: Edit form not available", "error");
-      return;
-    }
-
-    editTaskInput.value = task.text;
-    editTaskType.value = task.type;
-    editCooldownPeriod.value = task.cooldown;
-
-    // Show/hide cooldown options based on task type
-    this.toggleEditCooldownOptions();
-
     // Store the index being edited
     this.editingTaskIndex = index;
 
-    container.style.display = "block";
-    editTaskInput.focus();
+    // Re-render tasks to show inline edit form
+    this.renderTasks();
 
-    // Scroll to the edit form if needed
-    container.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    // Auto-focus the edit input after render
+    setTimeout(() => {
+      const editInput = document.getElementById(`editTaskInput-${index}`);
+      if (editInput) {
+        editInput.focus();
+        editInput.select();
+      }
+    }, 50);
   }
 
   hideTaskEdit() {
-    const container = document.getElementById("taskEditContainer");
-    container.style.display = "none";
     this.editingTaskIndex = null;
+    this.renderTasks();
   }
 
   toggleCooldownOptions() {
@@ -525,9 +496,11 @@ class TaskRandomizer {
     }
   }
 
-  toggleEditCooldownOptions() {
-    const taskType = document.getElementById("editTaskType").value;
-    const cooldownContainer = document.getElementById("editCooldownContainer");
+  toggleEditCooldownOptions(taskIndex) {
+    const taskType = document.getElementById(`editTaskType-${taskIndex}`).value;
+    const cooldownContainer = document.getElementById(
+      `editCooldownContainer-${taskIndex}`,
+    );
 
     if (taskType === "repeatable") {
       cooldownContainer.style.display = "block";
@@ -587,9 +560,15 @@ class TaskRandomizer {
       return;
     }
 
-    const input = document.getElementById("editTaskInput");
-    const taskTypeSelect = document.getElementById("editTaskType");
-    const cooldownSelect = document.getElementById("editCooldownPeriod");
+    const input = document.getElementById(
+      `editTaskInput-${this.editingTaskIndex}`,
+    );
+    const taskTypeSelect = document.getElementById(
+      `editTaskType-${this.editingTaskIndex}`,
+    );
+    const cooldownSelect = document.getElementById(
+      `editCooldownPeriod-${this.editingTaskIndex}`,
+    );
 
     if (!input || !taskTypeSelect || !cooldownSelect) {
       console.error("Edit form elements not found");
@@ -726,34 +705,85 @@ class TaskRandomizer {
           break;
       }
 
-      const typeIcon = task.type === "repeatable" ? "🔄" : "📝";
+      const typeIcon = task.type === "repeatable" ? "🔄" : "";
       const cooldownText =
         task.type === "repeatable"
-          ? ` - ${this.formatCooldown(task.cooldown)}`
+          ? ` ${this.formatCooldown(task.cooldown)}`
           : "";
 
       // Calculate execution statistics
       const execStats = this.getExecutionStats(task);
       const execStatsHtml = execStats.html;
 
-      taskItem.innerHTML = `
-                <div class="task-content">
-                    <div class="task-text">${this.escapeHtml(task.text)}</div>
-                    <div class="task-meta">
-                        <span class="task-type" title="${this.escapeHtml(task.type || "oneoff")}">${typeIcon}${cooldownText}</span>
-                        <span class="task-status ${status.type}" title="${this.escapeHtml(statusText)}">${statusIcon} ${statusText}</span>
-                    </div>
-                    ${execStatsHtml}
+      // Check if this task is being edited
+      if (this.editingTaskIndex === index) {
+        taskItem.innerHTML = `
+          <div class="task-edit-form">
+            <div class="edit-input-group">
+              <input
+                type="text"
+                id="editTaskInput-${index}"
+                value="${this.escapeHtml(task.text)}"
+                placeholder="Edit task..."
+                maxlength="200"
+                class="edit-task-input"
+              />
+              <div class="edit-task-options">
+                <div class="edit-option-group">
+                  <label for="editTaskType-${index}">Task Type:</label>
+                  <select id="editTaskType-${index}" onchange="app.toggleEditCooldownOptions(${index})">
+                    <option value="oneoff" ${task.type === "oneoff" ? "selected" : ""}>One-time task</option>
+                    <option value="repeatable" ${task.type === "repeatable" ? "selected" : ""}>Repeatable task</option>
+                  </select>
                 </div>
-                <div class="task-actions">
-                    <button class="edit-btn" onclick="app.showTaskEdit(${index})" aria-label="Edit task">
-                        <img src="img/edit.svg" alt="Edit" width="16" height="16" />
-                    </button>
-                    <button class="delete-btn" onclick="app.deleteTask(${index})" aria-label="Delete task">
-                        <img src="img/trash.svg" alt="Delete" width="16" height="16" />
-                    </button>
+                <div class="edit-option-group" id="editCooldownContainer-${index}" style="${task.type === "repeatable" ? "display: block" : "display: none"}">
+                  <label for="editCooldownPeriod-${index}">Cooldown:</label>
+                  <select id="editCooldownPeriod-${index}">
+                    <option value="0" ${task.cooldown === "0" ? "selected" : ""}>No cooldown</option>
+                    <option value="1" ${task.cooldown === "1" ? "selected" : ""}>1 hour</option>
+                    <option value="3" ${task.cooldown === "3" ? "selected" : ""}>3 hours</option>
+                    <option value="6" ${task.cooldown === "6" ? "selected" : ""}>6 hours</option>
+                    <option value="12" ${task.cooldown === "12" ? "selected" : ""}>12 hours</option>
+                    <option value="daily" ${task.cooldown === "daily" ? "selected" : ""}>Daily (24h)</option>
+                    <option value="weekly" ${task.cooldown === "weekly" ? "selected" : ""}>Weekly (7 days)</option>
+                    <option value="monthly" ${task.cooldown === "monthly" ? "selected" : ""}>Monthly (30 days)</option>
+                  </select>
                 </div>
-            `;
+              </div>
+              <div class="edit-actions">
+                <button class="btn-secondary edit-cancel" onclick="app.hideTaskEdit()">
+                  <img src="img/x.svg" alt="Cancel" width="16" height="16" />
+                  Cancel
+                </button>
+                <button class="btn-primary edit-save" onclick="app.saveTaskEdit()">
+                  <img src="img/check.svg" alt="Save" width="16" height="16" />
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      } else {
+        taskItem.innerHTML = `
+          <div class="task-content">
+              <div class="task-text">${this.escapeHtml(task.text)}</div>
+              <div class="task-meta">
+                  <span class="task-type" title="${this.escapeHtml(task.type || "oneoff")}">${typeIcon}${cooldownText}</span>
+                  <span class="task-status ${status.type}" title="${this.escapeHtml(statusText)}">${statusIcon} ${statusText}</span>
+              </div>
+              ${execStatsHtml}
+          </div>
+          <div class="task-actions">
+              <button class="edit-btn" onclick="app.showTaskEdit(${index})" aria-label="Edit task">
+                  <img src="img/edit.svg" alt="Edit" width="16" height="16" />
+              </button>
+              <button class="delete-btn" onclick="app.deleteTask(${index})" aria-label="Delete task">
+                  <img src="img/trash.svg" alt="Delete" width="16" height="16" />
+              </button>
+          </div>
+        `;
+      }
+
       taskList.appendChild(taskItem);
     });
   }
@@ -768,6 +798,12 @@ class TaskRandomizer {
         ...task.executions.map((e) => e.timestamp),
       );
       const cooldownMs = this.getCooldownMs(task.cooldown);
+
+      // Zero cooldown means always available
+      if (cooldownMs === 0) {
+        return { type: "available" };
+      }
+
       const nextAvailable = lastExecution + cooldownMs;
 
       if (Date.now() < nextAvailable) {
@@ -839,6 +875,8 @@ class TaskRandomizer {
 
   getCooldownMs(cooldown) {
     switch (cooldown) {
+      case "0":
+        return 0;
       case "daily":
         return 24 * 60 * 60 * 1000;
       case "weekly":
@@ -852,6 +890,8 @@ class TaskRandomizer {
 
   formatCooldown(cooldown) {
     switch (cooldown) {
+      case "0":
+        return "No cooldown";
       case "daily":
         return "Daily";
       case "weekly":
@@ -944,7 +984,7 @@ class TaskRandomizer {
       this.currentSelectedTask = selectedTask;
       this.showSelectedTask();
       this.setLoadingState(false);
-    }, 800); // Brief delay for effect
+    }, 200); // Quick delay for effect
   }
 
   showSelectedTask() {
@@ -1190,10 +1230,10 @@ class TaskRandomizer {
     // Show toast
     toast.classList.add("show");
 
-    // Hide after 3 seconds
+    // Hide after 2 seconds
     setTimeout(() => {
       toast.classList.remove("show");
-    }, 3000);
+    }, 2000);
   }
 
   escapeHtml(text) {

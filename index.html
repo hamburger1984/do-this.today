@@ -136,13 +136,14 @@
                 >
                   <label for="cooldownPeriod">Cooldown:</label>
                   <select id="cooldownPeriod">
+                    <option value="0">No cooldown</option>
+                    <option value="1">1 hour</option>
+                    <option value="3">3 hours</option>
+                    <option value="6">6 hours</option>
+                    <option value="12">12 hours</option>
                     <option value="daily">Daily (24h)</option>
                     <option value="weekly">Weekly (7 days)</option>
                     <option value="monthly">Monthly (30 days)</option>
-                    <option value="12">12 hours</option>
-                    <option value="6">6 hours</option>
-                    <option value="3">3 hours</option>
-                    <option value="1">1 hour</option>
                   </select>
                 </div>
               </div>
@@ -160,18 +161,6 @@
               <div class="collapsible-header" id="taskListHeader">
                 <h2>My Tasks</h2>
                 <div class="header-actions">
-                  <button
-                    class="btn-icon trash-btn"
-                    id="trashBtn"
-                    aria-label="View trash"
-                  >
-                    <img
-                      src="img/trash.svg"
-                      alt="Trash"
-                      width="20"
-                      height="20"
-                    />
-                  </button>
                   <div class="collapse-indicator" id="taskCollapseIndicator">
                     ▼
                   </div>
@@ -180,54 +169,6 @@
             </div>
 
             <div class="task-content" id="taskContent" style="display: none">
-              <div
-                class="task-edit-container"
-                id="taskEditContainer"
-                style="display: none"
-              >
-                <div class="input-group">
-                  <input
-                    type="text"
-                    id="editTaskInput"
-                    placeholder="Edit task..."
-                    maxlength="200"
-                  />
-                  <div class="task-options">
-                    <div class="option-group">
-                      <label for="editTaskType">Task Type:</label>
-                      <select id="editTaskType">
-                        <option value="oneoff">One-time task</option>
-                        <option value="repeatable">Repeatable task</option>
-                      </select>
-                    </div>
-                    <div
-                      class="option-group"
-                      id="editCooldownContainer"
-                      style="display: none"
-                    >
-                      <label for="editCooldownPeriod">Cooldown:</label>
-                      <select id="editCooldownPeriod">
-                        <option value="daily">Daily (24h)</option>
-                        <option value="weekly">Weekly (7 days)</option>
-                        <option value="monthly">Monthly (30 days)</option>
-                        <option value="12">12 hours</option>
-                        <option value="6">6 hours</option>
-                        <option value="3">3 hours</option>
-                        <option value="1">1 hour</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="input-actions">
-                    <button class="btn-secondary cancel-btn" id="cancelEditBtn">
-                      Cancel
-                    </button>
-                    <button class="btn-primary save-btn" id="saveEditBtn">
-                      Update
-                    </button>
-                  </div>
-                </div>
-              </div>
-
               <div class="task-list" id="taskList">
                 <!-- Tasks will be dynamically inserted here -->
               </div>
@@ -267,6 +208,15 @@
                       height="16"
                     />
                     Export Tasks as JSON
+                  </button>
+                  <button class="btn-secondary" id="trashBtn">
+                    <img
+                      src="img/trash.svg"
+                      alt="Trash"
+                      width="16"
+                      height="16"
+                    />
+                    View Trash
                   </button>
                   <button class="btn-secondary danger" id="resetAllBtn">
                     <img

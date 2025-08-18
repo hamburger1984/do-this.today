@@ -125,32 +125,6 @@ body {
   text-align: center;
 }
 
-.trash-btn {
-  background: transparent;
-  border: 1px solid var(--border-light);
-  color: var(--text-muted);
-  padding: 0.5rem;
-  border-radius: 6px;
-  min-height: auto;
-  transition: all 0.2s;
-}
-
-.trash-btn:hover {
-  background: var(--bg-light);
-  border-color: var(--border-medium);
-  color: var(--text-secondary);
-}
-
-.trash-btn img {
-  filter: brightness(0) saturate(100%) invert(47%) sepia(8%) saturate(1072%)
-    hue-rotate(179deg) brightness(95%) contrast(86%);
-}
-
-.trash-btn:hover img {
-  filter: brightness(0) saturate(100%) invert(29%) sepia(17%) saturate(1065%)
-    hue-rotate(179deg) brightness(95%) contrast(86%);
-}
-
 .app-title {
   font-size: 1.75rem;
   font-weight: 600;
@@ -182,7 +156,7 @@ body {
 /* Collapsible header */
 .collapsible-header {
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.1s ease;
   padding: 1rem;
   border-radius: 12px;
   margin-bottom: 0;
@@ -210,13 +184,12 @@ body {
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
 }
 
 .collapse-indicator {
   font-size: 1rem;
   color: var(--text-muted);
-  transition: transform 0.2s;
+  transition: transform 0.1s;
   user-select: none;
   font-weight: bold;
   min-width: 20px;
@@ -225,7 +198,7 @@ body {
 
 .task-content {
   overflow: hidden;
-  animation: fadeIn 0.3s ease;
+  animation: fadeIn 0.15s ease;
   padding: 0.75rem;
 }
 
@@ -275,7 +248,7 @@ body {
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.1s ease;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -308,7 +281,7 @@ body {
   font-size: 0.8rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.1s ease;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -326,7 +299,7 @@ body {
   padding: 0.75rem;
   border-radius: 12px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.1s ease;
   color: var(--primary-color);
   display: flex;
   align-items: center;
@@ -385,7 +358,7 @@ body {
   border: 2px solid var(--border-light);
   border-radius: 12px;
   font-size: 0.9rem;
-  transition: all 0.2s ease;
+  transition: all 0.1s ease;
   background: var(--bg-light);
 }
 
@@ -424,7 +397,7 @@ body {
   font-size: 0.8rem;
   background: var(--bg-light);
   color: var(--text-primary);
-  transition: all 0.2s ease;
+  transition: all 0.1s ease;
 }
 
 .option-group select:focus {
@@ -455,8 +428,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: all 0.2s ease;
-  animation: slideIn 0.3s ease;
+  transition: all 0.1s ease;
+  animation: slideIn 0.15s ease;
   border-radius: 12px;
   margin: 3px 0 0 0;
 }
@@ -536,7 +509,7 @@ body {
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 8px;
-  transition: all 0.2s ease;
+  transition: all 0.1s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -555,7 +528,7 @@ body {
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 8px;
-  transition: all 0.2s ease;
+  transition: all 0.1s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -574,7 +547,7 @@ body {
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 8px;
-  transition: all 0.2s ease;
+  transition: all 0.1s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -593,7 +566,7 @@ body {
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 8px;
-  transition: all 0.2s ease;
+  transition: all 0.1s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -654,7 +627,7 @@ body {
 
 /* Current task display */
 .current-task {
-  animation: fadeIn 0.5s ease;
+  animation: fadeIn 0.2s ease;
 }
 
 .task-display {
@@ -694,7 +667,7 @@ body {
 
 /* Active task state */
 .active-task {
-  animation: fadeIn 0.5s ease;
+  animation: fadeIn 0.2s ease;
 }
 
 .active-task-display {
@@ -757,7 +730,7 @@ body {
 
 /* Task completed state */
 .task-completed {
-  animation: fadeIn 0.5s ease;
+  animation: fadeIn 0.2s ease;
 }
 
 .success-icon {
@@ -818,8 +791,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: all 0.2s ease;
-  animation: slideIn 0.3s ease;
+  transition: all 0.1s ease;
+  animation: slideIn 0.15s ease;
 }
 
 .trash-item:hover {
@@ -870,7 +843,7 @@ body {
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  animation: fadeIn 0.3s ease;
+  animation: fadeIn 0.15s ease;
 }
 
 .modal-content {
@@ -880,7 +853,7 @@ body {
   max-width: 400px;
   width: 90%;
   box-shadow: var(--shadow-heavy);
-  animation: slideIn 0.3s ease;
+  animation: slideIn 0.15s ease;
 }
 
 .modal-content h3 {
@@ -901,7 +874,7 @@ body {
   resize: vertical;
   min-height: 100px;
   margin-bottom: 1.5rem;
-  transition: all 0.2s ease;
+  transition: all 0.1s ease;
 }
 
 .modal-content textarea:focus {
@@ -967,7 +940,7 @@ body {
   box-shadow: var(--shadow-toast);
   opacity: 0;
   visibility: hidden;
-  transition: all 0.3s ease;
+  transition: all 0.15s ease;
   z-index: 1000;
   max-width: 90%;
 }
@@ -993,7 +966,7 @@ body {
 /* Settings section */
 .settings-content {
   overflow: hidden;
-  animation: fadeIn 0.3s ease;
+  animation: fadeIn 0.15s ease;
   padding: 0.75rem;
 }
 
@@ -1087,11 +1060,92 @@ body {
   border: 1px solid var(--completed-alpha-30);
 }
 
+/* Inline task editing */
+.task-edit-form {
+  background: var(--bg-white);
+  border-radius: 12px;
+  padding: 1rem;
+  width: 100%;
+  box-shadow: 0 2px 8px var(--primary-alpha-10);
+}
+
+.edit-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.edit-task-input {
+  width: 100%;
+  padding: 0.875rem;
+  border: 2px solid var(--border-light);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  transition: all 0.1s ease;
+  background: var(--bg-white);
+  font-family: inherit;
+}
+
+.edit-task-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: var(--focus-ring);
+}
+
+.edit-task-options {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.edit-option-group {
+  flex: 1;
+  min-width: 140px;
+}
+
+.edit-option-group label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.edit-option-group select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid var(--border-light);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  background: var(--bg-white);
+  color: var(--text-primary);
+  transition: all 0.1s ease;
+}
+
+.edit-option-group select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: var(--focus-ring);
+}
+
+.edit-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}
+
+.edit-cancel,
+.edit-save {
+  min-width: 100px;
+  padding: 0.75rem 1rem;
+}
+
 /* Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(5px);
   }
   to {
     opacity: 1;
@@ -1102,7 +1156,7 @@ body {
 @keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateX(-20px);
+    transform: translateX(-10px);
   }
   to {
     opacity: 1;
@@ -1132,6 +1186,15 @@ body {
   .exec-stat {
     font-size: 0.7rem;
   }
+
+  .edit-task-options {
+    flex-direction: row;
+  }
+
+  .edit-actions {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
 }
 
 @media (min-width: 768px) {
@@ -1154,6 +1217,16 @@ body {
   .exec-stat {
     font-size: 0.75rem;
     padding: 0.25rem 0.5rem;
+  }
+
+  .edit-task-input {
+    font-size: 1rem;
+    padding: 1rem;
+  }
+
+  .edit-option-group select {
+    font-size: 0.9rem;
+    padding: 0.875rem;
   }
 }
 
@@ -1194,20 +1267,6 @@ body {
     filter: brightness(0) saturate(100%) invert(89%) sepia(6%) saturate(1019%)
       hue-rotate(183deg) brightness(96%) contrast(93%);
   }
-
-  .trash-btn:hover {
-    background: #374151;
-  }
-
-  .trash-btn img {
-    filter: brightness(0) saturate(100%) invert(64%) sepia(8%) saturate(1072%)
-      hue-rotate(179deg) brightness(95%) contrast(86%);
-  }
-
-  .trash-btn:hover img {
-    filter: brightness(0) saturate(100%) invert(89%) sepia(8%) saturate(1072%)
-      hue-rotate(179deg) brightness(95%) contrast(86%);
-  }
 }
 
 /* Focus styles for accessibility */
@@ -1246,9 +1305,9 @@ input:focus {
   }
 }
 
-/* Smooth scrolling */
+/* Fast scrolling */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 
 /* Selection styles */

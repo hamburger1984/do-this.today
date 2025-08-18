@@ -16,15 +16,16 @@ A mobile-first Progressive Web App that helps you decide what to do next by rand
   - 📝 **One-time tasks** - Complete once and they're done (e.g., "Buy birthday present")
   - 🔄 **Repeatable tasks** - Can be done multiple times with cooldowns (e.g., "Clean kitchen")
 - **Flexible cooldown system** with preset options:
+  - No cooldown (immediate re-availability)
+  - Custom durations (1h, 3h, 6h, 12h)
   - Daily (24 hours)
   - Weekly (7 days) 
   - Monthly (30 days)
-  - Custom durations (1h, 3h, 6h, 12h)
 - **Visual status indicators:**
   - ✅ Available (green) - ready to be selected
   - ⏰ Cooldown (orange) - waiting for cooldown to expire
   - 🏁 Completed (blue) - one-time task finished
-- **Full task editing** - modify text, type, and cooldown periods after creation
+- **Inline task editing** - edit tasks directly in place with a clean, focused interface
 - **Robust data integrity** - automatic corruption detection and recovery
 - **Trash system** - deleted tasks move to trash for recovery or permanent deletion
 - **Execution tracking** - keeps history of when tasks were completed
@@ -64,6 +65,8 @@ A mobile-first Progressive Web App that helps you decide what to do next by rand
 - **Single-page interface** - all functionality available on one page with collapsible sections
 - **Collapsible task list** - task management integrated into main page, starts collapsed for clean interface
 - **Quick task entry** - add form directly on main page for immediate task creation
+- **Inline editing** - edit tasks in place with auto-focus and clean styling
+- **Clean UI design** - minimal visual clutter, icons only shown when needed
 - **Accessibility features** - ARIA labels, focus management, screen reader support
 - **Error recovery** - automatic detection and fixing of corrupted data
 - **Debug tools** - built-in data integrity checking and cleanup functions
@@ -107,13 +110,15 @@ Then visit `http://localhost:8000`
 ### Managing Tasks
 - **Add Tasks**: Use the "Add New Task" form to quickly add new tasks
 - **Collapsible List**: Click the "My Tasks" header to show/hide your task list (starts collapsed)
-- **Edit Tasks**: Click the **pencil icon (✏️)** next to any task to modify it
-- **Delete Tasks**: Click the **trash icon** to move tasks to trash (not permanently deleted)
-- **Convert Types**: Tasks can be switched between one-time and repeatable types
+- **Inline Editing**: Click the **pencil icon (✏️)** to edit tasks directly in place
+- **Delete Tasks**: Click the **trash icon** to move tasks to trash (access via Settings)
+- **Task Types**: Switch between one-time and repeatable tasks
+- **Cooldown Options**: Choose from no cooldown to monthly intervals for repeatable tasks
 - **View Statistics**: Each task shows execution stats when available:
-  - ✓ **Successful completions** count
-  - ✗ **Abandoned attempts** count  
-  - 🕒 **Time since last completion** (e.g., "2h ago", "3d ago")
+  - ✓ **Successful completions** count (green)
+  - ✗ **Abandoned attempts** count (red)
+  - 🕒 **Time since last completion** (blue, e.g., "2h ago", "3d ago")
+- **Clean Display**: Repeatable tasks show 🔄 with cooldown info, one-time tasks have no icon
 
 ### Working with Tasks
 1. **Pick a Task**: Click "Pick Random Task" to get a random available task (avoids repeating the same task)
@@ -139,6 +144,7 @@ Then visit `http://localhost:8000`
 ### Settings & Data Management
 - **Access Settings**: Click the "Settings" header (below task list) to expand options
 - **Export Data**: Download all your tasks as pretty-printed JSON with metadata
+- **View Trash**: Access deleted tasks for restoration or permanent deletion
 - **Reset Everything**: Nuclear option to clear all data with double confirmation
 - **Debug Tools**: Access data integrity checking and corruption cleanup
 - **Collapsible Interface**: Settings section starts collapsed to keep interface clean
@@ -225,10 +231,11 @@ The app is designed to be easily customizable:
 - **Animations**: Modify transition timing and effects
 
 ### Functional Customization
-- **Sample tasks**: Edit default tasks in `script.js` `loadTasks()` method
-- **Cooldown options**: Add/modify options in the HTML select element
+### Sample tasks**: Edit default tasks in `script.js` `loadTasks()` method
+- **Cooldown options**: Add/modify options including zero cooldown support
 - **Active task duration**: Change the 8-hour limit in `acceptTask()` method
 - **Timer intervals**: Adjust countdown update frequency
+- **Edit form styling**: Customize inline editing appearance and behavior
 
 ### Adding New Features
 The modular JavaScript class structure makes it easy to:
@@ -280,9 +287,10 @@ app.resetEverything()     // Nuclear reset option (with confirmations)
 ### Using the Settings Panel
 1. **Expand Settings**: Click the "Settings" header (below task list)
 2. **Export Tasks**: Click "Export Tasks as JSON" to download your data
-3. **Debug Data**: Click "Debug Data" to inspect your data in console
-4. **Clean Data**: Click "Cleanup Corrupted Data" to fix any issues
-5. **Reset All**: Click "Reset Everything" to start completely fresh (with confirmations)
+3. **View Trash**: Click "View Trash" to see deleted tasks and restore or permanently delete them
+4. **Debug Data**: Click "Debug Data" to inspect your data in console
+5. **Clean Data**: Click "Cleanup Corrupted Data" to fix any issues
+6. **Reset All**: Click "Reset Everything" to start completely fresh (with confirmations)
 
 ## 🤝 Contributing
 
