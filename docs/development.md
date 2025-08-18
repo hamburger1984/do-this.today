@@ -2,6 +2,16 @@
 
 This guide is for developers who want to contribute to or customize the Task Dice app.
 
+## 📱 App Interface Overview
+
+<p align="center">
+  <img src="screenshots/main-screen.svg" alt="Main Interface" width="200"/>
+  <img src="screenshots/task-list.svg" alt="Task Management" width="200"/>
+  <img src="screenshots/active-task.svg" alt="Active Timer" width="200"/>
+</p>
+
+*See [screenshots documentation](screenshots/README.md) for detailed UI explanations.*
+
 ## 🚀 Getting Started
 
 ### Prerequisites

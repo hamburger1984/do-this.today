@@ -2,6 +2,11 @@
 
 A mobile-first Progressive Web App that helps you decide what to do next by randomly selecting from your personal task list. Perfect for managing both one-time tasks and daily routines with smart cooldown periods.
 
+<p align="center">
+  <img src="docs/screenshots/main-screen.svg" alt="Task Dice Main Screen" width="300"/>
+  <img src="docs/screenshots/task-selected.svg" alt="Task Selected" width="300"/>
+</p>
+
 ## 🌟 What It Does
 
 - **Random task selection** - Can't decide what to do? Let the app pick for you!
@@ -24,6 +29,10 @@ A mobile-first Progressive Web App that helps you decide what to do next by rand
 1. Open the app in Safari (iOS) or Chrome (Android)
 2. Look for "Add to Home Screen" or install prompt
 3. Add it to your home screen like any other app
+
+<p align="center">
+  <img src="docs/screenshots/pwa-install.svg" alt="PWA Installation on Mobile" width="300"/>
+</p>
 
 ### On Desktop
 1. Open in Chrome, Edge, or Firefox
@@ -54,11 +63,19 @@ A mobile-first Progressive Web App that helps you decide what to do next by rand
 3. **Accept it** - Click "Let's Do It!" to start the timer
 4. **Complete or abandon** - Mark done when finished, or give up with a reason
 
+<p align="center">
+  <img src="docs/screenshots/active-task.svg" alt="Active Task Timer" width="300"/>
+</p>
+
 ### Task Status
 - ✅ **Available** (green) - Ready to be picked
 - ⏰ **Cooldown** (orange) - Waiting for cooldown to end
 - 🏁 **Completed** (blue) - One-time task finished
 - 🔄 **Repeatable** - Shows cooldown period
+
+<p align="center">
+  <img src="docs/screenshots/task-list.svg" alt="Task List Management" width="300"/>
+</p>
 
 ## ⚙️ Settings & Data
 

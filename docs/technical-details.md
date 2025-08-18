@@ -2,6 +2,19 @@
 
 This document contains detailed technical information about the implementation, architecture, and data structures of the Task Dice app.
 
+## 📱 App Screenshots
+
+<p align="center">
+  <img src="screenshots/main-screen.svg" alt="Main Screen" width="250"/>
+  <img src="screenshots/task-selected.svg" alt="Task Selected" width="250"/>
+  <img src="screenshots/active-task.svg" alt="Active Task" width="250"/>
+</p>
+
+<p align="center">
+  <img src="screenshots/task-list.svg" alt="Task Management" width="250"/>
+  <img src="screenshots/pwa-install.svg" alt="PWA Installation" width="250"/>
+</p>
+
 ## 🏗️ Architecture Overview
 
 ### Technology Stack
