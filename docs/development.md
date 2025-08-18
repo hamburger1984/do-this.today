@@ -1,6 +1,6 @@
-# Development Guide - Now What? Task Randomizer
+# Development Guide - Task Dice
 
-This guide is for developers who want to contribute to or customize the Now What? Task Randomizer app.
+This guide is for developers who want to contribute to or customize the Task Dice app.
 
 ## 🚀 Getting Started
 
@@ -28,7 +28,7 @@ This guide is for developers who want to contribute to or customize the Now What
 ## 📁 Project Structure
 
 ```
-NowWhat/
+TaskDice/
 ├── index.html              # Main app entry point
 ├── styles.css              # Mobile-first CSS
 ├── script.js               # Core app logic

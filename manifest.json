@@ -1,7 +1,7 @@
 {
-  "name": "Now What? - Task Randomizer",
-  "short_name": "Now What?",
-  "description": "A mobile-first task randomizer to help you decide what to do next",
+  "name": "Task Dice",
+  "short_name": "Task Dice",
+  "description": "A mobile-first app to help you decide what to do next",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#667eea",

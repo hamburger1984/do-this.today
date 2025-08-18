@@ -1,4 +1,4 @@
-# Now What? - Task Randomizer
+# Task Dice
 
 A mobile-first Progressive Web App that helps you decide what to do next by randomly selecting from your personal task list. Perfect for managing both one-time tasks and daily routines with smart cooldown periods.
 

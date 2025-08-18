@@ -1,6 +1,6 @@
-# Technical Documentation - Now What? Task Randomizer
+# Technical Documentation - Task Dice
 
-This document contains detailed technical information about the implementation, architecture, and data structures of the Now What? Task Randomizer app.
+This document contains detailed technical information about the implementation, architecture, and data structures of the Task Dice app.
 
 ## 🏗️ Architecture Overview
 
