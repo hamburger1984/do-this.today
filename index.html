@@ -78,7 +78,6 @@
 
             <div class="active-task" id="activeTask" style="display: none">
               <div class="active-task-display">
-                <h3>Active Task</h3>
                 <div class="task-text" id="activeTaskText"></div>
                 <div class="timer-display">
                   <div class="timer-label">Time Remaining:</div>
@@ -111,50 +110,6 @@
             </div>
           </section>
 
-          <!-- Add New Task Section -->
-          <section class="quick-add-section">
-            <h2>Add New Task</h2>
-            <div class="input-group">
-              <input
-                type="text"
-                id="taskInput"
-                placeholder="Enter a new task..."
-                maxlength="200"
-              />
-              <div class="task-options">
-                <div class="option-group">
-                  <label for="taskType">Task Type:</label>
-                  <select id="taskType">
-                    <option value="oneoff">One-time task</option>
-                    <option value="repeatable">Repeatable task</option>
-                  </select>
-                </div>
-                <div
-                  class="option-group"
-                  id="cooldownContainer"
-                  style="display: none"
-                >
-                  <label for="cooldownPeriod">Cooldown:</label>
-                  <select id="cooldownPeriod">
-                    <option value="0">No cooldown</option>
-                    <option value="1">1 hour</option>
-                    <option value="3">3 hours</option>
-                    <option value="6">6 hours</option>
-                    <option value="12">12 hours</option>
-                    <option value="daily">Daily (24h)</option>
-                    <option value="weekly">Weekly (7 days)</option>
-                    <option value="monthly">Monthly (30 days)</option>
-                  </select>
-                </div>
-              </div>
-              <div class="input-actions">
-                <button class="btn-primary save-btn" id="saveTaskBtn">
-                  Add Task
-                </button>
-              </div>
-            </div>
-          </section>
-
           <!-- Task List Section -->
           <section class="task-section">
             <div class="section-header">
@@ -169,6 +124,49 @@
             </div>
 
             <div class="task-content" id="taskContent" style="display: none">
+              <!-- Add New Task Section -->
+              <div class="quick-add-section">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    id="taskInput"
+                    placeholder="Enter a new task..."
+                    maxlength="200"
+                  />
+                  <div class="task-options">
+                    <div class="option-group">
+                      <label for="taskType">Task Type:</label>
+                      <select id="taskType">
+                        <option value="oneoff">One-time task</option>
+                        <option value="repeatable">Repeatable task</option>
+                      </select>
+                    </div>
+                    <div
+                      class="option-group"
+                      id="cooldownContainer"
+                      style="display: none"
+                    >
+                      <label for="cooldownPeriod">Cooldown:</label>
+                      <select id="cooldownPeriod">
+                        <option value="0">No cooldown</option>
+                        <option value="1">1 hour</option>
+                        <option value="3">3 hours</option>
+                        <option value="6">6 hours</option>
+                        <option value="12">12 hours</option>
+                        <option value="daily">Daily (24h)</option>
+                        <option value="weekly">Weekly (7 days)</option>
+                        <option value="monthly">Monthly (30 days)</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="input-actions">
+                    <button class="btn-primary save-btn" id="saveTaskBtn">
+                      Add Task
+                    </button>
+                  </div>
+                </div>
+              </div>
+
               <div class="task-list" id="taskList">
                 <!-- Tasks will be dynamically inserted here -->
               </div>
