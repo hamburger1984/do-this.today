@@ -3,14 +3,12 @@
   /* Colors */
   --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   --primary-color: #667eea;
-  --primary-dark: #5a67d8;
   --secondary-color: #764ba2;
 
   /* Text Colors */
   --text-primary: #2d3748;
   --text-secondary: #4a5568;
   --text-muted: #718096;
-  --text-light: #a0aec0;
   --text-white: #ffffff;
   --text-dark: #333333;
 
@@ -18,14 +16,11 @@
   --bg-white: #ffffff;
   --bg-light: #f7fafc;
   --bg-lighter: #edf2f7;
-  --bg-dark: #1a202c;
   --bg-gray: #2d3748;
-  --bg-gray-light: #4a5568;
 
   /* Border Colors */
   --border-light: #e2e8f0;
   --border-medium: #cbd5e0;
-  --border-dark: #4a5568;
 
   /* Status Colors */
   --status-available: #38a169;
@@ -33,22 +28,14 @@
   --status-completed: #4299e1;
   --status-error: #e53e3e;
   --status-warning: #f59e0b;
-  --status-success: #38a169;
 
   /* Special Colors */
-  --cooldown-bg: #fef5e7;
-  --cooldown-border: #f6ad55;
-  --completed-bg: #f0fff4;
-  --completed-border: #68d391;
-  --trash-bg: #fef5e7;
-  --trash-border: #f6ad55;
-  --trash-hover: #fed7aa;
   --deleted-tag-bg: #fcd34d;
   --deleted-tag-text: #92400e;
 
   /* Shadows */
   --shadow-light: 0 2px 4px rgba(0, 0, 0, 0.05);
-  --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.05);
+
   --shadow-heavy: 0 10px 25px rgba(0, 0, 0, 0.2);
   --shadow-toast: 0 4px 12px rgba(0, 0, 0, 0.3);
   --shadow-button: 0 4px 12px rgba(102, 126, 234, 0.4);
@@ -59,7 +46,7 @@
   /* Alpha/Opacity Colors */
   --primary-alpha-10: rgba(102, 126, 234, 0.1);
   --primary-alpha-30: rgba(102, 126, 234, 0.3);
-  --primary-alpha-50: rgba(102, 126, 234, 0.5);
+
   --success-alpha-10: rgba(56, 161, 105, 0.1);
   --success-alpha-30: rgba(56, 161, 105, 0.3);
   --error-alpha-10: rgba(229, 62, 62, 0.1);
@@ -68,7 +55,7 @@
   --completed-alpha-30: rgba(66, 153, 225, 0.3);
   --secondary-alpha-10: rgba(74, 85, 104, 0.1);
   --black-alpha-10: rgba(0, 0, 0, 0.1);
-  --black-alpha-50: rgba(0, 0, 0, 0.5);
+
   --modal-overlay: rgba(0, 0, 0, 0.5);
 }
 
@@ -220,18 +207,6 @@ body {
   margin-bottom: 1rem;
 }
 
-/* Navigation section */
-.navigation-section {
-  margin-top: 2rem;
-  text-align: center;
-}
-
-.nav-btn {
-  min-width: 200px;
-  font-size: 1.1rem;
-  padding: 1rem 2rem;
-}
-
 .section-header h2 {
   font-size: 1.125rem;
   font-weight: 600;
@@ -339,13 +314,6 @@ body {
     hue-rotate(213deg) brightness(94%) contrast(91%);
 }
 
-/* Task input */
-.task-input-container,
-.task-edit-container {
-  margin-bottom: 1.5rem;
-  animation: fadeIn 0.3s ease;
-}
-
 .input-group {
   display: flex;
   flex-direction: column;
@@ -442,12 +410,12 @@ body {
 
 .task-item.task-cooldown {
   opacity: 0.7;
-  background: var(--cooldown-bg);
+  background: var(--bg-lighter);
 }
 
 .task-item.task-completed {
   opacity: 0.6;
-  background: var(--completed-bg);
+  background: var(--bg-lighter);
 }
 
 .task-content {
@@ -501,7 +469,7 @@ body {
 
 .task-stat.success {
   background: var(--success-alpha-10);
-  color: var(--status-success);
+  color: var(--status-available);
   border: 1px solid var(--success-alpha-30);
 }
 
@@ -805,7 +773,7 @@ body {
 }
 
 .trash-item {
-  background: var(--trash-bg);
+  background: var(--bg-lighter);
   border-radius: 12px;
   padding: 1rem;
   display: flex;
@@ -816,7 +784,7 @@ body {
 }
 
 .trash-item:hover {
-  background: var(--trash-hover);
+  background: var(--bg-light);
   transform: translateY(-1px);
 }
 
@@ -1210,43 +1178,6 @@ body {
 }
 
 /* Dark mode support */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-white: var(--bg-dark);
-    --bg-light: var(--bg-gray);
-    --bg-lighter: var(--bg-gray-light);
-    --text-primary: #e2e8f0;
-    --text-secondary: #e2e8f0;
-    --text-muted: #a0aec0;
-    --border-light: var(--border-dark);
-    --border-medium: var(--text-muted);
-    --deleted-tag-bg: var(--bg-gray-light);
-    --deleted-tag-text: #e2e8f0;
-  }
-
-  body {
-    background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-gray) 100%);
-  }
-
-  .collapsible-header:hover {
-    background: #374151;
-  }
-
-  .btn-secondary img {
-    filter: brightness(0) saturate(100%) invert(89%) sepia(6%) saturate(1019%)
-      hue-rotate(183deg) brightness(96%) contrast(93%);
-  }
-
-  .btn-icon img {
-    filter: brightness(0) saturate(100%) invert(28%) sepia(77%) saturate(1269%)
-      hue-rotate(213deg) brightness(94%) contrast(91%);
-  }
-
-  .edit-btn img {
-    filter: brightness(0) saturate(100%) invert(89%) sepia(6%) saturate(1019%)
-      hue-rotate(183deg) brightness(96%) contrast(93%);
-  }
-}
 
 /* Focus styles for accessibility */
 button:focus,
