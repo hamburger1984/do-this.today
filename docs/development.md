@@ -94,15 +94,23 @@ class TaskRandomizer {
 ## 🎨 CSS Architecture
 
 ### CSS Custom Properties
-The app uses CSS variables for consistent theming:
+The app uses a two-tier CSS variable system for easy theme switching:
 
 ```css
 :root {
-  --teal: #2d8486;
-  --sandy-brown: #fcaa67;
-  --redwood: #b0413e;
-  --cream: #ffffc7;
-  --van-dyke: #473335;
+  /* Base Color Palette */
+  --cerulean: #006e90ff;
+  --carrot-orange: #f18f01ff;
+  --columbia-blue: #adcad6ff;
+  --yellow-green: #99c24dff;
+  --aero: #41bbd9ff;
+
+  /* Semantic Color Variables */
+  --primary-dark: var(--cerulean);
+  --primary-main: var(--aero);
+  --surface-light: var(--columbia-blue);
+  --accent-warning: var(--carrot-orange);
+  --text-strong: var(--yellow-green);
   /* ... more variables */
 }
 ```
@@ -133,16 +141,19 @@ Mobile-first approach with breakpoints:
 3. Update `formatCooldown()` for display text
 
 ### Customizing Colors
-Modify CSS custom properties in `:root`:
+The two-tier color system makes theme changes easy. To switch themes, update the base color palette:
 ```css
 :root {
-  --teal: #your-teal-color;
-  --sandy-brown: #your-accent-color;
-  --redwood: #your-error-color;
-  --cream: #your-light-bg;
-  --van-dyke: #your-text-color;
+  /* Base Color Palette - Update these 5 colors for new themes */
+  --cerulean: #your-primary-dark;
+  --carrot-orange: #your-accent-warning;
+  --columbia-blue: #your-surface-light;
+  --yellow-green: #your-text-strong;
+  --aero: #your-primary-main;
 }
 ```
+
+The semantic variables (`--primary-main`, `--accent-warning`, etc.) automatically inherit the new colors.
 
 ### Adding New Icons
 1. Add SVG file to `img/` directory

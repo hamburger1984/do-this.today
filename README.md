@@ -87,6 +87,25 @@ A mobile-first Progressive Web App that helps you decide what to do next by rand
 - **Need help?** Check the debug tool at `debug-test.html`
 - **Want to start over?** Settings → "Reset Everything"
 
+## 🎨 Customization & Theming
+
+### Modern Color System
+Task Dice features a sophisticated two-tier color system that makes theme customization incredibly easy:
+
+- **Base Color Palette**: Five core colors define the entire theme
+- **Semantic Variables**: Colors are mapped to their functional purpose (primary actions, warnings, backgrounds, etc.)
+- **Easy Theme Switching**: Change the entire app's appearance by updating just 5 color values
+
+### Current Theme Colors
+- **Cerulean** (`#006e90`) - Primary dark elements and completed states
+- **Aero** (`#41bbd9`) - Main primary actions and available tasks  
+- **Columbia Blue** (`#adcad6`) - Light backgrounds and subtle elements
+- **Carrot Orange** (`#f18f01`) - Warnings, cooldowns, and secondary actions
+- **Yellow Green** (`#99c24d`) - Primary text and strong accents
+
+### For Developers
+Want to customize the colors? See [Development Guide](docs/development.md) for details on how to easily switch themes by updating the CSS color palette.
+
 ## 🔒 Privacy & Security
 
 - **Your data stays with you** - Everything is stored on your device only
@@ -107,11 +126,21 @@ Perfect for when you:
 
 ## 🛠️ Technical Details
 
-For developers and technical users, see [Technical Documentation](docs/technical-details.md) for:
+For developers and technical users, see our comprehensive documentation:
+
+### [Technical Documentation](docs/technical-details.md)
 - Architecture and code structure
 - Data storage format and schemas
 - PWA implementation details
-- Development and deployment info
+- Two-tier color system details
+- Performance optimizations
+
+### [Development Guide](docs/development.md)
+- Getting started with development
+- Adding new features
+- Customizing themes and colors
+- Testing and deployment
+- Contributing guidelines
 
 ## 🤝 Contributing
 

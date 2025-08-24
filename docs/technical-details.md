@@ -201,29 +201,46 @@ The app tracks detailed execution statistics:
 
 ### CSS Custom Properties (Variables)
 
-The styling system uses CSS custom properties for consistent theming:
+The styling system uses a two-tier CSS custom properties system for easy theme switching:
 
 ```css
 :root {
-  /* Color Palette */
-  --teal: #2d8486;
-  --sandy-brown: #fcaa67;
-  --redwood: #b0413e;
-  --cream: #ffffc7;
-  --van-dyke: #473335;
+  /* Base Color Palette */
+  --cerulean: #006e90ff;
+  --carrot-orange: #f18f01ff;
+  --columbia-blue: #adcad6ff;
+  --yellow-green: #99c24dff;
+  --aero: #41bbd9ff;
+
+  /* Semantic Color Variables */
+  --primary-dark: var(--cerulean);
+  --primary-main: var(--aero);
+  --surface-light: var(--columbia-blue);
+  --accent-warning: var(--carrot-orange);
+  --text-strong: var(--yellow-green);
   
-  /* Primary Colors */
-  --primary-gradient: linear-gradient(135deg, var(--teal) 0%, var(--sandy-brown) 100%);
-  --primary-color: var(--teal);
-  --secondary-color: var(--sandy-brown);
+  /* Gradients and Status Colors */
+  --primary-gradient: linear-gradient(135deg, var(--primary-main) 0%, var(--surface-light) 50%, var(--accent-warning) 100%);
+  --primary-color: var(--primary-main);
+  --secondary-color: var(--accent-warning);
   
   /* Status Colors */
-  --status-available: var(--teal);
-  --status-cooldown: var(--sandy-brown);
-  --status-completed: var(--redwood);
-  --status-error: var(--redwood);
+  --status-available: var(--primary-main);
+  --status-cooldown: var(--accent-warning);
+  --status-completed: var(--primary-dark);
+  --status-error: #dc3545;
 }
 ```
+
+#### Two-Tier Color System
+
+The color system is designed for easy theme changes:
+
+1. **Base Color Palette**: Five core colors that define the theme
+2. **Semantic Variables**: Map palette colors to their functional purpose
+3. **Implementation Variables**: Use semantic names throughout the CSS
+
+To change themes, simply update the five base palette colors.
 
 ### Responsive Design
 
