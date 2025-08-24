@@ -1,53 +1,79 @@
 /* CSS Variables */
 :root {
   /* Color Palette */
-  --teal: #2d8486;
-  --sandy-brown: #fcaa67;
-  --redwood: #b0413e;
-  --cream: #ffffc7;
-  --van-dyke: #473335;
+  --dark-blue: #295c8e;
+  --medium-blue: #4b91e2;
+  --light-blue: #7dc8e3;
+  --orange: #f4a462;
+  --dark-teal: #274754;
 
   /* Colors */
   --primary-gradient: linear-gradient(
     135deg,
-    var(--teal) 0%,
-    var(--sandy-brown) 100%
+    var(--medium-blue) 0%,
+    var(--light-blue) 50%,
+    var(--orange) 100%
   );
-  --primary-color: var(--teal);
-  --secondary-color: var(--sandy-brown);
+  --secondary-gradient: linear-gradient(
+    135deg,
+    var(--dark-blue) 0%,
+    var(--medium-blue) 100%
+  );
+  --accent-gradient: linear-gradient(
+    135deg,
+    var(--light-blue) 0%,
+    rgba(125, 200, 227, 0.3) 100%
+  );
+  --warm-gradient: linear-gradient(
+    135deg,
+    var(--orange) 0%,
+    rgba(244, 164, 98, 0.7) 100%
+  );
+  --cool-gradient: linear-gradient(
+    135deg,
+    var(--dark-blue) 0%,
+    var(--light-blue) 100%
+  );
+  --subtle-gradient: linear-gradient(
+    135deg,
+    rgba(125, 200, 227, 0.1) 0%,
+    rgba(75, 145, 226, 0.1) 100%
+  );
+  --primary-color: var(--medium-blue);
+  --secondary-color: var(--orange);
 
   /* Text Colors */
-  --text-primary: var(--van-dyke);
-  --text-secondary: #6b4d4f;
-  --text-muted: #8a6e71;
+  --text-primary: var(--dark-teal);
+  --text-secondary: var(--dark-blue);
+  --text-muted: rgba(39, 71, 84, 0.7);
   --text-white: #ffffff;
-  --text-dark: var(--van-dyke);
+  --text-dark: var(--dark-teal);
 
   /* Background Colors */
   --bg-white: #ffffff;
-  --bg-light: #fefef3;
-  --bg-lighter: var(--cream);
-  --bg-gray: var(--van-dyke);
+  --bg-light: rgba(125, 200, 227, 0.1);
+  --bg-lighter: var(--light-blue);
+  --bg-gray: var(--dark-teal);
 
   /* Border Colors */
-  --border-light: #f0e6b3;
-  --border-medium: #e6d999;
+  --border-light: rgba(125, 200, 227, 0.3);
+  --border-medium: rgba(75, 145, 226, 0.3);
 
   /* Status Colors */
-  --status-available: var(--teal);
-  --status-cooldown: var(--sandy-brown);
-  --status-completed: var(--redwood);
-  --status-error: var(--redwood);
-  --status-warning: var(--sandy-brown);
+  --status-available: var(--medium-blue);
+  --status-cooldown: var(--orange);
+  --status-completed: var(--dark-blue);
+  --status-error: #dc3545;
+  --status-warning: var(--orange);
 
   /* Special Colors */
-  --deleted-tag-bg: var(--sandy-brown);
-  --deleted-tag-text: var(--van-dyke);
+  --deleted-tag-bg: var(--orange);
+  --deleted-tag-text: var(--dark-teal);
 
   /* Additional Colors */
   --white: #ffffff;
   --black: #000000;
-  --dark-teal: #245a5c;
+  --accent-dark: var(--dark-blue);
 
   /* Shadows */
   --shadow-light: 0 2px 4px var(--black-alpha-10);
@@ -64,25 +90,25 @@
   --shadow-desktop: 0 10px 40px var(--primary-alpha-20);
 
   /* Focus */
-  --focus-ring: 0 0 0 3px rgba(45, 132, 134, 0.1);
+  --focus-ring: 0 0 0 3px rgba(75, 145, 226, 0.1);
 
   /* Alpha/Opacity Colors */
-  --primary-alpha-10: rgba(45, 132, 134, 0.1);
-  --primary-alpha-30: rgba(45, 132, 134, 0.3);
+  --primary-alpha-10: rgba(75, 145, 226, 0.1);
+  --primary-alpha-30: rgba(75, 145, 226, 0.3);
 
-  --success-alpha-10: rgba(45, 132, 134, 0.1);
-  --success-alpha-30: rgba(45, 132, 134, 0.3);
-  --error-alpha-10: rgba(176, 65, 62, 0.1);
-  --error-alpha-30: rgba(176, 65, 62, 0.3);
-  --completed-alpha-10: rgba(176, 65, 62, 0.1);
-  --completed-alpha-30: rgba(176, 65, 62, 0.3);
-  --secondary-alpha-10: rgba(252, 170, 103, 0.1);
-  --black-alpha-10: rgba(71, 51, 53, 0.1);
+  --success-alpha-10: rgba(75, 145, 226, 0.1);
+  --success-alpha-30: rgba(75, 145, 226, 0.3);
+  --error-alpha-10: rgba(220, 53, 69, 0.1);
+  --error-alpha-30: rgba(220, 53, 69, 0.3);
+  --completed-alpha-10: rgba(41, 92, 142, 0.1);
+  --completed-alpha-30: rgba(41, 92, 142, 0.3);
+  --secondary-alpha-10: rgba(244, 164, 98, 0.1);
+  --black-alpha-10: rgba(39, 71, 84, 0.1);
   --black-alpha-30: rgba(0, 0, 0, 0.2);
   --black-alpha-50: rgba(0, 0, 0, 0.3);
-  --primary-alpha-15: rgba(45, 132, 134, 0.15);
-  --primary-alpha-20: rgba(45, 132, 134, 0.2);
-  --primary-alpha-40: rgba(45, 132, 134, 0.4);
+  --primary-alpha-15: rgba(75, 145, 226, 0.15);
+  --primary-alpha-20: rgba(75, 145, 226, 0.2);
+  --primary-alpha-40: rgba(75, 145, 226, 0.4);
 
   --modal-overlay: rgba(0, 0, 0, 0.5);
 }
@@ -102,7 +128,7 @@ body {
     "Segoe UI",
     Roboto,
     sans-serif;
-  background: linear-gradient(135deg, var(--cream) 0%, var(--bg-light) 100%);
+  background: linear-gradient(135deg, var(--bg-white) 0%, var(--bg-light) 100%);
   min-height: 100vh;
   color: var(--text-dark);
   line-height: 1.6;
@@ -288,9 +314,9 @@ body {
 }
 
 .btn-secondary:hover {
-  background: var(--cream);
-  border-color: var(--sandy-brown);
-  color: var(--van-dyke);
+  background: var(--bg-lighter);
+  border-color: var(--orange);
+  color: var(--dark-teal);
 }
 
 .btn-icon {
@@ -429,8 +455,8 @@ body {
 }
 
 .task-item:hover {
-  background: var(--cream);
-  border-color: var(--sandy-brown);
+  background: var(--bg-lighter);
+  border-color: var(--orange);
   transform: translateY(-2px);
   box-shadow: var(--shadow-task-hover);
 }
@@ -483,32 +509,32 @@ body {
 }
 
 .task-stat.task-status.available {
-  background: var(--teal);
+  background: var(--medium-blue);
 }
 
 .task-stat.task-status.cooldown {
-  background: var(--sandy-brown);
+  background: var(--orange);
 }
 
 .task-stat.task-status.completed {
-  background: var(--redwood);
+  background: var(--dark-blue);
 }
 
 .task-stat.success {
   background: var(--success-alpha-10);
-  color: var(--teal);
+  color: var(--medium-blue);
   border: 1px solid var(--success-alpha-30);
 }
 
 .task-stat.abandoned {
   background: var(--error-alpha-10);
-  color: var(--redwood);
+  color: var(--dark-blue);
   border: 1px solid var(--error-alpha-30);
 }
 
 .task-stat.last-completed {
   background: var(--completed-alpha-10);
-  color: var(--redwood);
+  color: var(--dark-blue);
   border: 1px solid var(--completed-alpha-30);
 }
 
@@ -558,7 +584,7 @@ body {
 .restore-btn {
   background: none;
   border: none;
-  color: var(--teal);
+  color: var(--medium-blue);
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 8px;
@@ -701,7 +727,7 @@ body {
 }
 
 .active-task-display .task-text {
-  background: linear-gradient(135deg, var(--teal) 0%, var(--dark-teal) 100%);
+  background: var(--secondary-gradient);
   color: var(--text-white);
   padding: 1.5rem;
   border-radius: 12px;
@@ -730,7 +756,7 @@ body {
 .timer-value {
   font-size: 2rem;
   font-weight: 700;
-  color: var(--teal);
+  color: var(--medium-blue);
   font-family: "Courier New", monospace;
   letter-spacing: 0.1em;
 }
@@ -822,8 +848,8 @@ body {
 
 .deleted-date {
   font-size: 0.7rem;
-  color: var(--van-dyke);
-  background: var(--sandy-brown);
+  color: var(--dark-teal);
+  background: var(--orange);
   padding: 0.25rem 0.5rem;
   border-radius: 12px;
   font-weight: 500;
@@ -935,7 +961,7 @@ body {
   display: block;
   font-size: 2rem;
   font-weight: 700;
-  color: var(--teal);
+  color: var(--medium-blue);
   line-height: 1;
 }
 
@@ -972,15 +998,15 @@ body {
 }
 
 .toast.success {
-  background: var(--teal);
+  background: var(--medium-blue);
 }
 
 .toast.error {
-  background: var(--redwood);
+  background: var(--dark-blue);
 }
 
 .toast.warning {
-  background: var(--sandy-brown);
+  background: var(--orange);
 }
 
 /* Settings section */
@@ -1029,13 +1055,13 @@ body {
 }
 
 .btn-secondary.danger {
-  color: var(--redwood);
+  color: var(--dark-blue);
   border-color: var(--error-alpha-30);
 }
 
 .btn-secondary.danger:hover {
   background: var(--error-alpha-10);
-  border-color: var(--redwood);
+  border-color: var(--dark-blue);
 }
 
 .btn-secondary.danger img {

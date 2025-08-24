@@ -241,6 +241,7 @@ class TaskRandomizer {
             cooldown: task.cooldown || "daily",
             executions: Array.isArray(task.executions) ? task.executions : [],
             completed: Boolean(task.completed),
+            createdAt: task.createdAt || Date.now(),
           };
 
           return validTask;
@@ -264,6 +265,7 @@ class TaskRandomizer {
           cooldown: "daily",
           executions: [],
           completed: false,
+          createdAt: Date.now(),
         },
         {
           id: this.nextTaskId++,
@@ -272,6 +274,7 @@ class TaskRandomizer {
           cooldown: "daily",
           executions: [],
           completed: false,
+          createdAt: Date.now(),
         },
         {
           id: this.nextTaskId++,
@@ -280,6 +283,7 @@ class TaskRandomizer {
           cooldown: "weekly",
           executions: [],
           completed: false,
+          createdAt: Date.now(),
         },
         {
           id: this.nextTaskId++,
@@ -288,6 +292,7 @@ class TaskRandomizer {
           cooldown: "weekly",
           executions: [],
           completed: false,
+          createdAt: Date.now(),
         },
         {
           id: this.nextTaskId++,
@@ -296,6 +301,7 @@ class TaskRandomizer {
           cooldown: "daily",
           executions: [],
           completed: false,
+          createdAt: Date.now(),
         },
         {
           id: this.nextTaskId++,
@@ -304,6 +310,7 @@ class TaskRandomizer {
           cooldown: "daily",
           executions: [],
           completed: false,
+          createdAt: Date.now(),
         },
         {
           id: this.nextTaskId++,
@@ -312,6 +319,7 @@ class TaskRandomizer {
           cooldown: "daily",
           executions: [],
           completed: false,
+          createdAt: Date.now(),
         },
         {
           id: this.nextTaskId++,
@@ -320,6 +328,7 @@ class TaskRandomizer {
           cooldown: "daily",
           executions: [],
           completed: false,
+          createdAt: Date.now(),
         },
       ];
       this.saveTasks();
@@ -538,6 +547,7 @@ class TaskRandomizer {
       cooldown: cooldownPeriod,
       executions: [],
       completed: false,
+      createdAt: Date.now(),
     };
 
     this.tasks.push(newTask);
