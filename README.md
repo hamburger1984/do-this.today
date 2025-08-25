@@ -87,24 +87,33 @@ A mobile-first Progressive Web App that helps you decide what to do next by rand
 - **Need help?** Check the debug tool at `debug-test.html`
 - **Want to start over?** Settings → "Reset Everything"
 
-## 🎨 Customization & Theming
+## 🎨 Design & Theming
 
-### Modern Color System
-Task Dice features a sophisticated two-tier color system that makes theme customization incredibly easy:
+### Sunset-Inspired Color Theme ✨
+Task Dice features a warm, eye-friendly sunset-inspired design that creates a perfect balance between visibility and comfort:
 
-- **Base Color Palette**: Five core colors define the entire theme
-- **Semantic Variables**: Colors are mapped to their functional purpose (primary actions, warnings, backgrounds, etc.)
-- **Easy Theme Switching**: Change the entire app's appearance by updating just 5 color values
+- **Bright, Comfortable Background**: Very light cream base that's easy on the eyes in any lighting
+- **High Contrast Elements**: Excellent readability with carefully chosen text colors
+- **Sunset Color Palette**: Warm oranges and complementary ocean blues
+- **Enhanced Focus**: The Randomize button and task list are prominently featured
+- **Semantic Color System**: All colors are purpose-named for easy customization
 
-### Current Theme Colors
-- **Cerulean** (`#006e90`) - Primary dark elements and completed states
-- **Aero** (`#41bbd9`) - Main primary actions and available tasks  
-- **Columbia Blue** (`#adcad6`) - Light backgrounds and subtle elements
-- **Carrot Orange** (`#f18f01`) - Warnings, cooldowns, and secondary actions
-- **Yellow Green** (`#99c24d`) - Primary text and strong accents
+### Current Sunset Theme Colors
+- **Sunset Orange** (`#ff6b35`) - Primary actions (especially the Randomize button)
+- **Ocean Blue** (`#2d5a87`) - Secondary actions and status indicators
+- **Cream Background** (`#fef9f3`) - Main background for comfortable viewing
+- **Coral Accent** (`#f7931e`) - Hover states and warnings
+- **Deep Slate** (`#1f2937`) - Primary text for excellent contrast
+
+### Design Philosophy
+The new theme prioritizes:
+- **Eye comfort** with bright, warm backgrounds
+- **Visual hierarchy** that draws attention to key actions
+- **Accessibility** with high contrast ratios
+- **Warmth** through sunset-inspired color combinations
 
 ### For Developers
-Want to customize the colors? See [Development Guide](docs/development.md) for details on how to easily switch themes by updating the CSS color palette.
+Want to customize the colors? See [Development Guide](docs/development.md) for details on the semantic CSS variable system that makes theme switching incredibly easy.
 
 ## 🔒 Privacy & Security
 

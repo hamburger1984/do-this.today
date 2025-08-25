@@ -94,24 +94,42 @@ class TaskRandomizer {
 ## 🎨 CSS Architecture
 
 ### CSS Custom Properties
-The app uses a two-tier CSS variable system for easy theme switching:
+The app uses a sophisticated semantic CSS variable system for the sunset-inspired theme:
 
 ```css
 :root {
-  /* Base Color Palette */
-  --cerulean: #006e90ff;
-  --carrot-orange: #f18f01ff;
-  --columbia-blue: #adcad6ff;
-  --yellow-green: #99c24dff;
-  --aero: #41bbd9ff;
+  /* === SUNSET THEME COLOR PALETTE === */
+  
+  /* Core Sunset Colors */
+  --sunset-orange: #ff6b35;     /* Vibrant sunset orange - main theme color */
+  --sunset-coral: #f7931e;      /* Warm coral orange */
+  --sunset-peach: #ffb380;      /* Soft peachy orange */
+  --sunset-gold: #ffd23f;       /* Golden sunset yellow */
 
-  /* Semantic Color Variables */
-  --primary-dark: var(--cerulean);
-  --primary-main: var(--aero);
-  --surface-light: var(--columbia-blue);
-  --accent-warning: var(--carrot-orange);
-  --text-strong: var(--yellow-green);
-  /* ... more variables */
+  /* Ocean Blue Complement */
+  --ocean-deep: #1e3a5f;        /* Deep ocean blue */
+  --ocean-medium: #2d5a87;      /* Medium ocean blue */
+  --ocean-light: #4a90b8;       /* Light ocean blue */
+
+  /* Neutral Base Colors */
+  --cream-base: #fef9f3;        /* Very light cream background */
+  --slate-dark: #1f2937;        /* Dark slate for primary text */
+
+  /* === SEMANTIC COLOR VARIABLES === */
+  
+  /* Primary Actions (Randomize button focus) */
+  --color-primary-action: var(--sunset-orange);
+  --color-primary-action-hover: var(--sunset-coral);
+  
+  /* Backgrounds */
+  --color-background-main: var(--cream-base);
+  --color-background-card: var(--cream-warm);
+  
+  /* Text Colors */
+  --color-text-primary: var(--slate-dark);
+  --color-text-secondary: var(--slate-medium);
+  --color-text-on-primary: #ffffff;
+  /* ... more semantic variables */
 }
 ```
 
@@ -140,26 +158,59 @@ Mobile-first approach with breakpoints:
 2. Update `getCooldownMs()` method in script.js
 3. Update `formatCooldown()` for display text
 
-### Customizing Colors
-The two-tier color system makes theme changes easy. To switch themes, update the base color palette:
+### Customizing the Sunset Theme
+The semantic color system makes theme changes easy and maintains design consistency:
+
+#### Option 1: Modify Raw Colors
+Update the base sunset palette while keeping the semantic structure:
 ```css
 :root {
-  /* Base Color Palette - Update these 5 colors for new themes */
-  --cerulean: #your-primary-dark;
-  --carrot-orange: #your-accent-warning;
-  --columbia-blue: #your-surface-light;
-  --yellow-green: #your-text-strong;
-  --aero: #your-primary-main;
+  /* Update these core colors for a different sunset variation */
+  --sunset-orange: #your-primary-color;    /* Main theme color */
+  --sunset-coral: #your-hover-color;       /* Hover states */
+  --ocean-medium: #your-secondary-color;   /* Secondary actions */
+  --cream-base: #your-background-color;    /* Main background */
+  --slate-dark: #your-text-color;          /* Primary text */
 }
 ```
 
-The semantic variables (`--primary-main`, `--accent-warning`, etc.) automatically inherit the new colors.
+#### Option 2: Change Semantic Mappings
+Remap semantic variables to different raw colors:
+```css
+:root {
+  /* Keep sunset palette but change how colors are used */
+  --color-primary-action: var(--ocean-medium);    /* Use blue for primary */
+  --color-secondary-action: var(--sunset-orange); /* Use orange for secondary */
+  --color-background-main: var(--sand-light);     /* Different background */
+}
+```
+
+#### Option 3: Completely New Theme
+Replace the entire palette with your own colors:
+```css
+:root {
+  /* Your custom theme colors */
+  --forest-green: #2d5016;
+  --sage-green: #a4b494;
+  --cream-white: #faf7f0;
+  
+  /* Map to semantic variables */
+  --color-primary-action: var(--forest-green);
+  --color-background-main: var(--cream-white);
+  --color-text-primary: var(--forest-green);
+  /* ... continue mapping */
+}
+```
+
+The semantic variables ensure consistent theming across all UI elements regardless of color choice.
 
 ### Adding New Icons
 1. Add SVG file to `img/` directory
 2. Keep consistent sizing (16x16 or 20x20)
 3. Use `currentColor` for fill to inherit text color
-4. Reference in HTML: `<img src="img/your-icon.svg" />`
+4. Ensure icons work with both light and dark text
+5. Reference in HTML: `<img src="img/your-icon.svg" />`
+6. Test visibility against sunset theme backgrounds
 
 ## 🛠️ Debugging
 
@@ -265,9 +316,12 @@ The app is pure static files - deploy anywhere:
 
 ### CSS Guidelines
 - Mobile-first responsive design
-- Use CSS custom properties
-- Follow BEM-like naming
+- Always use semantic CSS custom properties (never hardcode colors)
+- Follow BEM-like naming conventions
 - Minimize specificity conflicts
+- Test color choices against sunset theme backgrounds
+- Ensure sufficient contrast ratios for accessibility
+- Use `--color-*` variables for consistency
 
 ### Submitting Changes
 1. Test thoroughly across browsers

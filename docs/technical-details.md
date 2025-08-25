@@ -1,6 +1,6 @@
 # Technical Documentation - Task Dice
 
-This document contains detailed technical information about the implementation, architecture, and data structures of the Task Dice app.
+This document contains detailed technical information about the implementation, architecture, and data structures of the Task Dice app, including details about the new sunset-inspired color theme system.
 
 ## 🏗️ Architecture Overview
 
@@ -201,46 +201,85 @@ The app tracks detailed execution statistics:
 
 ### CSS Custom Properties (Variables)
 
-The styling system uses a two-tier CSS custom properties system for easy theme switching:
+The styling system uses a sophisticated semantic CSS custom properties system for the sunset-inspired theme:
 
 ```css
 :root {
-  /* Base Color Palette */
-  --cerulean: #006e90ff;
-  --carrot-orange: #f18f01ff;
-  --columbia-blue: #adcad6ff;
-  --yellow-green: #99c24dff;
-  --aero: #41bbd9ff;
-
-  /* Semantic Color Variables */
-  --primary-dark: var(--cerulean);
-  --primary-main: var(--aero);
-  --surface-light: var(--columbia-blue);
-  --accent-warning: var(--carrot-orange);
-  --text-strong: var(--yellow-green);
+  /* === SUNSET THEME COLOR PALETTE === */
   
-  /* Gradients and Status Colors */
-  --primary-gradient: linear-gradient(135deg, var(--primary-main) 0%, var(--surface-light) 50%, var(--accent-warning) 100%);
-  --primary-color: var(--primary-main);
-  --secondary-color: var(--accent-warning);
+  /* Core Sunset Colors */
+  --sunset-orange: #ff6b35;     /* Vibrant sunset orange - main theme color */
+  --sunset-coral: #f7931e;      /* Warm coral orange */
+  --sunset-peach: #ffb380;      /* Soft peachy orange */
+  --sunset-gold: #ffd23f;       /* Golden sunset yellow */
+
+  /* Ocean Blue Complement */
+  --ocean-deep: #1e3a5f;        /* Deep ocean blue */
+  --ocean-medium: #2d5a87;      /* Medium ocean blue */
+  --ocean-light: #4a90b8;       /* Light ocean blue */
+  --ocean-mist: #87ceeb;        /* Very light ocean mist */
+
+  /* Neutral Base Colors */
+  --cream-base: #fef9f3;        /* Very light cream background */
+  --cream-warm: #fdf6ed;        /* Slightly warmer cream */
+  --sand-light: #f5f0e8;        /* Light sand color */
+  --sand-medium: #e8ddd1;       /* Medium sand */
+  --slate-soft: #6b7280;        /* Soft slate for muted text */
+  --slate-medium: #4b5563;      /* Medium slate for secondary text */
+  --slate-dark: #1f2937;        /* Dark slate for primary text */
+
+  /* === SEMANTIC COLOR VARIABLES === */
+  
+  /* Primary Actions (Randomize button focus) */
+  --color-primary-action: var(--sunset-orange);
+  --color-primary-action-hover: var(--sunset-coral);
+  --color-primary-action-active: #e55a2b;
+  
+  /* Backgrounds */
+  --color-background-main: var(--cream-base);
+  --color-background-card: var(--cream-warm);
+  --color-background-elevated: #ffffff;
+  
+  /* Text Colors */
+  --color-text-primary: var(--slate-dark);
+  --color-text-secondary: var(--slate-medium);
+  --color-text-muted: var(--slate-soft);
+  --color-text-on-primary: #ffffff;
+  --color-text-accent: var(--sunset-orange);
+  
+  /* Task List Colors */
+  --color-task-background: var(--cream-warm);
+  --color-task-background-hover: #ffffff;
+  --color-task-border: var(--sand-medium);
+  --color-task-border-hover: var(--sunset-peach);
   
   /* Status Colors */
-  --status-available: var(--primary-main);
-  --status-cooldown: var(--accent-warning);
-  --status-completed: var(--primary-dark);
-  --status-error: #dc3545;
+  --color-status-available: var(--ocean-light);
+  --color-status-cooldown: var(--sunset-coral);
+  --color-status-completed: var(--slate-soft);
+  --color-status-success: #10b981;
+  --color-status-error: #ef4444;
+  --color-status-warning: var(--sunset-gold);
 }
 ```
 
-#### Two-Tier Color System
+#### Semantic Color System
 
-The color system is designed for easy theme changes:
+The new color system is purpose-driven and easy to maintain:
 
-1. **Base Color Palette**: Five core colors that define the theme
-2. **Semantic Variables**: Map palette colors to their functional purpose
-3. **Implementation Variables**: Use semantic names throughout the CSS
+1. **Raw Color Palette**: Defines the sunset and complementary colors
+2. **Semantic Variables**: Map colors to their functional purpose (e.g., `--color-primary-action`, `--color-task-background`)
+3. **Legacy Compatibility**: Old variable names are mapped to new semantic ones
+4. **Enhanced UX**: Colors are chosen to draw attention to key elements like the Randomize button
 
-To change themes, simply update the five base palette colors.
+Key design principles:
+- **Bright backgrounds** (`--cream-base`) for eye comfort
+- **High contrast text** (`--slate-dark` on light backgrounds)
+- **Prominent primary actions** using sunset orange
+- **Subtle secondary elements** using muted tones
+- **Meaningful color coding** for task statuses
+
+To customize the theme, update the raw color palette variables and the semantic mappings will automatically inherit the changes.
 
 ### Responsive Design
 
@@ -282,6 +321,13 @@ One-off tasks follow a specific lifecycle:
 4. **Auto-Trash**: Automatically moved to trash 24 hours after last successful execution
 
 The cleanup process uses the most recent non-abandoned execution timestamp to determine when to move completed one-off tasks to trash. This prevents task list clutter while giving users time to see their accomplishments.
+
+### Theme Color Integration
+
+The app's theme color is set to match the primary sunset orange:
+- HTML meta tag: `<meta name="theme-color" content="#ff6b35" />`
+- PWA manifest integration for consistent branding
+- Browser UI elements adapt to the warm sunset theme
 
 ### App Installation
 
