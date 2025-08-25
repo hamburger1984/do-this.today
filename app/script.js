@@ -1,3 +1,8 @@
+/*
+ * TaskDice - A mobile-first Progressive Web App for task randomization
+ * Copyright (c) 2025 Andreas Krohn
+ * Licensed under the MIT License. See LICENSE file for details.
+ */
 class TaskRandomizer {
   constructor() {
     this.tasks = [];
