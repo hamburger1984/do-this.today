@@ -111,74 +111,15 @@
   --focus-ring-primary: 0 0 0 3px rgba(255, 107, 53, 0.2);
   --focus-ring-secondary: 0 0 0 3px rgba(45, 90, 135, 0.2);
 
-  /* === LEGACY COMPATIBILITY === */
-  /* Keep old variable names for compatibility but map to new semantic colors */
-  --primary-color: var(--color-primary-action);
-  --secondary-color: var(--color-secondary-action);
-  --text-primary: var(--color-text-primary);
-  --text-secondary: var(--color-text-secondary);
-  --text-muted: var(--color-text-muted);
-  --text-white: var(--color-text-on-primary);
-  --text-dark: var(--color-text-primary);
-  --bg-white: var(--color-background-elevated);
-  --bg-light: var(--color-background-subtle);
-  --bg-lighter: var(--color-background-card);
-  --bg-gray: var(--color-background-muted);
-  --border-light: var(--color-border-light);
-  --border-medium: var(--color-border-medium);
-  --status-available: var(--color-status-available);
-  --status-cooldown: var(--color-status-cooldown);
-  --status-completed: var(--color-status-completed);
-  --status-error: var(--color-status-error);
-  --status-warning: var(--color-status-warning);
-  --white: var(--color-background-elevated);
-  --black: var(--color-text-primary);
-  --accent-dark: var(--ocean-deep);
-  --deleted-tag-bg: var(--color-status-warning);
-  --deleted-tag-text: var(--color-text-primary);
-
-  /* Legacy gradients */
-  --primary-gradient: var(--gradient-primary-action);
-  --secondary-gradient: var(--gradient-secondary-action);
-  --accent-gradient: var(--gradient-background-subtle);
-  --warm-gradient: var(--gradient-sunset-accent);
-  --cool-gradient: var(--gradient-ocean-accent);
-  --subtle-gradient: var(--gradient-background-subtle);
-
-  /* Legacy shadows */
-  --shadow-light: var(--shadow-soft);
-  --shadow-heavy: var(--shadow-elevated);
-  --shadow-toast: var(--shadow-medium);
-  --shadow-button: var(--shadow-primary-button);
-  --shadow-button-teal: var(--shadow-secondary-button);
-  --shadow-button-teal-hover: var(--shadow-primary-button-hover);
-  --shadow-button-teal-heavy: var(--shadow-primary-button);
-  --shadow-button-teal-active: var(--shadow-primary-button-hover);
-  --shadow-container: var(--shadow-elevated);
-  --shadow-task-item: var(--shadow-task-item);
-  --shadow-task-hover: var(--shadow-task-item-hover);
-  --shadow-desktop: var(--shadow-elevated);
-
-  /* Legacy focus */
-  --focus-ring: var(--focus-ring-primary);
-
-  /* Legacy alpha colors */
-  --primary-alpha-10: rgba(255, 107, 53, 0.1);
-  --primary-alpha-15: rgba(255, 107, 53, 0.15);
-  --primary-alpha-20: rgba(255, 107, 53, 0.2);
-  --primary-alpha-30: rgba(255, 107, 53, 0.3);
-  --primary-alpha-40: rgba(255, 107, 53, 0.4);
+  /* === ALPHA COLORS === */
   --success-alpha-10: rgba(16, 185, 129, 0.1);
   --success-alpha-30: rgba(16, 185, 129, 0.3);
   --error-alpha-10: rgba(239, 68, 68, 0.1);
   --error-alpha-30: rgba(239, 68, 68, 0.3);
   --completed-alpha-10: rgba(107, 114, 128, 0.1);
   --completed-alpha-30: rgba(107, 114, 128, 0.3);
-  --secondary-alpha-10: rgba(45, 90, 135, 0.1);
-  --black-alpha-10: rgba(31, 41, 55, 0.1);
-  --black-alpha-30: rgba(31, 41, 55, 0.2);
-  --black-alpha-50: rgba(31, 41, 55, 0.3);
 
+  /* === MODAL OVERLAY === */
   --modal-overlay: rgba(31, 41, 55, 0.5);
 }
 
@@ -210,8 +151,8 @@ body {
   max-width: 480px;
   margin: 0 auto;
   min-height: 100vh;
-  background: var(--bg-white);
-  box-shadow: var(--shadow-container);
+  background: var(--color-background-elevated);
+  box-shadow: var(--shadow-elevated);
   display: flex;
   flex-direction: column;
   border-radius: 0;
@@ -283,7 +224,7 @@ body {
 }
 
 .collapsible-header:hover {
-  background: var(--bg-light);
+  background: var(--color-background-subtle);
 }
 
 .section-header {
@@ -292,7 +233,7 @@ body {
 
 .collapsible-header h2 {
   margin: 0;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
   font-weight: 600;
   font-size: 1.5rem;
 }
@@ -304,7 +245,7 @@ body {
 
 .collapse-indicator {
   font-size: 1rem;
-  color: var(--text-muted);
+  color: var(--color-text-muted);
   transition: transform 0.1s;
   user-select: none;
   font-weight: bold;
@@ -322,7 +263,7 @@ body {
 .quick-add-section {
   margin-bottom: 1.5rem;
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--color-border-light);
 }
 
 .settings-section,
@@ -524,6 +465,51 @@ body {
   box-shadow: var(--focus-ring-primary);
 }
 
+/* Task type toggle buttons */
+.task-type-toggle {
+  display: flex;
+  background: var(--color-background-elevated);
+  border: 2px solid var(--color-border-medium);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+}
+
+.toggle-btn {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: none;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.toggle-btn:first-child {
+  border-right: 1px solid var(--color-border-medium);
+}
+
+.toggle-btn:hover {
+  background: var(--color-background-subtle);
+  color: var(--color-text-primary);
+}
+
+.toggle-btn.active {
+  background: var(--gradient-primary-action);
+  color: var(--color-text-on-primary);
+  font-weight: 600;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-btn:focus {
+  outline: none;
+  z-index: 1;
+  box-shadow: var(--focus-ring-primary);
+}
+
 .input-actions {
   display: flex;
   gap: 0.75rem;
@@ -579,7 +565,7 @@ body {
 
 .task-text {
   font-size: 0.9rem;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   margin-bottom: 0.5rem;
   word-break: break-word;
 }
@@ -649,7 +635,7 @@ body {
 .edit-btn {
   background: none;
   border: none;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 8px;
@@ -662,13 +648,13 @@ body {
 }
 
 .edit-btn:hover {
-  background: var(--secondary-alpha-10);
+  background: var(--color-background-subtle);
 }
 
 .delete-btn {
   background: none;
   border: none;
-  color: var(--status-error);
+  color: var(--color-status-error);
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 8px;
@@ -687,7 +673,7 @@ body {
 .restore-btn {
   background: none;
   border: none;
-  color: var(--medium-blue);
+  color: var(--color-status-available);
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 8px;
@@ -706,7 +692,7 @@ body {
 .delete-forever-btn {
   background: none;
   border: none;
-  color: var(--status-error);
+  color: var(--color-status-error);
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 8px;
@@ -726,10 +712,10 @@ body {
 .empty-state {
   text-align: center;
   padding: 3rem 1rem;
-  color: var(--text-muted);
-  background: var(--bg-light);
+  color: var(--color-text-muted);
+  background: var(--color-background-subtle);
   border-radius: 12px;
-  border: 2px dashed var(--border-light);
+  border: 2px dashed var(--color-border-light);
 }
 
 .empty-icon {
@@ -741,7 +727,7 @@ body {
   font-size: 1.125rem;
   font-weight: 500;
   margin-bottom: 0.5rem;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
 }
 
 .empty-state p {
@@ -843,33 +829,33 @@ body {
 .active-task-display h3 {
   font-size: 1.5rem;
   font-weight: 600;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
   margin-bottom: 1rem;
 }
 
 .active-task-display .task-text {
-  background: var(--secondary-gradient);
-  color: var(--text-white);
+  background: var(--gradient-secondary-action);
+  color: var(--color-text-on-primary);
   padding: 1.5rem;
   border-radius: 12px;
   font-size: 1rem;
   font-weight: 600;
   line-height: 1.5;
   margin: 0 0 1.5rem 0;
-  box-shadow: var(--shadow-button-teal-active);
+  box-shadow: var(--shadow-primary-button-hover);
 }
 
 .timer-display {
   text-align: center;
   padding: 1rem;
-  background: var(--bg-light);
+  background: var(--color-background-subtle);
   border-radius: 8px;
-  border: 1px solid var(--border-light);
+  border: 1px solid var(--color-border-light);
 }
 
 .timer-label {
   font-size: 0.8rem;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
   margin-bottom: 0.5rem;
   font-weight: 500;
 }
@@ -877,7 +863,7 @@ body {
 .timer-value {
   font-size: 2rem;
   font-weight: 700;
-  color: var(--medium-blue);
+  color: var(--color-primary-action);
   font-family: "Courier New", monospace;
   letter-spacing: 0.1em;
 }
@@ -932,7 +918,7 @@ body {
 .page-header h2 {
   font-size: 1.25rem;
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   margin: 0;
 }
 
@@ -963,14 +949,14 @@ body {
 }
 
 .trash-item:hover {
-  background: var(--bg-light);
+  background: var(--color-background-subtle);
   transform: translateY(-1px);
 }
 
 .deleted-date {
   font-size: 0.7rem;
-  color: var(--dark-teal);
-  background: var(--orange);
+  color: var(--color-text-on-primary);
+  background: var(--color-status-warning);
   padding: 0.25rem 0.5rem;
   border-radius: 12px;
   font-weight: 500;
@@ -979,7 +965,7 @@ body {
 .empty-trash-state {
   text-align: center;
   padding: 3rem 1rem;
-  color: var(--text-muted);
+  color: var(--color-text-muted);
 }
 
 .empty-trash-state .empty-icon {
@@ -991,7 +977,7 @@ body {
   font-size: 1.125rem;
   font-weight: 500;
   margin-bottom: 0.5rem;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
 }
 
 .empty-trash-state p {
@@ -1160,7 +1146,7 @@ body {
 .settings-group h3 {
   font-size: 1rem;
   font-weight: 600;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
   margin-bottom: 1rem;
 }
 
@@ -1188,13 +1174,13 @@ body {
 }
 
 .btn-secondary.danger {
-  color: var(--dark-blue);
+  color: var(--color-status-error);
   border-color: var(--error-alpha-30);
 }
 
 .btn-secondary.danger:hover {
   background: var(--error-alpha-10);
-  border-color: var(--dark-blue);
+  border-color: var(--color-status-error);
 }
 
 .btn-secondary.danger img {
@@ -1204,11 +1190,11 @@ body {
 
 /* Inline task editing */
 .task-edit-form {
-  background: var(--bg-white);
+  background: var(--color-background-elevated);
   border-radius: 12px;
   padding: 1rem;
   width: 100%;
-  box-shadow: 0 2px 8px var(--primary-alpha-10);
+  box-shadow: var(--shadow-soft);
 }
 
 .edit-input-group {
@@ -1220,11 +1206,11 @@ body {
 .edit-task-input {
   width: 100%;
   padding: 0.875rem;
-  border: 2px solid var(--border-light);
+  border: 2px solid var(--color-border-medium);
   border-radius: 8px;
   font-size: 0.9rem;
   transition: all 0.1s ease;
-  background: var(--bg-white);
+  background: var(--color-background-elevated);
   font-family: inherit;
 }
 
@@ -1249,7 +1235,7 @@ body {
 .edit-option-group label {
   display: block;
   font-size: 0.8rem;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
   margin-bottom: 0.5rem;
   font-weight: 500;
 }
@@ -1257,11 +1243,11 @@ body {
 .edit-option-group select {
   width: 100%;
   padding: 0.75rem;
-  border: 2px solid var(--border-light);
+  border: 2px solid var(--color-border-medium);
   border-radius: 8px;
   font-size: 0.8rem;
-  background: var(--bg-white);
-  color: var(--text-primary);
+  background: var(--color-background-elevated);
+  color: var(--color-text-primary);
   transition: all 0.1s ease;
 }
 
@@ -1310,16 +1296,14 @@ body {
 /* Responsive design for larger screens */
 @media (min-width: 481px) {
   .app-container {
-    max-width: 600px;
-    margin: 1rem auto;
-    min-height: calc(100vh - 2rem);
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: var(--shadow-desktop);
+    max-width: 540px;
+    margin: 0 auto;
+    border-radius: 0;
+    box-shadow: none;
   }
 
   .main-content {
-    padding: 1.5rem;
+    padding: 2rem;
   }
 
   .current-task .task-actions {
@@ -1328,7 +1312,7 @@ body {
   }
 
   .task-stat {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
   }
 
   .edit-task-options {
@@ -1336,7 +1320,6 @@ body {
   }
 
   .edit-actions {
-    flex-direction: row;
     justify-content: flex-end;
   }
 }
@@ -1344,6 +1327,7 @@ body {
 @media (min-width: 768px) {
   .app-container {
     max-width: 700px;
+    box-shadow: var(--shadow-elevated);
   }
 
   .input-actions {
@@ -1356,17 +1340,16 @@ body {
 
   .task-stat {
     font-size: 0.75rem;
-    padding: 0.25rem 0.5rem;
+    padding: 0.25rem 0.75rem;
   }
 
   .edit-task-input {
     font-size: 1rem;
-    padding: 1rem;
+    padding: 1rem 1.25rem;
   }
 
   .edit-option-group select {
-    font-size: 0.9rem;
-    padding: 0.875rem;
+    font-size: 0.875rem;
   }
 }
 
@@ -1415,9 +1398,9 @@ html {
 
 /* Selection styles */
 ::selection {
-  background: var(--primary-alpha-30);
+  background: rgba(255, 107, 53, 0.3);
 }
 
 ::-moz-selection {
-  background: var(--primary-alpha-30);
+  background: rgba(255, 107, 53, 0.3);
 }

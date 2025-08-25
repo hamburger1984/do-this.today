@@ -135,11 +135,26 @@
                   />
                   <div class="task-options">
                     <div class="option-group">
-                      <label for="taskType">Task Type:</label>
-                      <select id="taskType">
-                        <option value="oneoff">One-time task</option>
-                        <option value="repeatable">Repeatable task</option>
-                      </select>
+                      <label>Task Type:</label>
+                      <div class="task-type-toggle" id="taskTypeToggle">
+                        <button
+                          type="button"
+                          class="toggle-btn active"
+                          data-type="oneoff"
+                          id="toggleOneoff"
+                        >
+                          One-time task
+                        </button>
+                        <button
+                          type="button"
+                          class="toggle-btn"
+                          data-type="repeatable"
+                          id="toggleRepeatable"
+                        >
+                          Repeatable task
+                        </button>
+                      </div>
+                      <input type="hidden" id="taskType" value="oneoff" />
                     </div>
                     <div
                       class="option-group"

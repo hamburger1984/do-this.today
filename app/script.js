@@ -118,10 +118,13 @@ class TaskRandomizer {
       .getElementById("abandonActiveBtn")
       .addEventListener("click", () => this.abandonActiveTask());
 
-    // Task type selection
+    // Task type toggle buttons
     document
-      .getElementById("taskType")
-      .addEventListener("change", () => this.toggleCooldownOptions());
+      .getElementById("toggleOneoff")
+      .addEventListener("click", (e) => this.handleTaskTypeToggle(e));
+    document
+      .getElementById("toggleRepeatable")
+      .addEventListener("click", (e) => this.handleTaskTypeToggle(e));
 
     // Task editing is now handled inline, no global event listeners needed
 
@@ -495,6 +498,43 @@ class TaskRandomizer {
     this.renderTasks();
   }
 
+  handleTaskTypeToggle(event) {
+    const clickedBtn = event.target;
+    const taskType = clickedBtn.dataset.type;
+
+    // Update hidden input
+    document.getElementById("taskType").value = taskType;
+
+    // Update button states
+    document.querySelectorAll(".toggle-btn").forEach((btn) => {
+      btn.classList.remove("active");
+    });
+    clickedBtn.classList.add("active");
+
+    // Show/hide cooldown options
+    this.toggleCooldownOptions();
+  }
+
+  handleEditTaskTypeToggle(event, taskIndex) {
+    const clickedBtn = event.target;
+    const taskType = clickedBtn.dataset.type;
+
+    // Update hidden input
+    document.getElementById(`editTaskType-${taskIndex}`).value = taskType;
+
+    // Update button states within this specific toggle group
+    const toggleGroup = document.getElementById(
+      `editTaskTypeToggle-${taskIndex}`,
+    );
+    toggleGroup.querySelectorAll(".toggle-btn").forEach((btn) => {
+      btn.classList.remove("active");
+    });
+    clickedBtn.classList.add("active");
+
+    // Show/hide cooldown options
+    this.toggleEditCooldownOptions(taskIndex);
+  }
+
   toggleCooldownOptions() {
     const taskType = document.getElementById("taskType").value;
     const cooldownContainer = document.getElementById("cooldownContainer");
@@ -560,6 +600,13 @@ class TaskRandomizer {
     document.getElementById("taskInput").value = "";
     document.getElementById("taskType").value = "oneoff";
     document.getElementById("cooldownPeriod").value = "daily";
+
+    // Reset toggle buttons
+    document.querySelectorAll(".toggle-btn").forEach((btn) => {
+      btn.classList.remove("active");
+    });
+    document.getElementById("toggleOneoff").classList.add("active");
+
     this.toggleCooldownOptions();
 
     this.showToast("Task added successfully", "success");
@@ -740,11 +787,26 @@ class TaskRandomizer {
               />
               <div class="edit-task-options">
                 <div class="edit-option-group">
-                  <label for="editTaskType-${index}">Task Type:</label>
-                  <select id="editTaskType-${index}" onchange="app.toggleEditCooldownOptions(${index})">
-                    <option value="oneoff" ${task.type === "oneoff" ? "selected" : ""}>One-time task</option>
-                    <option value="repeatable" ${task.type === "repeatable" ? "selected" : ""}>Repeatable task</option>
-                  </select>
+                  <label>Task Type:</label>
+                  <div class="task-type-toggle" id="editTaskTypeToggle-${index}">
+                    <button
+                      type="button"
+                      class="toggle-btn ${task.type === "oneoff" ? "active" : ""}"
+                      data-type="oneoff"
+                      onclick="app.handleEditTaskTypeToggle(event, ${index})"
+                    >
+                      One-time task
+                    </button>
+                    <button
+                      type="button"
+                      class="toggle-btn ${task.type === "repeatable" ? "active" : ""}"
+                      data-type="repeatable"
+                      onclick="app.handleEditTaskTypeToggle(event, ${index})"
+                    >
+                      Repeatable task
+                    </button>
+                  </div>
+                  <input type="hidden" id="editTaskType-${index}" value="${task.type}" />
                 </div>
                 <div class="edit-option-group" id="editCooldownContainer-${index}" style="${task.type === "repeatable" ? "display: block" : "display: none"}">
                   <label for="editCooldownPeriod-${index}">Cooldown:</label>
