@@ -1,108 +1,92 @@
 <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="tumbleweedGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#d4b896;stop-opacity:1" />
-      <stop offset="50%" style="stop-color:#c4a373;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#9b7d4f;stop-opacity:1" />
+    <radialGradient id="backgroundGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#f4e6d1;stop-opacity:0.8" />
+      <stop offset="70%" style="stop-color:#e6d3b7;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#d4b896;stop-opacity:0.4" />
+    </radialGradient>
+    <linearGradient id="branchGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b6914;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#a0731a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6b4f0d;stop-opacity:1" />
     </linearGradient>
   </defs>
 
-  <!-- Main spherical body outline - more prominent circle -->
-  <circle cx="40" cy="40" r="32" fill="none" stroke="url(#tumbleweedGrad)" stroke-width="0.5" opacity="0.3"/>
+  <!-- Light brown circular background -->
+  <circle cx="40" cy="40" r="35" fill="url(#backgroundGrad)" />
 
-  <!-- Dense outer ring branches -->
-  <g stroke="url(#tumbleweedGrad)" stroke-width="1.2" fill="none" opacity="0.7">
-    <!-- Top arc branches -->
-    <path d="M 15 25 Q 25 18 35 22 Q 45 18 55 22 Q 65 18 75 25" stroke-linecap="round"/>
-    <path d="M 12 30 Q 20 24 30 28 Q 40 24 50 28 Q 60 24 68 30" stroke-linecap="round"/>
-    <path d="M 10 35 Q 18 32 28 35 Q 38 32 48 35 Q 58 32 70 35" stroke-linecap="round"/>
+  <!-- Main branch 1 - top arc -->
+  <path d="M 40 40 Q 25 25 15 35" stroke="url(#branchGrad)" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- Sub-branches for branch 1 -->
+  <line x1="32" y1="32" x2="28" y2="25" stroke="url(#branchGrad)" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="30" y1="34" x2="25" y2="28" stroke="url(#branchGrad)" stroke-width="1" stroke-linecap="round"/>
+  <line x1="25" y1="32" x2="20" y2="28" stroke="url(#branchGrad)" stroke-width="1" stroke-linecap="round"/>
+  <line x1="22" y1="34" x2="18" y2="30" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
+  <line x1="19" y1="36" x2="15" y2="32" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
 
-    <!-- Left side branches -->
-    <path d="M 8 40 Q 12 32 18 36 Q 24 32 30 38" stroke-linecap="round"/>
-    <path d="M 8 45 Q 14 38 20 42 Q 26 38 32 44" stroke-linecap="round"/>
-    <path d="M 10 52 Q 16 46 22 50 Q 28 46 34 52" stroke-linecap="round"/>
+  <!-- Main branch 2 - top right arc -->
+  <path d="M 40 40 Q 55 25 65 35" stroke="url(#branchGrad)" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- Sub-branches for branch 2 -->
+  <line x1="48" y1="32" x2="52" y2="25" stroke="url(#branchGrad)" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="50" y1="34" x2="55" y2="28" stroke="url(#branchGrad)" stroke-width="1" stroke-linecap="round"/>
+  <line x1="55" y1="32" x2="60" y2="28" stroke="url(#branchGrad)" stroke-width="1" stroke-linecap="round"/>
+  <line x1="58" y1="34" x2="62" y2="30" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
+  <line x1="61" y1="36" x2="65" y2="32" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
 
-    <!-- Right side branches -->
-    <path d="M 72 40 Q 68 32 62 36 Q 56 32 50 38" stroke-linecap="round"/>
-    <path d="M 72 45 Q 66 38 60 42 Q 54 38 48 44" stroke-linecap="round"/>
-    <path d="M 70 52 Q 64 46 58 50 Q 52 46 46 52" stroke-linecap="round"/>
+  <!-- Main branch 3 - right arc -->
+  <path d="M 40 40 Q 55 55 65 45" stroke="url(#branchGrad)" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- Sub-branches for branch 3 -->
+  <line x1="48" y1="48" x2="52" y2="55" stroke="url(#branchGrad)" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="50" y1="46" x2="55" y2="52" stroke="url(#branchGrad)" stroke-width="1" stroke-linecap="round"/>
+  <line x1="55" y1="48" x2="60" y2="52" stroke="url(#branchGrad)" stroke-width="1" stroke-linecap="round"/>
+  <line x1="58" y1="46" x2="62" y2="50" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
+  <line x1="61" y1="44" x2="65" y2="48" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
 
-    <!-- Bottom arc branches -->
-    <path d="M 15 55 Q 25 62 35 58 Q 45 62 55 58 Q 65 62 75 55" stroke-linecap="round"/>
-    <path d="M 12 50 Q 20 56 30 52 Q 40 56 50 52 Q 60 56 68 50" stroke-linecap="round"/>
-    <path d="M 18 62 Q 28 68 38 64 Q 48 68 58 64 Q 62 66 65 62" stroke-linecap="round"/>
-  </g>
+  <!-- Main branch 4 - bottom right arc -->
+  <path d="M 40 40 Q 55 55 45 65" stroke="url(#branchGrad)" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- Sub-branches for branch 4 -->
+  <line x1="48" y1="48" x2="55" y2="52" stroke="url(#branchGrad)" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="46" y1="50" x2="52" y2="55" stroke="url(#branchGrad)" stroke-width="1" stroke-linecap="round"/>
+  <line x1="48" y1="55" x2="52" y2="60" stroke="url(#branchGrad)" stroke-width="1" stroke-linecap="round"/>
+  <line x1="46" y1="58" x2="50" y2="62" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
+  <line x1="44" y1="61" x2="48" y2="65" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
 
-  <!-- Middle layer - more radial branches -->
-  <g stroke="url(#tumbleweedGrad)" stroke-width="1" fill="none" opacity="0.6">
-    <!-- Radial spokes from center -->
-    <path d="M 40 40 Q 35 28 30 20" stroke-linecap="round"/>
-    <path d="M 40 40 Q 45 28 50 20" stroke-linecap="round"/>
-    <path d="M 40 40 Q 52 35 60 30" stroke-linecap="round"/>
-    <path d="M 40 40 Q 52 45 60 50" stroke-linecap="round"/>
-    <path d="M 40 40 Q 45 52 50 60" stroke-linecap="round"/>
-    <path d="M 40 40 Q 35 52 30 60" stroke-linecap="round"/>
-    <path d="M 40 40 Q 28 45 20 50" stroke-linecap="round"/>
-    <path d="M 40 40 Q 28 35 20 30" stroke-linecap="round"/>
+  <!-- Main branch 5 - bottom arc -->
+  <path d="M 40 40 Q 25 55 35 65" stroke="url(#branchGrad)" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- Sub-branches for branch 5 -->
+  <line x1="32" y1="48" x2="25" y2="52" stroke="url(#branchGrad)" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="34" y1="50" x2="28" y2="55" stroke="url(#branchGrad)" stroke-width="1" stroke-linecap="round"/>
+  <line x1="32" y1="55" x2="28" y2="60" stroke="url(#branchGrad)" stroke-width="1" stroke-linecap="round"/>
+  <line x1="34" y1="58" x2="30" y2="62" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
+  <line x1="36" y1="61" x2="32" y2="65" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
 
-    <!-- Connecting curved branches -->
-    <path d="M 25 25 Q 35 22 45 25 Q 55 22 60 28" stroke-linecap="round"/>
-    <path d="M 20 35 Q 30 32 40 35 Q 50 32 60 35" stroke-linecap="round"/>
-    <path d="M 25 45 Q 35 48 45 45 Q 55 48 60 52" stroke-linecap="round"/>
-    <path d="M 20 45 Q 30 48 40 45 Q 50 48 60 45" stroke-linecap="round"/>
-    <path d="M 25 55 Q 35 58 45 55 Q 55 58 60 52" stroke-linecap="round"/>
-  </g>
+  <!-- Main branch 6 - left arc -->
+  <path d="M 40 40 Q 25 25 15 45" stroke="url(#branchGrad)" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- Sub-branches for branch 6 -->
+  <line x1="32" y1="32" x2="25" y2="28" stroke="url(#branchGrad)" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="30" y1="34" x2="25" y2="32" stroke="url(#branchGrad)" stroke-width="1" stroke-linecap="round"/>
+  <line x1="25" y1="38" x2="20" y2="35" stroke="url(#branchGrad)" stroke-width="1" stroke-linecap="round"/>
+  <line x1="22" y1="40" x2="18" y2="38" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
+  <line x1="19" y1="42" x2="15" y2="40" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
 
-  <!-- Inner dense network -->
-  <g stroke="url(#tumbleweedGrad)" stroke-width="0.8" fill="none" opacity="0.5">
-    <!-- Cross-hatching pattern -->
-    <path d="M 30 30 Q 35 35 40 30 Q 45 35 50 30" stroke-linecap="round"/>
-    <path d="M 30 35 Q 35 40 40 35 Q 45 40 50 35" stroke-linecap="round"/>
-    <path d="M 30 40 Q 35 45 40 40 Q 45 45 50 40" stroke-linecap="round"/>
-    <path d="M 30 45 Q 35 50 40 45 Q 45 50 50 45" stroke-linecap="round"/>
-    <path d="M 30 50 Q 35 45 40 50 Q 45 45 50 50" stroke-linecap="round"/>
+  <!-- Main branch 7 - inner top-left arc -->
+  <path d="M 40 40 Q 30 30 25 40" stroke="url(#branchGrad)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <!-- Sub-branches for branch 7 -->
+  <line x1="35" y1="35" x2="32" y2="30" stroke="url(#branchGrad)" stroke-width="1" stroke-linecap="round"/>
+  <line x1="33" y1="36" x2="30" y2="32" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
+  <line x1="30" y1="37" x2="27" y2="34" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
+  <line x1="28" y1="38" x2="25" y2="35" stroke="url(#branchGrad)" stroke-width="0.6" stroke-linecap="round"/>
+  <line x1="26" y1="39" x2="23" y2="36" stroke="url(#branchGrad)" stroke-width="0.6" stroke-linecap="round"/>
 
-    <!-- Vertical connectors -->
-    <path d="M 32 28 Q 32 35 30 42 Q 30 48 32 55" stroke-linecap="round"/>
-    <path d="M 40 25 Q 40 35 38 45 Q 38 55 40 65" stroke-linecap="round"/>
-    <path d="M 48 28 Q 48 35 50 42 Q 50 48 48 55" stroke-linecap="round"/>
+  <!-- Main branch 8 - inner bottom-right arc -->
+  <path d="M 40 40 Q 50 50 55 40" stroke="url(#branchGrad)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <!-- Sub-branches for branch 8 -->
+  <line x1="45" y1="45" x2="48" y2="50" stroke="url(#branchGrad)" stroke-width="1" stroke-linecap="round"/>
+  <line x1="47" y1="44" x2="50" y2="48" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
+  <line x1="50" y1="43" x2="53" y2="46" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
+  <line x1="52" y1="42" x2="55" y2="45" stroke="url(#branchGrad)" stroke-width="0.6" stroke-linecap="round"/>
+  <line x1="54" y1="41" x2="57" y2="44" stroke="url(#branchGrad)" stroke-width="0.6" stroke-linecap="round"/>
 
-    <!-- Diagonal connectors -->
-    <path d="M 28 32 Q 35 38 42 32 Q 48 38 52 32" stroke-linecap="round"/>
-    <path d="M 28 48 Q 35 42 42 48 Q 48 42 52 48" stroke-linecap="round"/>
-  </g>
-
-  <!-- Fine detail layer - tiny branches -->
-  <g stroke="url(#tumbleweedGrad)" stroke-width="0.6" fill="none" opacity="0.4">
-    <!-- Small Y-shaped branches scattered around -->
-    <path d="M 26 24 L 28 27 L 30 24" stroke-linecap="round"/>
-    <path d="M 50 24 L 52 27 L 54 24" stroke-linecap="round"/>
-    <path d="M 22 38 L 24 41 L 26 38" stroke-linecap="round"/>
-    <path d="M 54 38 L 56 41 L 58 38" stroke-linecap="round"/>
-    <path d="M 26 56 L 28 53 L 30 56" stroke-linecap="round"/>
-    <path d="M 50 56 L 52 53 L 54 56" stroke-linecap="round"/>
-    <path d="M 34 28 L 36 31 L 38 28" stroke-linecap="round"/>
-    <path d="M 42 28 L 44 31 L 46 28" stroke-linecap="round"/>
-    <path d="M 34 52 L 36 49 L 38 52" stroke-linecap="round"/>
-    <path d="M 42 52 L 44 49 L 46 52" stroke-linecap="round"/>
-
-    <!-- Tiny connecting twigs -->
-    <path d="M 24 32 Q 26 35 24 38" stroke-linecap="round"/>
-    <path d="M 56 32 Q 54 35 56 38" stroke-linecap="round"/>
-    <path d="M 32 22 Q 35 24 38 22" stroke-linecap="round"/>
-    <path d="M 42 22 Q 45 24 48 22" stroke-linecap="round"/>
-    <path d="M 32 58 Q 35 56 38 58" stroke-linecap="round"/>
-    <path d="M 42 58 Q 45 56 48 58" stroke-linecap="round"/>
-  </g>
-
-  <!-- Scattered debris for realism -->
-  <g opacity="0.3">
-    <circle cx="18" cy="18" r="0.8" fill="url(#tumbleweedGrad)"/>
-    <circle cx="65" cy="22" r="0.6" fill="url(#tumbleweedGrad)"/>
-    <circle cx="12" cy="45" r="0.5" fill="url(#tumbleweedGrad)"/>
-    <circle cx="72" cy="55" r="0.7" fill="url(#tumbleweedGrad)"/>
-    <circle cx="25" cy="72" r="0.4" fill="url(#tumbleweedGrad)"/>
-    <circle cx="58" cy="68" r="0.6" fill="url(#tumbleweedGrad)"/>
-    <circle cx="15" cy="62" r="0.3" fill="url(#tumbleweedGrad)"/>
-  </g>
+  <!-- Central connection point -->
+  <circle cx="40" cy="40" r="2" fill="url(#branchGrad)" />
 </svg>
