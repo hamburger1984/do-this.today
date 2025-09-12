@@ -1352,28 +1352,49 @@ body {
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
   :root {
+    /* Dark mode base colors */
+    --dark-slate-deepest: #111827;
+    --dark-slate-deep: #1f2937;
+    --dark-slate-medium: #374151;
+    --dark-slate-light: #4b5563;
+    --dark-slate-lighter: #6b7280;
+    --dark-text-primary: #f9fafb;
+    --dark-text-secondary: #d1d5db;
+    --dark-text-muted: #9ca3af;
+
+    /* Toast colors for dark mode */
+    --forest-deep: #065f46;
+    --forest-medium: #059669;
+    --mint-light: #d1fae5;
+    --crimson-deep: #7f1d1d;
+    --crimson-medium: #dc2626;
+    --rose-light: #fecaca;
+
+    /* Alpha variants */
+    --sunset-orange-alpha-40: rgba(255, 107, 53, 0.4);
+
     /* Backgrounds */
-    --color-background-card: #1f2937;
-    --color-background-elevated: #374151;
-    --color-background-subtle: #111827;
-    --color-background-muted: #374151;
+    --color-background-card: var(--dark-slate-deep);
+    --color-background-elevated: var(--dark-slate-medium);
+    --color-background-subtle: var(--dark-slate-deepest);
+    --color-background-muted: var(--dark-slate-medium);
 
     /* Text */
-    --color-text-primary: #f9fafb;
-    --color-text-secondary: #d1d5db;
-    --color-text-muted: #9ca3af;
+    --color-text-primary: var(--dark-text-primary);
+    --color-text-secondary: var(--dark-text-secondary);
+    --color-text-muted: var(--dark-text-muted);
     --color-text-on-primary: #ffffff;
 
     /* Task List Colors */
-    --color-task-background: #374151;
-    --color-task-background-hover: #4b5563;
-    --color-task-border: #4b5563;
-    --color-task-text: #f9fafb;
-    --color-task-text-muted: #d1d5db;
+    --color-task-background: var(--dark-slate-medium);
+    --color-task-background-hover: var(--dark-slate-light);
+    --color-task-border: var(--dark-slate-light);
+    --color-task-text: var(--dark-text-primary);
+    --color-task-text-muted: var(--dark-text-secondary);
 
     /* Borders */
-    --color-border-light: #4b5563;
-    --color-border-medium: #6b7280;
+    --color-border-light: var(--dark-slate-light);
+    --color-border-medium: var(--dark-slate-lighter);
     --color-border-focus: var(--sunset-orange);
 
     /* Success/Error states (keep sunset theme) */
@@ -1390,8 +1411,8 @@ body {
     /* Gradients for dark mode */
     --gradient-background-subtle: linear-gradient(
       135deg,
-      #111827 0%,
-      #1f2937 100%
+      var(--dark-slate-deepest) 0%,
+      var(--dark-slate-deep) 100%
     );
   }
 
@@ -1403,45 +1424,45 @@ body {
 
   /* Update SVG icons for dark mode visibility */
   .randomizer-icon svg path {
-    stroke: #f9fafb;
+    stroke: var(--dark-text-primary);
   }
 
   /* Toast messages in dark mode */
   .toast.success {
-    background: #065f46;
-    border-color: #059669;
-    color: #d1fae5;
+    background: var(--forest-deep);
+    border-color: var(--forest-medium);
+    color: var(--mint-light);
   }
 
   .toast.error {
-    background: #7f1d1d;
-    border-color: #dc2626;
-    color: #fecaca;
+    background: var(--crimson-deep);
+    border-color: var(--crimson-medium);
+    color: var(--rose-light);
   }
 
   /* Input fields in dark mode */
   input[type="text"],
   textarea {
-    background: #374151;
-    border-color: #4b5563;
-    color: #f9fafb;
+    background: var(--dark-slate-medium);
+    border-color: var(--dark-slate-light);
+    color: var(--dark-text-primary);
   }
 
   input[type="text"]:focus,
   textarea:focus {
     border-color: var(--sunset-orange);
-    background: #4b5563;
+    background: var(--dark-slate-light);
   }
 
   /* Selection highlight in dark mode */
   ::selection {
-    background: rgba(255, 107, 53, 0.4);
-    color: #ffffff;
+    background: var(--sunset-orange-alpha-40);
+    color: var(--dark-text-primary);
   }
 
   ::-moz-selection {
-    background: rgba(255, 107, 53, 0.4);
-    color: #ffffff;
+    background: var(--sunset-orange-alpha-40);
+    color: var(--dark-text-primary);
   }
 }
 
