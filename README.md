@@ -1,6 +1,8 @@
-# Task Dice
+# do this - today!
 
 A mobile-first Progressive Web App that helps you decide what to do next by randomly selecting from your personal task list. Perfect for managing both one-time tasks and daily routines with smart cooldown periods.
+
+**🌐 Live App: [do-this.today](https://do-this.today)**
 
 
 
@@ -90,7 +92,7 @@ A mobile-first Progressive Web App that helps you decide what to do next by rand
 ## 🎨 Design & Theming
 
 ### Sunset-Inspired Color Theme ✨
-Task Dice features a warm, eye-friendly sunset-inspired design that creates a perfect balance between visibility and comfort:
+**do this - today!** features a warm, eye-friendly sunset-inspired design that creates a perfect balance between visibility and comfort:
 
 - **Bright, Comfortable Background**: Very light cream base that's easy on the eyes in any lighting
 - **High Contrast Elements**: Excellent readability with carefully chosen text colors
@@ -162,3 +164,5 @@ This is an open source project! Feel free to:
 ---
 
 **Made with ❤️ for productivity and decision-making**
+
+🌐 **Visit: [do-this.today](https://do-this.today)**

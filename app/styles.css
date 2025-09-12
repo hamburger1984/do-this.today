@@ -1156,18 +1156,6 @@ body {
   gap: 0.75rem;
 }
 
-@media (min-width: 481px) {
-  .settings-actions {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .settings-actions button {
-    flex: 1;
-    min-width: 180px;
-  }
-}
-
 .settings-actions button {
   justify-content: flex-start;
   text-align: left;
@@ -1295,6 +1283,16 @@ body {
 
 /* Responsive design for larger screens */
 @media (min-width: 481px) {
+  .settings-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .settings-actions button {
+    flex: 1;
+    min-width: 180px;
+  }
+
   .app-container {
     max-width: 540px;
     margin: 0 auto;

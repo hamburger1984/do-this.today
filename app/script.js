@@ -1,9 +1,9 @@
 /*
- * Task Dice - A mobile-first Progressive Web App for task randomization
+ * do this - today! - A mobile-first Progressive Web App for task randomization
  * Copyright (c) 2025 Andreas Krohn
  * Licensed under the MIT License. See LICENSE file for details.
  */
-class TaskDiceApp {
+class DoThisApp {
   constructor() {
     this.tasks = [];
     this.deletedTasks = [];
@@ -158,19 +158,19 @@ class TaskDiceApp {
 
   // Local storage management
   saveTasks() {
-    localStorage.setItem("nowwhat-tasks", JSON.stringify(this.tasks));
-    localStorage.setItem("nowwhat-deleted", JSON.stringify(this.deletedTasks));
-    localStorage.setItem("nowwhat-completed", this.completedTasks.toString());
-    localStorage.setItem("nowwhat-active", JSON.stringify(this.activeTask));
-    localStorage.setItem("nowwhat-nextid", this.nextTaskId.toString());
+    localStorage.setItem("dothis-tasks", JSON.stringify(this.tasks));
+    localStorage.setItem("dothis-deleted", JSON.stringify(this.deletedTasks));
+    localStorage.setItem("dothis-completed", this.completedTasks.toString());
+    localStorage.setItem("dothis-active", JSON.stringify(this.activeTask));
+    localStorage.setItem("dothis-nextid", this.nextTaskId.toString());
   }
 
   loadTasks() {
-    const saved = localStorage.getItem("nowwhat-tasks");
-    const deletedSaved = localStorage.getItem("nowwhat-deleted");
-    const completedSaved = localStorage.getItem("nowwhat-completed");
-    const activeSaved = localStorage.getItem("nowwhat-active");
-    const nextIdSaved = localStorage.getItem("nowwhat-nextid");
+    const saved = localStorage.getItem("dothis-tasks");
+    const deletedSaved = localStorage.getItem("dothis-deleted");
+    const completedSaved = localStorage.getItem("dothis-completed");
+    const activeSaved = localStorage.getItem("dothis-active");
+    const nextIdSaved = localStorage.getItem("dothis-nextid");
 
     if (saved) {
       try {
@@ -227,7 +227,7 @@ class TaskDiceApp {
         console.error("Error loading tasks from localStorage:", error);
         this.tasks = [];
         // Clear corrupted data
-        localStorage.removeItem("nowwhat-tasks");
+        localStorage.removeItem("dothis-tasks");
       }
     } else {
       // Add some sample tasks for first-time users
@@ -363,7 +363,7 @@ class TaskDiceApp {
       } catch (error) {
         console.error("Error loading deleted tasks from localStorage:", error);
         this.deletedTasks = [];
-        localStorage.removeItem("nowwhat-deleted");
+        localStorage.removeItem("dothis-deleted");
       }
     }
 
@@ -1382,11 +1382,11 @@ class TaskDiceApp {
 
     // Check localStorage data
     console.log("Raw localStorage data:");
-    console.log("- tasks:", localStorage.getItem("nowwhat-tasks"));
-    console.log("- deleted:", localStorage.getItem("nowwhat-deleted"));
-    console.log("- completed:", localStorage.getItem("nowwhat-completed"));
-    console.log("- active:", localStorage.getItem("nowwhat-active"));
-    console.log("- nextid:", localStorage.getItem("nowwhat-nextid"));
+    console.log("- tasks:", localStorage.getItem("dothis-tasks"));
+    console.log("- deleted:", localStorage.getItem("dothis-deleted"));
+    console.log("- completed:", localStorage.getItem("dothis-completed"));
+    console.log("- active:", localStorage.getItem("dothis-active"));
+    console.log("- nextid:", localStorage.getItem("dothis-nextid"));
 
     console.groupEnd();
 
@@ -1422,7 +1422,7 @@ class TaskDiceApp {
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `nowwhat-tasks-${new Date().toISOString().split("T")[0]}.json`;
+      a.download = `dothis-tasks-${new Date().toISOString().split("T")[0]}.json`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -1455,11 +1455,11 @@ class TaskDiceApp {
 
     try {
       // Clear all localStorage data
-      localStorage.removeItem("nowwhat-tasks");
-      localStorage.removeItem("nowwhat-deleted");
-      localStorage.removeItem("nowwhat-completed");
-      localStorage.removeItem("nowwhat-active");
-      localStorage.removeItem("nowwhat-nextid");
+      localStorage.removeItem("dothis-tasks");
+      localStorage.removeItem("dothis-deleted");
+      localStorage.removeItem("dothis-completed");
+      localStorage.removeItem("dothis-active");
+      localStorage.removeItem("dothis-nextid");
 
       // Reset all app state
       this.tasks = [];
@@ -1550,8 +1550,8 @@ class TaskDiceApp {
         "Are you sure you want to delete all tasks and reset your progress? This cannot be undone.",
       )
     ) {
-      localStorage.removeItem("nowwhat-tasks");
-      localStorage.removeItem("nowwhat-completed");
+      localStorage.removeItem("dothis-tasks");
+      localStorage.removeItem("dothis-completed");
       this.tasks = [];
       this.completedTasks = 0;
       this.currentSelectedTask = null;
@@ -1653,7 +1653,7 @@ class TaskDiceApp {
 
 // Initialize the app when DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
-  window.app = new TaskDiceApp();
+  window.app = new DoThisApp();
 });
 
 // Service Worker registration for PWA capabilities (optional enhancement)

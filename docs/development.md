@@ -1,6 +1,8 @@
-# Development Guide - Task Dice
+# Development Guide - do this - today!
 
-This guide is for developers who want to contribute to or customize the Task Dice app.
+This guide is for developers who want to contribute to or customize the **do this - today!** app.
+
+**🌐 Live App: [do-this.today](https://do-this.today)**
 
 
 
@@ -30,23 +32,25 @@ This guide is for developers who want to contribute to or customize the Task Dic
 ## 📁 Project Structure
 
 ```
-TaskDice/
-├── index.html              # Main app entry point
-├── styles.css              # Mobile-first CSS
-├── script.js               # Core app logic
-├── manifest.json           # PWA manifest
-├── sw.js                   # Service Worker
-├── debug-test.html         # Debug utility
-└── img/                    # SVG icons
+do-this-today/
+├── app/
+│   ├── index.html              # Main app entry point
+│   ├── styles.css              # Mobile-first CSS
+│   ├── script.js               # Core app logic
+│   ├── manifest.json           # PWA manifest
+│   ├── sw.js                   # Service Worker
+│   ├── favicon.svg             # App icon
+│   └── img/                    # SVG icons
+└── docs/                       # Documentation
 ```
 
 ## 🏗️ Architecture Overview
 
-### Core Class: TaskRandomizer
+### Core Class: DoThisApp
 The app is built around a single ES6 class that manages all functionality:
 
 ```javascript
-class TaskRandomizer {
+class DoThisApp {
   constructor()           // Initialize app state
   init()                 // Setup and bind events
   loadTasks()            // Load data from localStorage
@@ -67,11 +71,11 @@ class TaskRandomizer {
 ## 💾 Data Management
 
 ### localStorage Keys
-- `nowwhat-tasks` - Active tasks array
-- `nowwhat-deleted` - Deleted tasks array
-- `nowwhat-completed` - Completion count
-- `nowwhat-active` - Active task object
-- `nowwhat-nextid` - Next task ID
+- `dothis-tasks` - Active tasks array
+- `dothis-deleted` - Deleted tasks array
+- `dothis-completed` - Completion count
+- `dothis-active` - Active task object
+- `dothis-nextid` - Next task ID
 
 ### Task Object Schema
 ```javascript
@@ -227,11 +231,7 @@ app.resetEverything()           // Clear all data
 ```
 
 ### Debug Test Tool
-Use `debug-test.html` for:
-- Data integrity checking
-- Corruption cleanup
-- Backup export
-- Complete reset
+For debugging, use the browser console commands available when the main app is loaded
 
 ### Common Issues
 - **localStorage disabled**: App fails to save data

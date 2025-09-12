@@ -1,6 +1,6 @@
 {
-  "name": "Task Dice",
-  "short_name": "Task Dice",
+  "name": "do this - today!",
+  "short_name": "do this",
   "description": "A mobile-first app to help you decide what to do next",
   "start_url": "/",
   "display": "standalone",

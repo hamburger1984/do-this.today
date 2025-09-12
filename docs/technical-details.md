@@ -1,6 +1,8 @@
-# Technical Documentation - Task Dice
+# Technical Documentation - do this - today!
 
-This document contains detailed technical information about the implementation, architecture, and data structures of the Task Dice app, including details about the new sunset-inspired color theme system.
+This document contains detailed technical information about the implementation, architecture, and data structures of the **do this - today!** app, including details about the new sunset-inspired color theme system.
+
+**🌐 Live App: [do-this.today](https://do-this.today)**
 
 ## 🏗️ Architecture Overview
 
@@ -28,18 +30,19 @@ This document contains detailed technical information about the implementation, 
 ## 📁 File Structure & Functions
 
 ```
-NowWhat/
-├── index.html              # Main application entry point
-├── styles.css              # Mobile-first CSS with CSS variables
-├── script.js               # Core application logic (TaskRandomizer class)
-├── manifest.json           # PWA manifest for app installation
-├── sw.js                   # Service Worker for offline support
-├── favicon.svg             # App icon in SVG format
-├── debug-test.html         # Standalone data integrity diagnostic tool
-├── generate-favicon.html   # Utility for generating favicon files
+do-this-today/
+├── app/
+│   ├── index.html              # Main application entry point
+│   ├── styles.css              # Mobile-first CSS with CSS variables
+│   ├── script.js               # Core application logic (TaskDiceApp class)
+│   ├── manifest.json           # PWA manifest for app installation
+│   ├── sw.js                   # Service Worker for offline support
+│   ├── favicon.svg             # App icon in SVG format
+│   └── img/                    # SVG icon assets
 ├── docs/
-│   └── technical-details.md # This file
-└── img/                    # SVG icon assets
+│   ├── development.md          # Development guide
+│   └── technical-details.md    # This file
+└── debug-test.html             # Standalone data integrity diagnostic tool
     ├── arrow-left.svg      # Back navigation (24x24)
     ├── check.svg           # Complete/accept actions (20x20)
     ├── clock.svg           # Timer/cooldown indicators (20x20)
@@ -57,15 +60,14 @@ NowWhat/
 #### Core Application Files
 - **`index.html`**: Single-page application structure with semantic HTML5
 - **`styles.css`**: Mobile-first CSS with CSS custom properties for theming
-- **`script.js`**: Main application logic encapsulated in TaskRandomizer ES6 class
+- **`script.js`**: Main application logic encapsulated in DoThisApp ES6 class
 
 #### PWA Files
 - **`manifest.json`**: Defines app metadata for installation and app store listing
 - **`sw.js`**: Service Worker for caching and offline functionality
 
 #### Utility Files
-- **`debug-test.html`**: Standalone diagnostic tool for data corruption issues
-- **`generate-favicon.html`**: Development utility for creating favicon assets
+
 
 ## 💾 Data Storage Implementation
 
@@ -73,11 +75,11 @@ NowWhat/
 The app uses the following localStorage keys:
 
 ```javascript
-'nowwhat-tasks'      // JSON array of active tasks
-'nowwhat-deleted'    // JSON array of deleted tasks (trash)
-'nowwhat-completed'  // Integer count of completed tasks
-'nowwhat-active'     // JSON object of currently active task
-'nowwhat-nextid'     // Integer for next task ID assignment
+'dothis-tasks'      // JSON array of active tasks
+'dothis-deleted'    // JSON array of deleted tasks (trash)
+'dothis-completed'  // Integer count of completed tasks
+'dothis-active'     // JSON object of currently active task
+'dothis-nextid'     // Integer for next task ID assignment
 ```
 
 ### Task Data Structure
@@ -131,7 +133,7 @@ When a task is active (user has accepted it), it's stored with additional metada
 
 ## 🔧 Core Application Logic
 
-### TaskRandomizer Class Structure
+### DoThisApp Class Structure
 
 The main application is implemented as an ES6 class with the following key methods:
 
@@ -359,13 +361,7 @@ app.loadTasks()                 // Reload from localStorage
 
 ### Debug Test Tool
 
-`debug-test.html` provides a standalone interface for:
-- Data integrity checking
-- Corruption cleanup
-- Backup export
-- Complete data reset
-
-Useful when the main app fails to load due to corrupted data.
+The main app provides debug tools via browser console commands when corrupted data prevents normal operation.
 
 ## 📊 Performance Considerations
 
