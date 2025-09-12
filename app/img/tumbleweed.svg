@@ -18,75 +18,58 @@
   <!-- Root at bottom center -->
   <circle cx="40" cy="75" r="2.5" fill="url(#branchGrad)" />
 
-  <!-- Main branch 1 - center upward -->
-  <path d="M 40 75 Q 40 50 38 20" stroke="url(#branchGrad)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-  <!-- Sub-branches for branch 1 -->
-  <line x1="39" y1="65" x2="35" y2="62" stroke="url(#branchGrad)" stroke-width="1.2" stroke-linecap="round"/>
-  <line x1="39" y1="55" x2="34" y2="50" stroke="url(#branchGrad)" stroke-width="1" stroke-linecap="round"/>
-  <line x1="38" y1="40" x2="33" y2="37" stroke="url(#branchGrad)" stroke-width="1" stroke-linecap="round"/>
-  <line x1="38" y1="30" x2="42" y2="25" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
-  <line x1="38" y1="23" x2="35" y2="18" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
-
-  <!-- Main branch 2 - left upward arc (longer and more curved) -->
-  <path d="M 40 75 Q 15 50 5 20" stroke="url(#branchGrad)" stroke-width="2" fill="none" stroke-linecap="round"/>
-  <!-- Sub-branches for branch 2 -->
-  <line x1="32" y1="68" x2="26" y2="66" stroke="url(#branchGrad)" stroke-width="1.2" stroke-linecap="round"/>
-  <line x1="25" y1="58" x2="18" y2="54" stroke="url(#branchGrad)" stroke-width="1" stroke-linecap="round"/>
-  <line x1="18" y1="48" x2="12" y2="44" stroke="url(#branchGrad)" stroke-width="1" stroke-linecap="round"/>
-  <line x1="12" y1="38" x2="6" y2="34" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
-  <line x1="8" y1="28" x2="2" y2="24" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
-
-  <!-- Main branch 3 - right upward arc (longer and more curved) -->
-  <path d="M 40 75 Q 65 50 75 20" stroke="url(#branchGrad)" stroke-width="2" fill="none" stroke-linecap="round"/>
-  <!-- Sub-branches for branch 3 -->
-  <line x1="48" y1="68" x2="54" y2="66" stroke="url(#branchGrad)" stroke-width="1.2" stroke-linecap="round"/>
-  <line x1="55" y1="58" x2="62" y2="54" stroke="url(#branchGrad)" stroke-width="1" stroke-linecap="round"/>
-  <line x1="62" y1="48" x2="68" y2="44" stroke="url(#branchGrad)" stroke-width="1" stroke-linecap="round"/>
-  <line x1="68" y1="38" x2="74" y2="34" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
-  <line x1="72" y1="28" x2="78" y2="24" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
-
-  <!-- Main branch 4 - left-center upward (more curved) -->
-  <path d="M 40 75 Q 25 60 18 30" stroke="url(#branchGrad)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-  <!-- Sub-branches for branch 4 -->
-  <line x1="36" y1="72" x2="30" y2="70" stroke="url(#branchGrad)" stroke-width="1" stroke-linecap="round"/>
-  <line x1="30" y1="65" x2="24" y2="62" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
-  <line x1="25" y1="55" x2="19" y2="52" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
-  <line x1="21" y1="45" x2="15" y2="42" stroke="url(#branchGrad)" stroke-width="0.6" stroke-linecap="round"/>
-  <line x1="19" y1="35" x2="13" y2="32" stroke="url(#branchGrad)" stroke-width="0.6" stroke-linecap="round"/>
-
-  <!-- Main branch 5 - right-center upward (more curved) -->
-  <path d="M 40 75 Q 55 60 62 30" stroke="url(#branchGrad)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-  <!-- Sub-branches for branch 5 -->
-  <line x1="44" y1="72" x2="50" y2="70" stroke="url(#branchGrad)" stroke-width="1" stroke-linecap="round"/>
-  <line x1="50" y1="65" x2="56" y2="62" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
-  <line x1="55" y1="55" x2="61" y2="52" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
-  <line x1="59" y1="45" x2="65" y2="42" stroke="url(#branchGrad)" stroke-width="0.6" stroke-linecap="round"/>
-  <line x1="61" y1="35" x2="67" y2="32" stroke="url(#branchGrad)" stroke-width="0.6" stroke-linecap="round"/>
-
-  <!-- Main branch 6 - far left upward (longer, more curved) -->
-  <path d="M 40 75 Q 10 65 2 40" stroke="url(#branchGrad)" stroke-width="1.6" fill="none" stroke-linecap="round"/>
-  <!-- Sub-branches for branch 6 -->
-  <line x1="28" y1="73" x2="22" y2="72" stroke="url(#branchGrad)" stroke-width="1" stroke-linecap="round"/>
-  <line x1="20" y1="70" x2="14" y2="68" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
-  <line x1="12" y1="65" x2="6" y2="62" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
-  <line x1="6" y1="58" x2="1" y2="55" stroke="url(#branchGrad)" stroke-width="0.6" stroke-linecap="round"/>
-  <line x1="4" y1="48" x2="0" y2="45" stroke="url(#branchGrad)" stroke-width="0.6" stroke-linecap="round"/>
-
-  <!-- Main branch 7 - far right upward (longer, more curved) -->
-  <path d="M 40 75 Q 70 65 78 40" stroke="url(#branchGrad)" stroke-width="1.6" fill="none" stroke-linecap="round"/>
-  <!-- Sub-branches for branch 7 -->
-  <line x1="52" y1="73" x2="58" y2="72" stroke="url(#branchGrad)" stroke-width="1" stroke-linecap="round"/>
-  <line x1="60" y1="70" x2="66" y2="68" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
-  <line x1="68" y1="65" x2="74" y2="62" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
-  <line x1="74" y1="58" x2="79" y2="55" stroke="url(#branchGrad)" stroke-width="0.6" stroke-linecap="round"/>
-  <line x1="76" y1="48" x2="80" y2="45" stroke="url(#branchGrad)" stroke-width="0.6" stroke-linecap="round"/>
-
-  <!-- Main branch 8 - top arc branch (longer) -->
-  <path d="M 40 75 Q 42 40 35 10" stroke="url(#branchGrad)" stroke-width="1.4" fill="none" stroke-linecap="round"/>
-  <!-- Sub-branches for branch 8 -->
-  <line x1="41" y1="60" x2="45" y2="58" stroke="url(#branchGrad)" stroke-width="1" stroke-linecap="round"/>
-  <line x1="41" y1="50" x2="45" y2="47" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
-  <line x1="39" y1="30" x2="43" y2="27" stroke="url(#branchGrad)" stroke-width="0.8" stroke-linecap="round"/>
-  <line x1="37" y1="20" x2="40" y2="15" stroke="url(#branchGrad)" stroke-width="0.6" stroke-linecap="round"/>
-  <line x1="36" y1="13" x2="32" y2="8" stroke="url(#branchGrad)" stroke-width="0.6" stroke-linecap="round"/>
+  <path
+     d="M 40 75 Q 45 50 38 20"
+     stroke="url(#branchGrad)"
+     stroke-width="2.2"
+     fill="none"
+     stroke-linecap="round" />
+  <path
+     d="M 40 75 Q 78 55 63 30"
+     stroke="url(#branchGrad)"
+     stroke-width="2.2"
+     fill="none"
+     stroke-linecap="round" />
+  <path
+     d="M 40 75 Q 5 50 30 18"
+     stroke="url(#branchGrad)"
+     stroke-width="2"
+     fill="none"
+     stroke-linecap="round" />
+  <path
+     d="M 40 75 Q 75 55 50 20"
+     stroke="url(#branchGrad)"
+     stroke-width="2"
+     fill="none"
+     stroke-linecap="round" />
+  <path
+     d="M 40 75 Q 25 60 30 30"
+     stroke="url(#branchGrad)"
+     stroke-width="1.8"
+     fill="none"
+     stroke-linecap="round" />
+  <path
+     d="M 40 75 Q 55 60 50 30"
+     stroke="url(#branchGrad)"
+     stroke-width="1.8"
+     fill="none"
+     stroke-linecap="round" />
+  <path
+     d="M 40 75 Q -10 60 20 22"
+     stroke="url(#branchGrad)"
+     stroke-width="1.6"
+     fill="none"
+     stroke-linecap="round" />
+  <path
+     d="M 40 75 Q 70 70 71 40"
+     stroke="url(#branchGrad)"
+     stroke-width="1.6"
+     fill="none"
+     stroke-linecap="round" />
+  <path
+     d="M 40 75 Q 28 40 35 10"
+     stroke="url(#branchGrad)"
+     stroke-width="1.4"
+     fill="none"
+     stroke-linecap="round" />
 </svg>
