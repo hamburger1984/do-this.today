@@ -1392,6 +1392,11 @@ body {
     --color-task-text: var(--dark-text-primary);
     --color-task-text-muted: var(--dark-text-secondary);
 
+    /* Action Colors */
+    --color-secondary-action: var(--ocean-light);
+    --color-secondary-action-hover: var(--ocean-medium);
+    --color-secondary-action-active: var(--ocean-deep);
+
     /* Borders */
     --color-border-light: var(--dark-slate-light);
     --color-border-medium: var(--dark-slate-lighter);
