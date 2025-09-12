@@ -1413,6 +1413,14 @@ body {
     /* Modal Overlay */
     --modal-overlay: rgba(0, 0, 0, 0.8);
 
+    /* Header gradient with better contrast for dark mode */
+    --gradient-sunset-accent: linear-gradient(
+      135deg,
+      var(--dark-slate-deep) 0%,
+      var(--dark-slate-medium) 50%,
+      var(--sunset-orange) 100%
+    );
+
     /* Gradients for dark mode */
     --gradient-background-subtle: linear-gradient(
       135deg,
