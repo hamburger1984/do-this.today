@@ -46,7 +46,7 @@ do-this-today/
     ├── arrow-left.svg      # Back navigation (24x24)
     ├── check.svg           # Complete/accept actions (20x20)
     ├── clock.svg           # Timer/cooldown indicators (20x20)
-    ├── dice.svg            # Randomize task action (20x20)
+    ├── dice.svg            # Icon assets (20x20)
     ├── download.svg        # Export data action (16x16)
     ├── edit.svg            # Edit task action (16x16)
     ├── info.svg            # Debug/info actions (16x16)

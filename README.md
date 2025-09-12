@@ -55,7 +55,7 @@ A mobile-first Progressive Web App that helps you decide what to do next by rand
   - Monthly (30 days)
 
 ### Working with Tasks
-1. **Pick a random task** - Click the big dice button
+1. **Pick a random task** - Click the "Pick Random Task" button
 2. **Try another** - Don't like it? Pick again
 3. **Accept it** - Click "Let's Do It!" to start the timer
 4. **Complete or abandon** - Mark done when finished, or give up with a reason

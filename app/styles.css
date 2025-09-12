@@ -37,7 +37,7 @@
   --color-secondary-action-active: var(--ocean-deep);
 
   /* Backgrounds */
-  --color-background-main: var(--cream-base);
+
   --color-background-card: var(--cream-warm);
   --color-background-elevated: #ffffff;
   --color-background-subtle: var(--sand-light);
@@ -48,8 +48,6 @@
   --color-text-secondary: var(--slate-medium);
   --color-text-muted: var(--slate-soft);
   --color-text-on-primary: #ffffff;
-  --color-text-on-dark: #ffffff;
-  --color-text-accent: var(--sunset-orange);
 
   /* Task List Colors */
   --color-task-background: var(--cream-warm);

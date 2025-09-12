@@ -1543,27 +1543,6 @@ class DoThisApp {
     }
   }
 
-  // Public method to clear all data (useful for testing/reset)
-  clearAllData() {
-    if (
-      confirm(
-        "Are you sure you want to delete all tasks and reset your progress? This cannot be undone.",
-      )
-    ) {
-      localStorage.removeItem("dothis-tasks");
-      localStorage.removeItem("dothis-completed");
-      this.tasks = [];
-      this.completedTasks = 0;
-      this.currentSelectedTask = null;
-      this.activeTask = null;
-      this.clearActiveTaskTimer();
-      this.updateUI();
-      this.updateStats();
-      this.resetRandomizer();
-      this.showToast("All data cleared", "success");
-    }
-  }
-
   // Trash management methods
   renderTrashList() {
     const trashList = document.getElementById("trashList");
