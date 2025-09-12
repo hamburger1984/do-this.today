@@ -1,9 +1,9 @@
 /*
- * TaskDice - A mobile-first Progressive Web App for task randomization
+ * Task Dice - A mobile-first Progressive Web App for task randomization
  * Copyright (c) 2025 Andreas Krohn
  * Licensed under the MIT License. See LICENSE file for details.
  */
-class TaskRandomizer {
+class TaskDiceApp {
   constructor() {
     this.tasks = [];
     this.deletedTasks = [];
@@ -33,7 +33,6 @@ class TaskRandomizer {
       this.validateDataIntegrity();
     } catch (error) {
       console.error("Error during app initialization:", error);
-      this.handleInitializationError(error);
     }
   }
 
@@ -50,39 +49,6 @@ class TaskRandomizer {
     if (hasIssues) {
       console.warn(
         "Data integrity issues detected. Consider running app.cleanupCorruptedData() from console.",
-      );
-    }
-  }
-
-  handleInitializationError(error) {
-    // Try to recover from initialization errors
-    try {
-      console.warn("Attempting recovery from initialization error...");
-      this.tasks = [];
-      this.deletedTasks = [];
-      this.completedTasks = 0;
-      this.activeTask = null;
-      this.nextTaskId = 1;
-
-      // Clear potentially corrupted data
-      localStorage.removeItem("nowwhat-tasks");
-      localStorage.removeItem("nowwhat-deleted");
-
-      // Initialize with default tasks
-      this.loadTasks();
-      this.updateUI();
-      this.updateStats();
-      this.updateRandomizeButton();
-
-      this.showToast(
-        "App recovered from data corruption. Some tasks may have been lost.",
-        "warning",
-      );
-    } catch (recoveryError) {
-      console.error("Recovery failed:", recoveryError);
-      this.showToast(
-        "App failed to initialize properly. Please refresh the page.",
-        "error",
       );
     }
   }
@@ -1028,6 +994,7 @@ class TaskRandomizer {
 
   // Randomizer methods
   randomizeTask() {
+    playConfetti();
     const availableTasks = this.getAvailableTasks();
 
     if (availableTasks.length === 0) {
@@ -1144,7 +1111,8 @@ class TaskRandomizer {
       this.updateStats();
       this.updateRandomizeButton();
       this.showTaskCompleted();
-      this.showToast("Great job! Task completed! 🎉", "success");
+      //this.showToast("Great job! Task completed! 🎉", "success");
+      playConfetti();
     }
   }
 
@@ -1362,7 +1330,7 @@ class TaskRandomizer {
 
   // Public method to debug and inspect data (useful for troubleshooting)
   debugData() {
-    console.group("Now What? Debug Information");
+    console.group("Task Dice - Debug Information");
     console.log("Tasks:", this.tasks);
     console.log("Deleted Tasks:", this.deletedTasks);
     console.log("Completed Tasks:", this.completedTasks);
@@ -1525,7 +1493,7 @@ class TaskRandomizer {
   // Debug data in console
   debugDataConsole() {
     console.clear();
-    console.log("📊 Now What? Debug Information");
+    console.log("📊 Task Dice - Debug Information");
     console.log("===============================");
     const debugInfo = this.debugData();
     this.showToast("Debug information logged to console", "default");
@@ -1685,7 +1653,7 @@ class TaskRandomizer {
 
 // Initialize the app when DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
-  window.app = new TaskRandomizer();
+  window.app = new TaskDiceApp();
 });
 
 // Service Worker registration for PWA capabilities (optional enhancement)
@@ -1761,3 +1729,65 @@ document.addEventListener(
   },
   false,
 );
+
+/**
+ * A lightweight confetti animation that can be triggered anywhere.
+ *
+ * Usage:
+ *   import { playConfetti } from './confetti.js';
+ *   playConfetti();
+ */
+
+function playConfetti() {
+  const canvas = document.createElement("canvas");
+  canvas.id = "confettiCanvas";
+  canvas.style.position = "fixed";
+  canvas.style.top = "0";
+  canvas.style.left = "0";
+  canvas.style.width = "100%";
+  canvas.style.height = "100%";
+  canvas.style.pointerEvents = "none";
+  canvas.style.zIndex = "9999";
+  document.body.appendChild(canvas);
+
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const colors = ["#ff595e", "#ffca3a", "#8ac926", "#1982c4", "#6a4c93"];
+  const confettiCount = 150;
+  const confetti = [];
+
+  for (let i = 0; i < confettiCount; i++) {
+    confetti.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height + canvas.height / 2,
+      size: Math.random() * 6 + 4,
+      x_speed: (Math.random() - 0.5) * 3,
+      y_speed: Math.random() * 3 + 4,
+      color: colors[Math.floor(Math.random() * colors.length)],
+    });
+  }
+
+  let frame = 0;
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (const p of confetti) {
+      p.y -= Math.cos(frame * 0.02) * p.y_speed;
+      p.x += Math.sin(frame * 0.01) * p.x_speed;
+
+      ctx.fillStyle = p.color;
+      ctx.fillRect(p.x, p.y, p.size, p.size);
+    }
+
+    frame++;
+    if (frame < 200) {
+      requestAnimationFrame(draw);
+    } else {
+      document.body.removeChild(canvas);
+    }
+  }
+
+  draw();
+}
