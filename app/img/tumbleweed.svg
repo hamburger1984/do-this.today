@@ -1,0 +1,108 @@
+<svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="tumbleweedGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#d4b896;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#c4a373;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#9b7d4f;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Main spherical body outline - more prominent circle -->
+  <circle cx="40" cy="40" r="32" fill="none" stroke="url(#tumbleweedGrad)" stroke-width="0.5" opacity="0.3"/>
+
+  <!-- Dense outer ring branches -->
+  <g stroke="url(#tumbleweedGrad)" stroke-width="1.2" fill="none" opacity="0.7">
+    <!-- Top arc branches -->
+    <path d="M 15 25 Q 25 18 35 22 Q 45 18 55 22 Q 65 18 75 25" stroke-linecap="round"/>
+    <path d="M 12 30 Q 20 24 30 28 Q 40 24 50 28 Q 60 24 68 30" stroke-linecap="round"/>
+    <path d="M 10 35 Q 18 32 28 35 Q 38 32 48 35 Q 58 32 70 35" stroke-linecap="round"/>
+
+    <!-- Left side branches -->
+    <path d="M 8 40 Q 12 32 18 36 Q 24 32 30 38" stroke-linecap="round"/>
+    <path d="M 8 45 Q 14 38 20 42 Q 26 38 32 44" stroke-linecap="round"/>
+    <path d="M 10 52 Q 16 46 22 50 Q 28 46 34 52" stroke-linecap="round"/>
+
+    <!-- Right side branches -->
+    <path d="M 72 40 Q 68 32 62 36 Q 56 32 50 38" stroke-linecap="round"/>
+    <path d="M 72 45 Q 66 38 60 42 Q 54 38 48 44" stroke-linecap="round"/>
+    <path d="M 70 52 Q 64 46 58 50 Q 52 46 46 52" stroke-linecap="round"/>
+
+    <!-- Bottom arc branches -->
+    <path d="M 15 55 Q 25 62 35 58 Q 45 62 55 58 Q 65 62 75 55" stroke-linecap="round"/>
+    <path d="M 12 50 Q 20 56 30 52 Q 40 56 50 52 Q 60 56 68 50" stroke-linecap="round"/>
+    <path d="M 18 62 Q 28 68 38 64 Q 48 68 58 64 Q 62 66 65 62" stroke-linecap="round"/>
+  </g>
+
+  <!-- Middle layer - more radial branches -->
+  <g stroke="url(#tumbleweedGrad)" stroke-width="1" fill="none" opacity="0.6">
+    <!-- Radial spokes from center -->
+    <path d="M 40 40 Q 35 28 30 20" stroke-linecap="round"/>
+    <path d="M 40 40 Q 45 28 50 20" stroke-linecap="round"/>
+    <path d="M 40 40 Q 52 35 60 30" stroke-linecap="round"/>
+    <path d="M 40 40 Q 52 45 60 50" stroke-linecap="round"/>
+    <path d="M 40 40 Q 45 52 50 60" stroke-linecap="round"/>
+    <path d="M 40 40 Q 35 52 30 60" stroke-linecap="round"/>
+    <path d="M 40 40 Q 28 45 20 50" stroke-linecap="round"/>
+    <path d="M 40 40 Q 28 35 20 30" stroke-linecap="round"/>
+
+    <!-- Connecting curved branches -->
+    <path d="M 25 25 Q 35 22 45 25 Q 55 22 60 28" stroke-linecap="round"/>
+    <path d="M 20 35 Q 30 32 40 35 Q 50 32 60 35" stroke-linecap="round"/>
+    <path d="M 25 45 Q 35 48 45 45 Q 55 48 60 52" stroke-linecap="round"/>
+    <path d="M 20 45 Q 30 48 40 45 Q 50 48 60 45" stroke-linecap="round"/>
+    <path d="M 25 55 Q 35 58 45 55 Q 55 58 60 52" stroke-linecap="round"/>
+  </g>
+
+  <!-- Inner dense network -->
+  <g stroke="url(#tumbleweedGrad)" stroke-width="0.8" fill="none" opacity="0.5">
+    <!-- Cross-hatching pattern -->
+    <path d="M 30 30 Q 35 35 40 30 Q 45 35 50 30" stroke-linecap="round"/>
+    <path d="M 30 35 Q 35 40 40 35 Q 45 40 50 35" stroke-linecap="round"/>
+    <path d="M 30 40 Q 35 45 40 40 Q 45 45 50 40" stroke-linecap="round"/>
+    <path d="M 30 45 Q 35 50 40 45 Q 45 50 50 45" stroke-linecap="round"/>
+    <path d="M 30 50 Q 35 45 40 50 Q 45 45 50 50" stroke-linecap="round"/>
+
+    <!-- Vertical connectors -->
+    <path d="M 32 28 Q 32 35 30 42 Q 30 48 32 55" stroke-linecap="round"/>
+    <path d="M 40 25 Q 40 35 38 45 Q 38 55 40 65" stroke-linecap="round"/>
+    <path d="M 48 28 Q 48 35 50 42 Q 50 48 48 55" stroke-linecap="round"/>
+
+    <!-- Diagonal connectors -->
+    <path d="M 28 32 Q 35 38 42 32 Q 48 38 52 32" stroke-linecap="round"/>
+    <path d="M 28 48 Q 35 42 42 48 Q 48 42 52 48" stroke-linecap="round"/>
+  </g>
+
+  <!-- Fine detail layer - tiny branches -->
+  <g stroke="url(#tumbleweedGrad)" stroke-width="0.6" fill="none" opacity="0.4">
+    <!-- Small Y-shaped branches scattered around -->
+    <path d="M 26 24 L 28 27 L 30 24" stroke-linecap="round"/>
+    <path d="M 50 24 L 52 27 L 54 24" stroke-linecap="round"/>
+    <path d="M 22 38 L 24 41 L 26 38" stroke-linecap="round"/>
+    <path d="M 54 38 L 56 41 L 58 38" stroke-linecap="round"/>
+    <path d="M 26 56 L 28 53 L 30 56" stroke-linecap="round"/>
+    <path d="M 50 56 L 52 53 L 54 56" stroke-linecap="round"/>
+    <path d="M 34 28 L 36 31 L 38 28" stroke-linecap="round"/>
+    <path d="M 42 28 L 44 31 L 46 28" stroke-linecap="round"/>
+    <path d="M 34 52 L 36 49 L 38 52" stroke-linecap="round"/>
+    <path d="M 42 52 L 44 49 L 46 52" stroke-linecap="round"/>
+
+    <!-- Tiny connecting twigs -->
+    <path d="M 24 32 Q 26 35 24 38" stroke-linecap="round"/>
+    <path d="M 56 32 Q 54 35 56 38" stroke-linecap="round"/>
+    <path d="M 32 22 Q 35 24 38 22" stroke-linecap="round"/>
+    <path d="M 42 22 Q 45 24 48 22" stroke-linecap="round"/>
+    <path d="M 32 58 Q 35 56 38 58" stroke-linecap="round"/>
+    <path d="M 42 58 Q 45 56 48 58" stroke-linecap="round"/>
+  </g>
+
+  <!-- Scattered debris for realism -->
+  <g opacity="0.3">
+    <circle cx="18" cy="18" r="0.8" fill="url(#tumbleweedGrad)"/>
+    <circle cx="65" cy="22" r="0.6" fill="url(#tumbleweedGrad)"/>
+    <circle cx="12" cy="45" r="0.5" fill="url(#tumbleweedGrad)"/>
+    <circle cx="72" cy="55" r="0.7" fill="url(#tumbleweedGrad)"/>
+    <circle cx="25" cy="72" r="0.4" fill="url(#tumbleweedGrad)"/>
+    <circle cx="58" cy="68" r="0.6" fill="url(#tumbleweedGrad)"/>
+    <circle cx="15" cy="62" r="0.3" fill="url(#tumbleweedGrad)"/>
+  </g>
+</svg>

@@ -5,256 +5,348 @@ Licensed under the MIT License. See LICENSE file for details.
 -->
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="do this - today!" />
+    <meta name="theme-color" content="#ff6b35" />
+    <title>do this - today!</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="do this - today!" />
-  <meta name="theme-color" content="#ff6b35" />
-  <title>do this - today!</title>
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-</head>
-
-<body>
-  <div class="app-container">
-    <header class="app-header">
-      <div class="header-content">
-        <div class="title-section">
-          <h1 class="app-title">do this - today!</h1>
-          <p class="app-subtitle">Let us decide what to do next</p>
+  <body>
+    <div class="app-container">
+      <header class="app-header">
+        <div class="header-content">
+          <div class="title-section">
+            <h1 class="app-title">do this - today!</h1>
+            <p class="app-subtitle">Let us decide what to do next</p>
+          </div>
         </div>
-      </div>
-    </header>
-    <main class="main-content">
-      <!-- Main Page -->
-      <div id="mainPage">
-        <!-- Randomizer Section -->
-        <section class="randomizer-section">
-          <div class="current-task" id="currentTask" style="display: none">
-            <div class="task-display">
-              <h3>Your next task:</h3>
-              <div class="task-text" id="selectedTaskText"></div>
-            </div>
-            <div class="task-actions">
-              <button class="btn-secondary randomize-btn" id="randomizeAgainBtn">
-                <img src="img/refresh.svg" alt="Refresh" width="20" height="20" />
-                Try Another
-              </button>
-              <button class="btn-primary accept-btn" id="acceptTaskBtn">
-                <img src="img/check.svg" alt="Check" width="20" height="20" />
-                Let's Do It!
-              </button>
-            </div>
-          </div>
-          <div class="randomizer-start" id="randomizerStart">
-            <div class="randomizer-icon">
-              <img src="img/checkmark.svg" alt="Checkmark" width="80" height="80" />
-            </div>
-            <h3>Ready to pick a task?</h3>
-            <p>Click the button below to randomly select one of your tasks</p>
-            <button class="btn-primary randomize-btn" id="randomizeBtn" disabled>
-              <img src="img/dice.svg" alt="Dice" width="20" height="20" />
-              Pick Random Task
-            </button>
-          </div>
-          <div class="active-task" id="activeTask" style="display: none">
-            <div class="active-task-display">
-              <div class="task-text" id="activeTaskText"></div>
-              <div class="timer-display">
-                <div class="timer-label">Time Remaining:</div>
-                <div class="timer-value" id="activeTaskTimer">8:00:00</div>
+      </header>
+      <main class="main-content">
+        <!-- Main Page -->
+        <div id="mainPage">
+          <!-- Randomizer Section -->
+          <section class="randomizer-section">
+            <div class="current-task" id="currentTask" style="display: none">
+              <div class="task-display">
+                <h3>Your next task:</h3>
+                <div class="task-text" id="selectedTaskText"></div>
+              </div>
+              <div class="task-actions">
+                <button
+                  class="btn-secondary randomize-btn"
+                  id="randomizeAgainBtn"
+                >
+                  <img
+                    src="img/refresh.svg"
+                    alt="Refresh"
+                    width="20"
+                    height="20"
+                  />
+                  Try Another
+                </button>
+                <button class="btn-primary accept-btn" id="acceptTaskBtn">
+                  <img src="img/check.svg" alt="Check" width="20" height="20" />
+                  Let's Do It!
+                </button>
               </div>
             </div>
-            <div class="active-task-actions">
-              <button class="btn-secondary" id="abandonActiveBtn">
-                <img src="img/x.svg" alt="Close" width="20" height="20" />
-                Give Up
-              </button>
-              <button class="btn-primary" id="completeActiveBtn">
-                <img src="img/check.svg" alt="Check" width="20" height="20" />
-                Mark as Done
+            <div class="randomizer-start" id="randomizerStart">
+              <div class="randomizer-icon">
+                <img
+                  src="img/checkmark.svg"
+                  alt="Checkmark"
+                  width="80"
+                  height="80"
+                />
+              </div>
+              <h3>Ready to pick a task?</h3>
+              <p>Click the button below to randomly select one of your tasks</p>
+              <button
+                class="btn-primary randomize-btn"
+                id="randomizeBtn"
+                disabled
+              >
+                <img src="img/dice.svg" alt="Dice" width="20" height="20" />
+                Pick Random Task
               </button>
             </div>
-          </div>
-          <div class="task-completed" id="taskCompleted" style="display: none">
-            <div class="success-icon">
-              <img src="img/checkmark.svg" alt="Success" class="animated-checkmark" />
+            <div class="active-task" id="activeTask" style="display: none">
+              <div class="active-task-display">
+                <div class="task-text" id="activeTaskText"></div>
+                <div class="timer-display">
+                  <div class="timer-label">Time Remaining:</div>
+                  <div class="timer-value" id="activeTaskTimer">8:00:00</div>
+                </div>
+              </div>
+              <div class="active-task-actions">
+                <button class="btn-secondary" id="abandonActiveBtn">
+                  <img src="img/x.svg" alt="Close" width="20" height="20" />
+                  Give Up
+                </button>
+                <button class="btn-primary" id="completeActiveBtn">
+                  <img src="img/check.svg" alt="Check" width="20" height="20" />
+                  Mark as Done
+                </button>
+              </div>
             </div>
-            <h3>Great job!</h3>
-            <p>Task completed. Ready for the next one?</p>
-            <button class="btn-primary" id="nextTaskBtn">
-              Pick Another Task
-            </button>
-          </div>
-        </section>
-        <!-- Task List Section -->
-        <section class="task-section">
-          <div class="section-header">
-            <div class="collapsible-header" id="taskListHeader">
-              <h2>My Tasks</h2>
-              <div class="header-actions">
-                <div class="collapse-indicator" id="taskCollapseIndicator">
+            <div
+              class="task-completed"
+              id="taskCompleted"
+              style="display: none"
+            >
+              <div class="success-icon">
+                <img
+                  src="img/checkmark.svg"
+                  alt="Success"
+                  class="animated-checkmark"
+                />
+              </div>
+              <h3>Great job!</h3>
+              <p>Task completed. Ready for the next one?</p>
+              <button class="btn-primary" id="nextTaskBtn">
+                Pick Another Task
+              </button>
+            </div>
+          </section>
+          <!-- Task List Section -->
+          <section class="task-section">
+            <div class="section-header">
+              <div class="collapsible-header" id="taskListHeader">
+                <h2>My Tasks</h2>
+                <div class="header-actions">
+                  <div class="collapse-indicator" id="taskCollapseIndicator">
+                    ▼
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="task-content" id="taskContent" style="display: none">
+              <!-- Add New Task Section -->
+              <div class="quick-add-section">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    id="taskInput"
+                    placeholder="Enter a new task..."
+                    maxlength="200"
+                  />
+                  <div class="task-options">
+                    <div class="option-group">
+                      <label>Task Type:</label>
+                      <div class="task-type-toggle" id="taskTypeToggle">
+                        <button
+                          type="button"
+                          class="toggle-btn active"
+                          data-type="oneoff"
+                          id="toggleOneoff"
+                        >
+                          One-time task
+                        </button>
+                        <button
+                          type="button"
+                          class="toggle-btn"
+                          data-type="repeatable"
+                          id="toggleRepeatable"
+                        >
+                          Repeatable task
+                        </button>
+                      </div>
+                      <input type="hidden" id="taskType" value="oneoff" />
+                    </div>
+                    <div
+                      class="option-group"
+                      id="cooldownContainer"
+                      style="display: none"
+                    >
+                      <label for="cooldownPeriod">Cooldown:</label>
+                      <select id="cooldownPeriod">
+                        <option value="0">No cooldown</option>
+                        <option value="1">1 hour</option>
+                        <option value="3">3 hours</option>
+                        <option value="6">6 hours</option>
+                        <option value="12">12 hours</option>
+                        <option value="daily">Daily (24h)</option>
+                        <option value="weekly">Weekly (7 days)</option>
+                        <option value="monthly">Monthly (30 days)</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="input-actions">
+                    <button class="btn-primary save-btn" id="saveTaskBtn">
+                      Add Task
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="task-list" id="taskList">
+                <!-- Tasks will be dynamically inserted here -->
+              </div>
+              <div class="empty-state" id="emptyState">
+                <div class="empty-icon">
+                  <img
+                    src="img/tumbleweed.svg"
+                    alt="No tasks"
+                    class="animated-tumbleweed"
+                  />
+                </div>
+                <h3>No tasks yet</h3>
+                <p>Add some tasks to get started with randomization</p>
+              </div>
+            </div>
+          </section>
+          <!-- Settings Section -->
+          <section class="settings-section">
+            <div class="section-header">
+              <div class="collapsible-header" id="settingsHeader">
+                <h2>Settings</h2>
+                <div class="collapse-indicator" id="settingsCollapseIndicator">
                   ▼
                 </div>
               </div>
             </div>
-          </div>
-          <div class="task-content" id="taskContent" style="display: none">
-            <!-- Add New Task Section -->
-            <div class="quick-add-section">
-              <div class="input-group">
-                <input type="text" id="taskInput" placeholder="Enter a new task..." maxlength="200" />
-                <div class="task-options">
-                  <div class="option-group">
-                    <label>Task Type:</label>
-                    <div class="task-type-toggle" id="taskTypeToggle">
-                      <button type="button" class="toggle-btn active" data-type="oneoff" id="toggleOneoff">
-                        One-time task
-                      </button>
-                      <button type="button" class="toggle-btn" data-type="repeatable" id="toggleRepeatable">
-                        Repeatable task
-                      </button>
-                    </div>
-                    <input type="hidden" id="taskType" value="oneoff" />
-                  </div>
-                  <div class="option-group" id="cooldownContainer" style="display: none">
-                    <label for="cooldownPeriod">Cooldown:</label>
-                    <select id="cooldownPeriod">
-                      <option value="0">No cooldown</option>
-                      <option value="1">1 hour</option>
-                      <option value="3">3 hours</option>
-                      <option value="6">6 hours</option>
-                      <option value="12">12 hours</option>
-                      <option value="daily">Daily (24h)</option>
-                      <option value="weekly">Weekly (7 days)</option>
-                      <option value="monthly">Monthly (30 days)</option>
-                    </select>
-                  </div>
+            <div
+              class="settings-content"
+              id="settingsContent"
+              style="display: none"
+            >
+              <div class="settings-group">
+                <h3>Data Management</h3>
+                <div class="settings-actions">
+                  <button class="btn-secondary" id="exportDataBtn">
+                    <img
+                      src="img/download.svg"
+                      alt="Export"
+                      width="16"
+                      height="16"
+                    />
+                    Export Tasks as JSON
+                  </button>
+                  <button class="btn-secondary" id="trashBtn">
+                    <img
+                      src="img/trash.svg"
+                      alt="Trash"
+                      width="16"
+                      height="16"
+                    />
+                    View Trash
+                  </button>
+                  <button class="btn-secondary danger" id="resetAllBtn">
+                    <img
+                      src="img/trash.svg"
+                      alt="Reset"
+                      width="16"
+                      height="16"
+                    />
+                    Reset Everything
+                  </button>
                 </div>
-                <div class="input-actions">
-                  <button class="btn-primary save-btn" id="saveTaskBtn">
-                    Add Task
+              </div>
+              <div class="settings-group">
+                <h3>Debug Information</h3>
+                <div class="settings-actions">
+                  <button class="btn-secondary" id="debugDataBtn">
+                    <img
+                      src="img/info.svg"
+                      alt="Debug"
+                      width="16"
+                      height="16"
+                    />
+                    Debug Data
+                  </button>
+                  <button class="btn-secondary" id="cleanupDataBtn">
+                    <img
+                      src="img/refresh.svg"
+                      alt="Cleanup"
+                      width="16"
+                      height="16"
+                    />
+                    Cleanup Corrupted Data
                   </button>
                 </div>
               </div>
             </div>
-            <div class="task-list" id="taskList">
-              <!-- Tasks will be dynamically inserted here -->
-            </div>
-            <div class="empty-state" id="emptyState">
-              <div class="empty-icon">📝</div>
-              <h3>No tasks yet</h3>
-              <p>Add some tasks to get started with randomization</p>
-            </div>
+          </section>
+        </div>
+        <!-- Trash Page -->
+        <div id="trashPage" style="display: none">
+          <div class="page-header">
+            <button
+              class="btn-icon back-btn"
+              id="backToMainBtn"
+              aria-label="Back to main"
+            >
+              <img src="img/arrow-left.svg" alt="Back" width="24" height="24" />
+            </button>
+            <h2>Trash</h2>
+            <button class="btn-secondary clear-all-btn" id="clearAllTrashBtn">
+              Clear All
+            </button>
           </div>
-        </section>
-        <!-- Settings Section -->
-        <section class="settings-section">
-          <div class="section-header">
-            <div class="collapsible-header" id="settingsHeader">
-              <h2>Settings</h2>
-              <div class="collapse-indicator" id="settingsCollapseIndicator">
-                ▼
-              </div>
-            </div>
+          <div class="trash-list" id="trashList">
+            <!-- Deleted tasks will be dynamically inserted here -->
           </div>
-          <div class="settings-content" id="settingsContent" style="display: none">
-            <div class="settings-group">
-              <h3>Data Management</h3>
-              <div class="settings-actions">
-                <button class="btn-secondary" id="exportDataBtn">
-                  <img src="img/download.svg" alt="Export" width="16" height="16" />
-                  Export Tasks as JSON
-                </button>
-                <button class="btn-secondary" id="trashBtn">
-                  <img src="img/trash.svg" alt="Trash" width="16" height="16" />
-                  View Trash
-                </button>
-                <button class="btn-secondary danger" id="resetAllBtn">
-                  <img src="img/trash.svg" alt="Reset" width="16" height="16" />
-                  Reset Everything
-                </button>
-              </div>
-            </div>
-            <div class="settings-group">
-              <h3>Debug Information</h3>
-              <div class="settings-actions">
-                <button class="btn-secondary" id="debugDataBtn">
-                  <img src="img/info.svg" alt="Debug" width="16" height="16" />
-                  Debug Data
-                </button>
-                <button class="btn-secondary" id="cleanupDataBtn">
-                  <img src="img/refresh.svg" alt="Cleanup" width="16" height="16" />
-                  Cleanup Corrupted Data
-                </button>
-              </div>
-            </div>
+          <div class="empty-trash-state" id="emptyTrashState">
+            <div class="empty-icon">🗑️</div>
+            <h3>Trash is empty</h3>
+            <p>
+              Deleted tasks will appear here. You can restore or permanently
+              delete them.
+            </p>
           </div>
-        </section>
-      </div>
-      <!-- Trash Page -->
-      <div id="trashPage" style="display: none">
-        <div class="page-header">
-          <button class="btn-icon back-btn" id="backToMainBtn" aria-label="Back to main">
-            <img src="img/arrow-left.svg" alt="Back" width="24" height="24" />
+        </div>
+      </main>
+      <!-- Statistics Footer -->
+      <footer class="app-footer">
+        <div class="stats">
+          <div class="stat-item">
+            <span class="stat-number" id="totalTasks">0</span>
+            <span class="stat-label">Total Tasks</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" id="completedTasks">0</span>
+            <span class="stat-label">Completed</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <!-- Toast Notifications -->
+    <div class="toast" id="toast"></div>
+    <!-- Abandon Reason Modal -->
+    <div class="modal-overlay" id="abandonReasonModal" style="display: none">
+      <div class="modal-content">
+        <h3>Why are you abandoning this task?</h3>
+        <textarea
+          id="abandonReasonInput"
+          placeholder="Enter reason for abandoning (e.g., 'Too difficult right now', 'Need more resources', 'Changed priorities')..."
+          rows="4"
+          maxlength="300"
+        ></textarea>
+        <div class="modal-actions">
+          <button class="btn-secondary" id="cancelAbandonReasonBtn">
+            Cancel
           </button>
-          <h2>Trash</h2>
-          <button class="btn-secondary clear-all-btn" id="clearAllTrashBtn">
-            Clear All
+          <button class="btn-primary" id="saveAbandonReasonBtn">
+            Abandon Task
           </button>
         </div>
-        <div class="trash-list" id="trashList">
-          <!-- Deleted tasks will be dynamically inserted here -->
-        </div>
-        <div class="empty-trash-state" id="emptyTrashState">
-          <div class="empty-icon">🗑️</div>
-          <h3>Trash is empty</h3>
-          <p>
-            Deleted tasks will appear here. You can restore or permanently
-            delete them.
-          </p>
-        </div>
-      </div>
-    </main>
-    <!-- Statistics Footer -->
-    <footer class="app-footer">
-      <div class="stats">
-        <div class="stat-item">
-          <span class="stat-number" id="totalTasks">0</span>
-          <span class="stat-label">Total Tasks</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number" id="completedTasks">0</span>
-          <span class="stat-label">Completed</span>
-        </div>
-      </div>
-    </footer>
-  </div>
-  <!-- Toast Notifications -->
-  <div class="toast" id="toast"></div>
-  <!-- Abandon Reason Modal -->
-  <div class="modal-overlay" id="abandonReasonModal" style="display: none">
-    <div class="modal-content">
-      <h3>Why are you abandoning this task?</h3>
-      <textarea id="abandonReasonInput" placeholder="Enter reason for abandoning (e.g., 'Too difficult right now', 'Need more resources', 'Changed priorities')..." rows="4" maxlength="300"></textarea>
-      <div class="modal-actions">
-        <button class="btn-secondary" id="cancelAbandonReasonBtn">
-          Cancel
-        </button>
-        <button class="btn-primary" id="saveAbandonReasonBtn">
-          Abandon Task
-        </button>
       </div>
     </div>
-  </div>
-  <script src="script.js"></script>
-</body>
-
+    <script src="script.js"></script>
+  </body>
 </html>
