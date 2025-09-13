@@ -743,52 +743,6 @@ body {
   height: 80px;
 }
 
-.animated-tumbleweed {
-  animation: tumbleweedBounce 4s linear infinite;
-}
-
-@keyframes tumbleweedBounce {
-  0% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  8% {
-    transform: translateY(-3px) rotate(29deg);
-  }
-  16% {
-    transform: translateY(-6px) rotate(58deg);
-  }
-  25% {
-    transform: translateY(-8px) rotate(90deg);
-  }
-  33% {
-    transform: translateY(-6px) rotate(119deg);
-  }
-  41% {
-    transform: translateY(-2px) rotate(148deg);
-  }
-  50% {
-    transform: translateY(0px) rotate(180deg);
-  }
-  58% {
-    transform: translateY(-4px) rotate(209deg);
-  }
-  66% {
-    transform: translateY(-7px) rotate(238deg);
-  }
-  75% {
-    transform: translateY(-5px) rotate(270deg);
-  }
-  83% {
-    transform: translateY(-3px) rotate(299deg);
-  }
-  91% {
-    transform: translateY(-1px) rotate(328deg);
-  }
-  100% {
-    transform: translateY(0px) rotate(360deg);
-  }
-}
-
 .empty-state h3 {
   font-size: 1.125rem;
   font-weight: 500;
@@ -809,12 +763,6 @@ body {
   border-radius: 24px;
   border: 2px solid var(--color-border-light);
   box-shadow: var(--shadow-elevated);
-}
-
-.randomizer-icon {
-  font-size: 5rem;
-  margin-bottom: 1.5rem;
-  filter: drop-shadow(0 2px 4px rgba(255, 107, 53, 0.2));
 }
 
 .randomizer-start h3 {
@@ -1529,11 +1477,6 @@ body {
   body {
     background: var(--color-background-subtle);
     color: var(--color-text-primary);
-  }
-
-  /* Update SVG icons for dark mode visibility */
-  .randomizer-icon svg path {
-    stroke: var(--dark-text-primary);
   }
 
   /* Toast messages in dark mode */
