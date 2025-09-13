@@ -882,17 +882,17 @@ class DoThisApp {
     let statsHtml = "";
 
     if (successful.length > 0) {
-      statsHtml += `<span class="task-stat success" title="Successful completions">✓ ${successful.length}</span>`;
+      statsHtml += `<span class="task-stat success" title="Successful completions"><img src="img/check-mark.svg" alt="Success" width="16" height="16" /> ${successful.length}</span>`;
     }
 
     if (abandoned.length > 0) {
-      statsHtml += `<span class="task-stat abandoned" title="Abandoned attempts">✗ ${abandoned.length}</span>`;
+      statsHtml += `<span class="task-stat abandoned" title="Abandoned attempts"><img src="img/x-mark.svg" alt="Abandoned" width="16" height="16" /> ${abandoned.length}</span>`;
     }
 
     if (lastSuccessful) {
       const lastDate = new Date(lastSuccessful);
       const timeAgo = this.getTimeAgo(lastSuccessful);
-      statsHtml += `<span class="task-stat last-completed" title="Last completed: ${lastDate.toLocaleString()}">🕒 ${timeAgo}</span>`;
+      statsHtml += `<span class="task-stat last-completed" title="Last completed: ${lastDate.toLocaleString()}"><img src="img/clock.svg" alt="Last completed" width="16" height="16" /> ${timeAgo}</span>`;
     }
 
     return {
