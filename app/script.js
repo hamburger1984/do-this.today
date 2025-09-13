@@ -854,7 +854,7 @@ class DoThisApp {
       if (Date.now() < nextAvailable) {
         return {
           type: "cooldown",
-          availableAt: new Date(nextAvailable).toLocaleString(),
+          availableAt: this.formatCooldownTime(nextAvailable),
         };
       }
     }
@@ -984,6 +984,34 @@ class DoThisApp {
         return "Monthly";
       default:
         return `${cooldown}h`;
+    }
+  }
+
+  formatCooldownTime(timestamp) {
+    const date = new Date(timestamp);
+    const now = new Date();
+
+    // Check if the time is midnight (00:00:00)
+    const isMidnight =
+      date.getHours() === 0 &&
+      date.getMinutes() === 0 &&
+      date.getSeconds() === 0;
+
+    // Check if the date is today
+    const isToday = date.toDateString() === now.toDateString();
+
+    if (isMidnight && !isToday) {
+      // Show just the date when it's midnight and not today
+      return date.toLocaleDateString();
+    } else if (isToday && !isMidnight) {
+      // Show just the time when it's today but not midnight
+      return date.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    } else {
+      // Default: show both date and time
+      return date.toLocaleString();
     }
   }
 
