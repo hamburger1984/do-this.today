@@ -37,7 +37,6 @@
   --color-secondary-action-active: var(--ocean-deep);
 
   /* Backgrounds */
-
   --color-background-card: var(--cream-warm);
   --color-background-elevated: #ffffff;
   --color-background-subtle: var(--sand-light);
@@ -116,6 +115,8 @@
   --error-alpha-30: rgba(239, 68, 68, 0.3);
   --completed-alpha-10: rgba(107, 114, 128, 0.1);
   --completed-alpha-30: rgba(107, 114, 128, 0.3);
+  --subtle-alpha-10: rgba(255, 255, 255, 0.1);
+  --subtle-alpha-30: rgba(255, 255, 255, 0.3);
 
   /* === MODAL OVERLAY === */
   --modal-overlay: rgba(31, 41, 55, 0.5);
@@ -585,9 +586,16 @@ body {
   white-space: nowrap;
 }
 
-.task-stat.task-type {
+.test {
   background: var(--color-background-subtle);
   color: var(--color-text-secondary);
+  border: 1px solid var(--color-text-secondary);
+}
+
+.task-stat.task-type {
+  background: var(--subtle-alpha-10);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--subtle-alpha-30);
 }
 
 .task-stat.task-status {
