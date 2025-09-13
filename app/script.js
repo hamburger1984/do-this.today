@@ -721,22 +721,25 @@ class DoThisApp {
 
       switch (status.type) {
         case "available":
-          statusIcon = "✅";
+          statusIcon =
+            '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M13.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.793l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>';
           statusText = "Available";
           break;
         case "cooldown":
-          statusIcon = "⏰";
+          statusIcon =
+            '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/></svg>';
           statusText = `Cooldown until ${status.availableAt}`;
           break;
         case "completed":
-          statusIcon = "🏁";
+          statusIcon =
+            '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L9.394 10.5l.686 4.114a.5.5 0 0 1-.828.586L8 14.5l-1.252.7a.5.5 0 0 1-.828-.586L6.606 10.5l-5.292-2.036A.5.5 0 0 1 1 8V.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5v7.793L14.222.085z"/></svg>';
           statusText = "Completed";
           break;
       }
 
       const typeDisplay =
         task.type === "repeatable"
-          ? `🔄 ${this.formatCooldown(task.cooldown)}`
+          ? `<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="vertical-align: text-top; margin-right: 4px;"><path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/><path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/></svg> ${this.formatCooldown(task.cooldown)}`
           : "";
 
       // Calculate execution statistics
@@ -882,17 +885,17 @@ class DoThisApp {
     let statsHtml = "";
 
     if (successful.length > 0) {
-      statsHtml += `<span class="task-stat success" title="Successful completions"><img src="img/check-mark.svg" alt="Success" width="16" height="16" /> ${successful.length}</span>`;
+      statsHtml += `<span class="task-stat success" title="Successful completions"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="vertical-align: text-top; margin-right: 4px;"><path d="M13.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.793l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>${successful.length}</span>`;
     }
 
     if (abandoned.length > 0) {
-      statsHtml += `<span class="task-stat abandoned" title="Abandoned attempts"><img src="img/x-mark.svg" alt="Abandoned" width="16" height="16" /> ${abandoned.length}</span>`;
+      statsHtml += `<span class="task-stat abandoned" title="Abandoned attempts"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="vertical-align: text-top; margin-right: 4px;"><path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/></svg>${abandoned.length}</span>`;
     }
 
     if (lastSuccessful) {
       const lastDate = new Date(lastSuccessful);
       const timeAgo = this.getTimeAgo(lastSuccessful);
-      statsHtml += `<span class="task-stat last-completed" title="Last completed: ${lastDate.toLocaleString()}"><img src="img/clock.svg" alt="Last completed" width="16" height="16" /> ${timeAgo}</span>`;
+      statsHtml += `<span class="task-stat last-completed" title="Last completed: ${lastDate.toLocaleString()}"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="vertical-align: text-top; margin-right: 4px;"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/></svg>${timeAgo}</span>`;
     }
 
     return {
@@ -1634,7 +1637,10 @@ class DoThisApp {
       const taskItem = document.createElement("div");
       taskItem.className = "trash-item";
 
-      const typeIcon = task.type === "repeatable" ? "🔄" : "📝";
+      const typeIcon =
+        task.type === "repeatable"
+          ? '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/><path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/></svg>'
+          : '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"/></svg>';
       const deletedDate = new Date(task.deletedAt).toLocaleDateString();
 
       taskItem.innerHTML = `
