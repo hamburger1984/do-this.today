@@ -10,6 +10,7 @@ class DoThisApp {
     this.completedTasks = 0;
     this.currentSelectedTask = null;
     this.activeTask = null;
+    this.cooldownCheckInterval = null;
     this.activeTaskTimer = null;
     this.nextTaskId = 1;
     this.taskListCollapsed = true;
@@ -1050,14 +1051,21 @@ class DoThisApp {
             `;
     } else if (availableTasks.length === 0) {
       randomizeBtn.innerHTML = `
-                <img src="img/clock.svg" alt="Clock" width="20" height="20" />
+                <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor" style="margin-right: 8px;">
+                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                  <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+                </svg>
                 All tasks on cooldown
             `;
+      // Start checking for tasks coming off cooldown
+      this.startCooldownChecking();
     } else {
       randomizeBtn.innerHTML = `
                 <img src="img/dice.svg" alt="Dice" width="20" height="20" />
                 Pick Random Task (${availableTasks.length})
             `;
+      // Stop cooldown checking since tasks are available
+      this.stopCooldownChecking();
     }
   }
 
@@ -1068,6 +1076,9 @@ class DoThisApp {
 
   // Randomizer methods
   randomizeTask() {
+    // Stop cooldown checking since we're moving to task selection
+    this.stopCooldownChecking();
+
     playConfetti();
     const availableTasks = this.getAvailableTasks();
 
@@ -1117,6 +1128,9 @@ class DoThisApp {
   }
 
   acceptTask() {
+    // Stop cooldown checking since we're leaving the initial screen
+    this.stopCooldownChecking();
+
     this.activeTask = {
       task: this.currentSelectedTask,
       startTime: Date.now(),
@@ -1157,7 +1171,40 @@ class DoThisApp {
   }
 
   nextTask() {
-    this.randomizeTask();
+    // Go back to initial screen instead of randomizing immediately
+    const randomizerStart = document.getElementById("randomizerStart");
+    const currentTask = document.getElementById("currentTask");
+    const taskCompleted = document.getElementById("taskCompleted");
+
+    taskCompleted.style.display = "none";
+    currentTask.style.display = "none";
+    randomizerStart.style.display = "block";
+
+    // Start cooldown checking if needed
+    this.updateRandomizeButton();
+  }
+
+  // Cooldown checking methods
+  startCooldownChecking() {
+    // Clear any existing interval first
+    this.stopCooldownChecking();
+
+    // Check every 2 minutes (120000ms) for tasks coming off cooldown
+    this.cooldownCheckInterval = setInterval(() => {
+      const availableTasks = this.getAvailableTasks();
+      if (availableTasks.length > 0) {
+        // Tasks are now available, update the UI
+        this.updateRandomizeButton();
+        this.stopCooldownChecking();
+      }
+    }, 120000);
+  }
+
+  stopCooldownChecking() {
+    if (this.cooldownCheckInterval) {
+      clearInterval(this.cooldownCheckInterval);
+      this.cooldownCheckInterval = null;
+    }
   }
 
   completeActiveTask() {
