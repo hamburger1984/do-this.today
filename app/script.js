@@ -799,7 +799,10 @@ class DoThisApp {
               </div>
               <div class="edit-actions">
                 <button class="btn-secondary edit-cancel" onclick="app.hideTaskEdit()">
-                  <img src="img/x.svg" alt="Cancel" width="16" height="16" />
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
                   Cancel
                 </button>
                 <button class="btn-primary edit-save" onclick="app.saveTaskEdit()">
@@ -824,10 +827,17 @@ class DoThisApp {
           </div>
           <div class="task-actions">
               <button class="edit-btn" onclick="app.showTaskEdit(${index})" aria-label="Edit task">
-                  <img src="img/edit.svg" alt="Edit" width="16" height="16" />
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="m18 2 4 4-14 14H4v-4L18 2z"></path>
+                    <path d="m14.5 5.5 4 4"></path>
+                  </svg>
               </button>
               <button class="delete-btn" onclick="app.deleteTask(${index})" aria-label="Delete task">
-                  <img src="img/trash.svg" alt="Delete" width="16" height="16" />
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
+                    <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                  </svg>
               </button>
           </div>
         `;
@@ -1048,7 +1058,15 @@ class DoThisApp {
 
     if (this.tasks.length === 0) {
       randomizeBtn.innerHTML = `
-                <img src="img/dice.svg" alt="Dice" width="20" height="20" />
+                <svg width="20" height="20" viewBox="0 0 24 24">
+                  <rect x="3" y="3" width="18" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="2"/>
+                  <circle cx="8" cy="8" r="1.3" fill="currentColor"/>
+                  <circle cx="16" cy="8" r="1.3" fill="currentColor"/>
+                  <circle cx="8" cy="12" r="1.3" fill="currentColor"/>
+                  <circle cx="16" cy="12" r="1.3" fill="currentColor"/>
+                  <circle cx="8" cy="16" r="1.3" fill="currentColor"/>
+                  <circle cx="16" cy="16" r="1.3" fill="currentColor"/>
+                </svg>
                 Add tasks first
             `;
     } else if (availableTasks.length === 0) {
@@ -1063,7 +1081,15 @@ class DoThisApp {
       this.startCooldownChecking();
     } else {
       randomizeBtn.innerHTML = `
-                <img src="img/dice.svg" alt="Dice" width="20" height="20" />
+                <svg width="20" height="20" viewBox="0 0 24 24">
+                  <rect x="3" y="3" width="18" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="2"/>
+                  <circle cx="8" cy="8" r="1.3" fill="currentColor"/>
+                  <circle cx="16" cy="8" r="1.3" fill="currentColor"/>
+                  <circle cx="8" cy="12" r="1.3" fill="currentColor"/>
+                  <circle cx="16" cy="12" r="1.3" fill="currentColor"/>
+                  <circle cx="8" cy="16" r="1.3" fill="currentColor"/>
+                  <circle cx="16" cy="16" r="1.3" fill="currentColor"/>
+                </svg>
                 Pick Random Task (${availableTasks.length})
             `;
       // Stop cooldown checking since tasks are available
@@ -1710,7 +1736,11 @@ class DoThisApp {
               </svg>
             </button>
             <button class="delete-forever-btn" onclick="app.deleteTaskForever(${index})" aria-label="Delete forever">
-              <img src="img/trash.svg" alt="Delete Forever" width="16" height="16" />
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
+                <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
             </button>
           </div>
         `;
