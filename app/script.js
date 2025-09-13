@@ -732,7 +732,7 @@ class DoThisApp {
           break;
         case "completed":
           statusIcon =
-            '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L9.394 10.5l.686 4.114a.5.5 0 0 1-.828.586L8 14.5l-1.252.7a.5.5 0 0 1-.828-.586L6.606 10.5l-5.292-2.036A.5.5 0 0 1 1 8V.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5v7.793L14.222.085z"/></svg>';
+            '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="0" width="1" height="16"/><rect x="2" y="2" width="2" height="2"/><rect x="6" y="2" width="2" height="2"/><rect x="10" y="2" width="2" height="2"/><rect x="14" y="2" width="1" height="2"/><rect x="4" y="4" width="2" height="2"/><rect x="8" y="4" width="2" height="2"/><rect x="12" y="4" width="2" height="2"/><rect x="2" y="6" width="2" height="2"/><rect x="6" y="6" width="2" height="2"/><rect x="10" y="6" width="2" height="2"/><rect x="14" y="6" width="1" height="2"/><rect x="4" y="8" width="2" height="2"/><rect x="8" y="8" width="2" height="2"/><rect x="12" y="8" width="2" height="2"/><path d="M2 2h13v8H2V2z" stroke="currentColor" stroke-width="0.5" fill="none"/></svg>';
           statusText = "Completed";
           break;
       }
