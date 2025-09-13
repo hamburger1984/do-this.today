@@ -110,14 +110,28 @@ Available cooldown periods for repeatable tasks:
 
 ```javascript
 "0"        // No cooldown (immediate re-availability)
-"1"        // 1 hour (3,600,000 ms)
-"3"        // 3 hours (10,800,000 ms)
-"6"        // 6 hours (21,600,000 ms)
-"12"       // 12 hours (43,200,000 ms)
-"daily"    // 24 hours (86,400,000 ms)
-"weekly"   // 7 days (604,800,000 ms)
-"monthly"  // 30 days (2,592,000,000 ms)
+"1"        // 1 hour (exact duration from completion)
+"3"        // 3 hours (exact duration from completion)
+"6"        // 6 hours (exact duration from completion)
+"12"       // 12 hours (exact duration from completion)
+"daily"    // Until next midnight (trimmed to day boundary)
+"weekly"   // Until next Monday at midnight (trimmed to week boundary)
+"monthly"  // Until 1st of next month at midnight (trimmed to month boundary)
 ```
+
+#### Cooldown Calculation Behavior
+The app uses two different cooldown calculation methods:
+
+**Hour-based cooldowns** (`"1"`, `"3"`, `"6"`, `"12"`):
+- Calculated as exact duration from completion timestamp
+- Example: Complete at 2:30 PM → Available again at 5:30 PM (3-hour cooldown)
+
+**Calendar-based cooldowns** (`"daily"`, `"weekly"`, `"monthly"`):
+- Trimmed to calendar boundaries for predictable reset times
+- **Daily**: Available at next midnight (00:00)
+- **Weekly**: Available at next Monday at midnight
+- **Monthly**: Available at 1st of next month at midnight
+- Example: Complete daily task at 2:30 PM Tuesday → Available Wednesday at 00:00
 
 ### Active Task Structure
 
@@ -175,7 +189,8 @@ Tasks have four possible states:
    - Repeatable tasks: no executions or cooldown expired
 
 2. **Cooldown**: Waiting for cooldown period (repeatable only)
-   - Last execution timestamp + cooldown duration > current time
+   - Hour-based: Last execution timestamp + cooldown duration > current time
+   - Calendar-based: Current time < next calendar boundary (midnight/Monday/1st)
 
 3. **Completed**: Finished (one-off only)
    - `completed` property set to `true`

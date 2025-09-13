@@ -49,10 +49,10 @@ A mobile-first Progressive Web App that helps you decide what to do next by rand
 - **Repeatable tasks** - Can be done multiple times with cooldowns:
 
   - No cooldown (always available)
-  - 1, 3, 6, or 12 hours
-  - Daily (24 hours)
-  - Weekly (7 days)
-  - Monthly (30 days)
+  - 1, 3, 6, or 12 hours (exact time from completion)
+  - Daily (resets at midnight)
+  - Weekly (resets Monday at midnight)
+  - Monthly (resets 1st of month at midnight)
 
 ### Working with Tasks
 1. **Pick a random task** - Click the "Pick Random Task" button

@@ -840,14 +840,16 @@ class DoThisApp {
       const lastExecution = Math.max(
         ...task.executions.map((e) => e.timestamp),
       );
-      const cooldownMs = this.getCooldownMs(task.cooldown);
 
       // Zero cooldown means always available
-      if (cooldownMs === 0) {
+      if (task.cooldown === "0") {
         return { type: "available" };
       }
 
-      const nextAvailable = lastExecution + cooldownMs;
+      const nextAvailable = this.calculateNextAvailableTime(
+        lastExecution,
+        task.cooldown,
+      );
 
       if (Date.now() < nextAvailable) {
         return {
@@ -926,6 +928,47 @@ class DoThisApp {
         return 30 * 24 * 60 * 60 * 1000;
       default:
         return parseInt(cooldown) * 60 * 60 * 1000; // custom hours
+    }
+  }
+
+  calculateNextAvailableTime(lastExecutionTimestamp, cooldown) {
+    const lastExecution = new Date(lastExecutionTimestamp);
+
+    switch (cooldown) {
+      case "daily":
+        // Next midnight after the last execution
+        const nextDay = new Date(lastExecution);
+        nextDay.setDate(nextDay.getDate() + 1);
+        nextDay.setHours(0, 0, 0, 0);
+        return nextDay.getTime();
+
+      case "weekly":
+        // Next Monday at midnight after the last execution
+        const nextWeek = new Date(lastExecution);
+        const currentDayOfWeek = nextWeek.getDay();
+
+        // Calculate days until next Monday (1 = Monday)
+        let daysUntilMonday = (1 - currentDayOfWeek + 7) % 7;
+        if (daysUntilMonday === 0) {
+          daysUntilMonday = 7; // If it's already Monday, go to next Monday
+        }
+
+        nextWeek.setDate(nextWeek.getDate() + daysUntilMonday);
+        nextWeek.setHours(0, 0, 0, 0);
+        return nextWeek.getTime();
+
+      case "monthly":
+        // Next 1st of month at midnight after the last execution
+        const nextMonth = new Date(lastExecution);
+        nextMonth.setMonth(nextMonth.getMonth() + 1);
+        nextMonth.setDate(1);
+        nextMonth.setHours(0, 0, 0, 0);
+        return nextMonth.getTime();
+
+      default:
+        // For hour-based cooldowns, use the old behavior
+        const cooldownMs = this.getCooldownMs(cooldown);
+        return lastExecutionTimestamp + cooldownMs;
     }
   }
 
