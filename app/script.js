@@ -803,7 +803,9 @@ class DoThisApp {
                   Cancel
                 </button>
                 <button class="btn-primary edit-save" onclick="app.saveTaskEdit()">
-                  <img src="img/check.svg" alt="Save" width="16" height="16" />
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
                   Save
                 </button>
               </div>
@@ -1700,7 +1702,12 @@ class DoThisApp {
           </div>
           <div class="task-actions">
             <button class="restore-btn" onclick="app.restoreTask(${index})" aria-label="Restore task">
-              <img src="img/refresh.svg" alt="Restore" width="16" height="16" />
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="23 4 23 10 17 10"></polyline>
+                <polyline points="1 20 1 14 7 14"></polyline>
+                <path d="M20.49 9A9 9 0 0 0 5.64 5.64l1.27 1.27"></path>
+                <path d="M3.51 15a9 9 0 0 0 14.85 3.36l-1.27-1.27"></path>
+              </svg>
             </button>
             <button class="delete-forever-btn" onclick="app.deleteTaskForever(${index})" aria-label="Delete forever">
               <img src="img/trash.svg" alt="Delete Forever" width="16" height="16" />
