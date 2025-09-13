@@ -811,7 +811,7 @@ class DoThisApp {
           <div class="task-content">
               <div class="task-text">${this.escapeHtml(task.text)}</div>
               <div class="task-meta">
-                  ${typeDisplay ? `<span class="task-stat task-type" title="${this.escapeHtml(task.type)}">${typeDisplay}</span>` : ""}
+                  ${typeDisplay ? `<span class="task-stat task-type ${task.type}" title="${this.escapeHtml(task.type)}">${typeDisplay}</span>` : ""}
                   <span class="task-stat task-status ${status.type}" title="${this.escapeHtml(statusText)}">${statusIcon} ${statusText}</span>
                   ${execStatsHtml}
               </div>

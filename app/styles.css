@@ -62,6 +62,10 @@
   --color-status-error: #ef4444;
   --color-status-warning: var(--sunset-gold);
 
+  /* Task Type Colors */
+  --color-type-repeatable: var(--ocean-mist);
+  --color-type-unique: var(--ocean-light);
+
   /* Border Colors */
   --color-border-light: var(--sand-light);
   --color-border-medium: var(--sand-medium);
@@ -117,6 +121,8 @@
   --completed-alpha-30: rgba(107, 114, 128, 0.3);
   --subtle-alpha-10: rgba(255, 255, 255, 0.1);
   --subtle-alpha-30: rgba(255, 255, 255, 0.3);
+  --tasktype-alpha-10: rgba(107, 114, 128, 0.1);
+  --tasktype-alpha-30: rgba(107, 114, 128, 0.3);
 
   /* === MODAL OVERLAY === */
   --modal-overlay: rgba(31, 41, 55, 0.5);
@@ -586,21 +592,14 @@ body {
   white-space: nowrap;
 }
 
-.test {
-  background: var(--color-background-subtle);
-  color: var(--color-text-secondary);
-  border: 1px solid var(--color-text-secondary);
-}
-
 .task-stat.task-type {
-  background: var(--subtle-alpha-10);
+  background: var(--tasktype-alpha-10);
   color: var(--color-text-secondary);
-  border: 1px solid var(--subtle-alpha-30);
+  border: 1px solid var(--tasktype-alpha-30);
 }
 
 .task-stat.task-status {
   color: var(--color-text-on-primary);
-  font-weight: 600;
 }
 
 .task-stat.task-status.available {
@@ -1492,6 +1491,10 @@ body {
     --error-alpha-30: rgba(239, 68, 68, 0.3);
     --completed-alpha-10: rgba(156, 163, 175, 0.1);
     --completed-alpha-30: rgba(156, 163, 175, 0.3);
+
+    /* Task Type Colors */
+    --color-type-repeatable: var(--dark-slate-deep);
+    --color-type-unique: var(--ocean-light);
 
     /* Modal Overlay */
     --modal-overlay: rgba(0, 0, 0, 0.8);
