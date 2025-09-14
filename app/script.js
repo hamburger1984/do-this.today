@@ -829,7 +829,9 @@ class DoThisApp {
                     <path d="m14.5 5.5 4 4"></path>
                   </svg>
               </button>
-              <button class="delete-btn" onclick="app.deleteTask(${index})" aria-label="Delete task">
+              <button class="delete-btn${this.isTaskActive(task) ? " disabled" : ""}"
+                      ${this.isTaskActive(task) ? 'disabled title="Cannot delete active task"' : `onclick="app.deleteTask(${index})"`}
+                      aria-label="Delete task">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="3 6 5 6 21 6"></polyline>
                     <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
@@ -1033,6 +1035,10 @@ class DoThisApp {
       const status = this.getTaskStatus(task);
       return status.type === "available";
     });
+  }
+
+  isTaskActive(task) {
+    return this.activeTask && this.activeTask.task.id === task.id;
   }
 
   toggleEmptyState() {

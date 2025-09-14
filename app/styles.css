@@ -468,6 +468,16 @@ body {
   background: var(--error-alpha-10);
 }
 
+.delete-btn.disabled {
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.delete-btn.disabled:hover {
+  background: none;
+}
+
 .restore-btn {
   background: none;
   border: none;
