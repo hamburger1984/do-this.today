@@ -29,6 +29,8 @@ class DoThisApp {
       this.updateStats();
       this.updateRandomizeButton();
       this.updateDefaultTasksButton();
+      this.updateRandomizerText();
+      this.updateTaskListCollapse();
       this.checkActiveTask();
 
       // Run a quick data integrity check on startup
@@ -620,6 +622,9 @@ class DoThisApp {
 
   // UI update methods
   updateUI() {
+    this.updateRandomizerText();
+    this.updateTaskListCollapse();
+
     if (!this.taskListCollapsed || this.currentPage !== "main") {
       this.renderTasks();
       this.toggleEmptyState();
@@ -1034,6 +1039,36 @@ class DoThisApp {
       addDefaultTasksBtn.style.display = "inline-flex";
     } else {
       addDefaultTasksBtn.style.display = "none";
+    }
+  }
+
+  updateRandomizerText() {
+    const randomizerStart = document.getElementById("randomizerStart");
+    const title = randomizerStart.querySelector("h3");
+    const description = randomizerStart.querySelector("p");
+
+    if (this.tasks.length === 0) {
+      title.textContent = "Let's start with some tasks!";
+      description.textContent =
+        "Add some tasks below to get started with randomization";
+    } else {
+      title.textContent = "Ready to pick a task?";
+      description.textContent =
+        "Click the button below to randomly select one of your tasks";
+    }
+  }
+
+  updateTaskListCollapse() {
+    // Auto-expand task list when no tasks exist to encourage adding tasks
+    if (this.tasks.length === 0 && this.taskListCollapsed) {
+      this.taskListCollapsed = false;
+      const taskContent = document.getElementById("taskContent");
+      const collapseIndicator = document.getElementById(
+        "taskCollapseIndicator",
+      );
+
+      taskContent.style.display = "block";
+      collapseIndicator.textContent = "▲";
     }
   }
 
