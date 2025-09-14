@@ -1107,7 +1107,6 @@ class DoThisApp {
     // Stop cooldown checking since we're moving to task selection
     this.stopCooldownChecking();
 
-    playConfetti();
     const availableTasks = this.getAvailableTasks();
 
     if (availableTasks.length === 0) {
