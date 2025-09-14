@@ -25,6 +25,7 @@ class DoThisApp {
       this.loadTasks();
       this.cleanupCompletedOneOffTasks(); // Clean up completed one-off tasks after 24h
       this.bindEvents();
+      this.applySectionStates();
       this.updateUI();
       this.updateStats();
       this.updateRandomizeButton();
@@ -170,6 +171,14 @@ class DoThisApp {
     localStorage.setItem("dothis-completed", this.completedTasks.toString());
     localStorage.setItem("dothis-active", JSON.stringify(this.activeTask));
     localStorage.setItem("dothis-nextid", this.nextTaskId.toString());
+    localStorage.setItem(
+      "dothis-tasklist-collapsed",
+      this.taskListCollapsed.toString(),
+    );
+    localStorage.setItem(
+      "dothis-settings-collapsed",
+      this.settingsCollapsed.toString(),
+    );
   }
 
   loadTasks() {
@@ -313,6 +322,22 @@ class DoThisApp {
         this.getMaxTaskId() + 1,
       );
     }
+
+    // Load section collapse states
+    const taskListCollapsedSaved = localStorage.getItem(
+      "dothis-tasklist-collapsed",
+    );
+    const settingsCollapsedSaved = localStorage.getItem(
+      "dothis-settings-collapsed",
+    );
+
+    if (taskListCollapsedSaved !== null) {
+      this.taskListCollapsed = taskListCollapsedSaved === "true";
+    }
+
+    if (settingsCollapsedSaved !== null) {
+      this.settingsCollapsed = settingsCollapsedSaved === "true";
+    }
   }
 
   getMaxTaskId() {
@@ -349,6 +374,9 @@ class DoThisApp {
       collapseIndicator.textContent = "▲";
       this.updateUI();
     }
+
+    // Save state to localStorage
+    this.saveTasks();
   }
 
   toggleSettings() {
@@ -364,6 +392,39 @@ class DoThisApp {
     } else {
       settingsContent.style.display = "block";
       collapseIndicator.textContent = "▲";
+    }
+
+    // Save state to localStorage
+    this.saveTasks();
+  }
+
+  applySectionStates() {
+    // Apply task list collapse state
+    const taskContent = document.getElementById("taskContent");
+    const taskCollapseIndicator = document.getElementById(
+      "taskCollapseIndicator",
+    );
+
+    if (this.taskListCollapsed) {
+      taskContent.style.display = "none";
+      taskCollapseIndicator.textContent = "▼";
+    } else {
+      taskContent.style.display = "block";
+      taskCollapseIndicator.textContent = "▲";
+    }
+
+    // Apply settings collapse state
+    const settingsContent = document.getElementById("settingsContent");
+    const settingsCollapseIndicator = document.getElementById(
+      "settingsCollapseIndicator",
+    );
+
+    if (this.settingsCollapsed) {
+      settingsContent.style.display = "none";
+      settingsCollapseIndicator.textContent = "▼";
+    } else {
+      settingsContent.style.display = "block";
+      settingsCollapseIndicator.textContent = "▲";
     }
   }
 
@@ -1059,8 +1120,14 @@ class DoThisApp {
   }
 
   updateTaskListCollapse() {
-    // Auto-expand task list when no tasks exist to encourage adding tasks
-    if (this.tasks.length === 0 && this.taskListCollapsed) {
+    // Auto-expand task list when no tasks exist and no saved state exists (first-time user)
+    const savedState = localStorage.getItem("dothis-tasklist-collapsed");
+
+    if (
+      this.tasks.length === 0 &&
+      this.taskListCollapsed &&
+      savedState === null
+    ) {
       this.taskListCollapsed = false;
       const taskContent = document.getElementById("taskContent");
       const collapseIndicator = document.getElementById(
@@ -1069,6 +1136,9 @@ class DoThisApp {
 
       taskContent.style.display = "block";
       collapseIndicator.textContent = "▲";
+
+      // Save the new state
+      this.saveTasks();
     }
   }
 
@@ -1669,6 +1739,8 @@ class DoThisApp {
       localStorage.removeItem("dothis-completed");
       localStorage.removeItem("dothis-active");
       localStorage.removeItem("dothis-nextid");
+      localStorage.removeItem("dothis-tasklist-collapsed");
+      localStorage.removeItem("dothis-settings-collapsed");
 
       // Reset all app state
       this.tasks = [];
