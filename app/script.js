@@ -641,16 +641,12 @@ class DoThisApp {
     task.type = taskType;
     task.cooldown = cooldownPeriod;
 
-    // If changing from repeatable to oneoff, reset executions and completed status
-    if (oldType === "repeatable" && taskType === "oneoff") {
-      task.executions = [];
+    // If changing from repeatable to oneoff or vice versa, reset completed status
+    if (
+      (oldType === "repeatable" && taskType === "oneoff") ||
+      (oldType === "oneoff" && taskType === "repeatable")
+    ) {
       task.completed = false;
-    }
-
-    // If changing from oneoff to repeatable, ensure proper structure
-    if (oldType === "oneoff" && taskType === "repeatable") {
-      task.completed = false;
-      // Keep executions array as is
     }
 
     this.saveTasks();
@@ -1359,6 +1355,7 @@ class DoThisApp {
       this.activeTask = null;
       this.clearActiveTaskTimer();
       this.saveTasks();
+      this.updateUI();
       this.resetRandomizer();
       this.hideAbandonReasonModal();
       this.showToast("Task abandoned with reason recorded", "default");

@@ -1,0 +1,2 @@
+* abandoning a task will refresh the task list
+* abandoned task executions will not be considered for cooldown
