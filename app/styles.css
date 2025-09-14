@@ -743,6 +743,10 @@ body {
   color: var(--color-text-primary);
 }
 
+.task-item.task-available {
+  border-color: var(--color-status-available);
+}
+
 .task-item.task-cooldown {
   opacity: 0.7;
   background: var(--color-background-subtle);
