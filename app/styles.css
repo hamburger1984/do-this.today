@@ -782,7 +782,7 @@ body {
 }
 
 .task-text {
-  font-size: var(--font-size-heading-large);
+  font-size: var(--font-size-body);
   color: var(--color-text-primary);
   margin-bottom: 0.5rem;
   word-break: break-word;
@@ -981,6 +981,7 @@ body {
 }
 
 .active-task-display .task-text {
+  font-size: var(--font-size-heading-large);
   background: var(--gradient-secondary-action);
   color: var(--color-text-on-primary);
   padding: 1.5rem;
@@ -1096,6 +1097,7 @@ body {
   border: 2px solid var(--color-border-light);
   border-radius: 20px;
   padding: 2.5rem;
+  margin: auto;
   max-width: 440px;
   width: 90%;
   box-shadow: var(--shadow-elevated);
