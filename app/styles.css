@@ -126,6 +126,30 @@
 
   /* === MODAL OVERLAY === */
   --modal-overlay: rgba(31, 41, 55, 0.5);
+
+  /* === TYPOGRAPHY SIZES === */
+  /* App Title & Main Headers */
+  --font-size-app-title: 2.25rem; /* App main title */
+  --font-size-hero-heading: 1.75rem; /* Randomizer section, task display headings */
+  --font-size-section-heading: 1.5rem; /* Collapsible section headers, active task */
+  --font-size-modal-heading: 1.375rem; /* Modal titles */
+  --font-size-page-heading: 1.25rem; /* Page headers (h2) */
+  --font-size-subsection-heading: 1.125rem; /* App subtitle, empty state headings */
+
+  /* Body & Content Text */
+  --font-size-body: 1rem; /* Standard body text, buttons, inputs */
+  --font-size-task-text: 1.1rem; /* Task item main text */
+  --font-size-description: 0.9rem; /* Task completed description, empty state text */
+  --font-size-body-small: 0.875rem; /* Form labels, button text, settings */
+
+  /* Small & Detail Text */
+  --font-size-caption: 0.8rem; /* Timer labels, stat labels */
+  --font-size-tiny: 0.75rem; /* Mobile responsive smaller text */
+  --font-size-badge: 0.7rem; /* Task meta badges, execution stats */
+
+  /* Special/Large Text */
+  --font-size-display: 4rem; /* Large display text (empty icons) */
+  --font-size-large-display: 2rem; /* Stats numbers */
 }
 
 /* ===== BASE/RESET STYLES ===== */
@@ -211,7 +235,7 @@ body {
 }
 
 .app-title {
-  font-size: 2.25rem;
+  font-size: var(--font-size-app-title);
   font-weight: 800;
   margin-bottom: 0.75rem;
   letter-spacing: -0.02em;
@@ -220,7 +244,7 @@ body {
 }
 
 .app-subtitle {
-  font-size: 1.125rem;
+  font-size: var(--font-size-subsection-heading);
   color: var(--color-text-secondary);
   font-weight: 500;
   opacity: 0.95;
@@ -235,7 +259,7 @@ body {
 }
 
 .section-header h2 {
-  font-size: 1.25rem;
+  font-size: var(--font-size-page-heading);
   font-weight: 700;
   color: var(--color-text-primary);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -252,7 +276,7 @@ body {
 }
 
 .page-header h2 {
-  font-size: 1.25rem;
+  font-size: var(--font-size-page-heading);
   font-weight: 600;
   color: var(--color-text-primary);
   margin: 0;
@@ -279,7 +303,7 @@ body {
   margin: 0;
   color: var(--color-text-secondary);
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: var(--font-size-section-heading);
 }
 
 .header-actions {
@@ -288,7 +312,7 @@ body {
 }
 
 .collapse-indicator {
-  font-size: 1rem;
+  font-size: var(--font-size-body);
   color: var(--color-text-muted);
   transition: transform 0.1s;
   user-select: none;
@@ -308,7 +332,7 @@ body {
   border: none;
   padding: 1rem 2rem;
   border-radius: 16px;
-  font-size: 1rem;
+  font-size: var(--font-size-body);
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -356,7 +380,7 @@ body {
   border: 2px solid var(--color-border-medium);
   padding: 0.75rem 1.25rem;
   border-radius: 12px;
-  font-size: 0.875rem;
+  font-size: var(--font-size-body-small);
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -499,7 +523,7 @@ body {
   border: none;
   background: transparent;
   color: var(--color-text-secondary);
-  font-size: 0.875rem;
+  font-size: var(--font-size-body-small);
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -573,7 +597,7 @@ body {
   padding: 1rem;
   border: 2px solid var(--color-border-medium);
   border-radius: 16px;
-  font-size: 1rem;
+  font-size: var(--font-size-body);
   transition: all 0.2s ease;
   background: var(--color-background-elevated);
   color: var(--color-text-primary);
@@ -601,7 +625,7 @@ body {
 
 .option-group label {
   display: block;
-  font-size: 0.875rem;
+  font-size: var(--font-size-body-small);
   color: var(--color-text-secondary);
   margin-bottom: 0.5rem;
   font-weight: 600;
@@ -612,7 +636,7 @@ body {
   padding: 0.75rem;
   border: 2px solid var(--color-border-medium);
   border-radius: 12px;
-  font-size: 0.875rem;
+  font-size: var(--font-size-body-small);
   background: var(--color-background-elevated);
   color: var(--color-text-primary);
   transition: all 0.2s ease;
@@ -651,7 +675,7 @@ body {
   padding: 0.875rem;
   border: 2px solid var(--color-border-medium);
   border-radius: 8px;
-  font-size: 0.9rem;
+  font-size: var(--font-size-description);
   transition: all 0.1s ease;
   background: var(--color-background-elevated);
   font-family: inherit;
@@ -677,7 +701,7 @@ body {
 
 .edit-option-group label {
   display: block;
-  font-size: 0.8rem;
+  font-size: var(--font-size-caption);
   color: var(--color-text-secondary);
   margin-bottom: 0.5rem;
   font-weight: 500;
@@ -688,7 +712,7 @@ body {
   padding: 0.75rem;
   border: 2px solid var(--color-border-medium);
   border-radius: 8px;
-  font-size: 0.8rem;
+  font-size: var(--font-size-caption);
   background: var(--color-background-elevated);
   color: var(--color-text-primary);
   transition: all 0.1s ease;
@@ -764,7 +788,7 @@ body {
 }
 
 .task-text {
-  font-size: 1.1rem;
+  font-size: var(--font-size-task-text);
   color: var(--color-text-primary);
   margin-bottom: 0.5rem;
   word-break: break-word;
@@ -778,7 +802,7 @@ body {
 }
 
 .task-stat {
-  font-size: 0.7rem;
+  font-size: var(--font-size-badge);
   padding: 0.25rem 0.5rem;
   border-radius: 12px;
   font-weight: 500;
@@ -863,7 +887,7 @@ body {
 }
 
 .deleted-date {
-  font-size: 0.7rem;
+  font-size: var(--font-size-badge);
   color: var(--color-text-on-primary);
   background: var(--color-status-warning);
   padding: 0.25rem 0.5rem;
@@ -883,7 +907,7 @@ body {
 }
 
 .randomizer-start h3 {
-  font-size: 1.75rem;
+  font-size: var(--font-size-hero-heading);
   font-weight: 700;
   color: var(--color-text-primary);
   margin-bottom: 0.75rem;
@@ -893,7 +917,7 @@ body {
 .randomizer-start p {
   color: var(--color-text-secondary);
   margin-bottom: 2.5rem;
-  font-size: 1rem;
+  font-size: var(--font-size-body);
   font-weight: 500;
   max-width: 300px;
   margin-left: auto;
@@ -909,7 +933,7 @@ body {
 }
 
 .task-display h3 {
-  font-size: 1.75rem;
+  font-size: var(--font-size-hero-heading);
   font-weight: 700;
   color: var(--color-text-primary);
   margin-bottom: 1.5rem;
@@ -921,7 +945,7 @@ body {
   color: var(--color-text-on-primary);
   padding: 2rem 1.5rem;
   border-radius: 20px;
-  font-size: 1.125rem;
+  font-size: var(--font-size-subsection-heading);
   font-weight: 600;
   line-height: 1.6;
   margin: 0;
@@ -956,7 +980,7 @@ body {
 }
 
 .active-task-display h3 {
-  font-size: 1.5rem;
+  font-size: var(--font-size-section-heading);
   font-weight: 600;
   color: var(--color-text-secondary);
   margin-bottom: 1rem;
@@ -967,7 +991,7 @@ body {
   color: var(--color-text-on-primary);
   padding: 1.5rem;
   border-radius: 12px;
-  font-size: 1rem;
+  font-size: var(--font-size-body);
   font-weight: 600;
   line-height: 1.5;
   margin: 0 0 1.5rem 0;
@@ -983,14 +1007,14 @@ body {
 }
 
 .timer-label {
-  font-size: 0.8rem;
+  font-size: var(--font-size-caption);
   color: var(--color-text-secondary);
   margin-bottom: 0.5rem;
   font-weight: 500;
 }
 
 .timer-value {
-  font-size: 2rem;
+  font-size: var(--font-size-large-display);
   font-weight: 700;
   color: var(--color-primary-action);
   font-family: "Courier New", monospace;
@@ -1015,7 +1039,7 @@ body {
 }
 
 .success-icon {
-  font-size: 4rem;
+  font-size: var(--font-size-display);
   margin-bottom: 1rem;
 }
 
@@ -1044,7 +1068,7 @@ body {
 }
 
 .task-completed h3 {
-  font-size: 1.5rem;
+  font-size: var(--font-size-section-heading);
   font-weight: 600;
   color: var(--text-primary);
   margin-bottom: 0.5rem;
@@ -1053,7 +1077,7 @@ body {
 .task-completed p {
   color: var(--text-muted);
   margin-bottom: 2rem;
-  font-size: 0.9rem;
+  font-size: var(--font-size-description);
 }
 
 /* ===== MODAL AND OVERLAY COMPONENTS ===== */
@@ -1084,7 +1108,7 @@ body {
 }
 
 .modal-content h3 {
-  font-size: 1.375rem;
+  font-size: var(--font-size-modal-heading);
   font-weight: 700;
   color: var(--color-text-primary);
   margin-bottom: 1.5rem;
@@ -1097,7 +1121,7 @@ body {
   padding: 1.25rem;
   border: 2px solid var(--color-border-medium);
   border-radius: 16px;
-  font-size: 1rem;
+  font-size: var(--font-size-body);
   font-family: inherit;
   background: var(--color-background-elevated);
   color: var(--color-text-primary);
@@ -1136,7 +1160,7 @@ body {
   color: var(--color-text-on-primary);
   padding: 1.25rem 2rem;
   border-radius: 16px;
-  font-size: 0.875rem;
+  font-size: var(--font-size-body-small);
   font-weight: 600;
   box-shadow: var(--shadow-elevated);
   opacity: 0;
@@ -1185,7 +1209,7 @@ body {
 
 .stat-number {
   display: block;
-  font-size: 2rem;
+  font-size: var(--font-size-large-display);
   font-weight: 700;
   color: var(--color-primary-action);
   line-height: 1;
@@ -1193,7 +1217,7 @@ body {
 }
 
 .stat-label {
-  font-size: 0.75rem;
+  font-size: var(--font-size-tiny);
   color: var(--color-text-secondary);
   text-transform: uppercase;
   font-weight: 600;
@@ -1229,7 +1253,7 @@ body {
   }
 
   .task-stat {
-    font-size: 0.75rem;
+    font-size: var(--font-size-tiny);
   }
 
   .edit-task-options {
@@ -1256,17 +1280,17 @@ body {
   }
 
   .task-stat {
-    font-size: 0.75rem;
+    font-size: var(--font-size-tiny);
     padding: 0.25rem 0.75rem;
   }
 
   .edit-task-input {
-    font-size: 1rem;
+    font-size: var(--font-size-body);
     padding: 1rem 1.25rem;
   }
 
   .edit-option-group select {
-    font-size: 0.875rem;
+    font-size: var(--font-size-body-small);
   }
 }
 
@@ -1410,7 +1434,7 @@ body {
 }
 
 .empty-icon {
-  font-size: 4rem;
+  font-size: var(--font-size-display);
   margin-bottom: 1rem;
 }
 
@@ -1420,14 +1444,14 @@ body {
 }
 
 .empty-state h3 {
-  font-size: 1.125rem;
+  font-size: var(--font-size-subsection-heading);
   font-weight: 500;
   margin-bottom: 0.5rem;
   color: var(--color-text-secondary);
 }
 
 .empty-state p {
-  font-size: 0.9rem;
+  font-size: var(--font-size-description);
 }
 
 .empty-trash-state {
@@ -1437,19 +1461,19 @@ body {
 }
 
 .empty-trash-state .empty-icon {
-  font-size: 4rem;
+  font-size: var(--font-size-display);
   margin-bottom: 1rem;
 }
 
 .empty-trash-state h3 {
-  font-size: 1.125rem;
+  font-size: var(--font-size-subsection-heading);
   font-weight: 500;
   margin-bottom: 0.5rem;
   color: var(--color-text-secondary);
 }
 
 .empty-trash-state p {
-  font-size: 0.9rem;
+  font-size: var(--font-size-description);
 }
 
 .settings-content {
@@ -1467,7 +1491,7 @@ body {
 }
 
 .settings-group h3 {
-  font-size: 1rem;
+  font-size: var(--font-size-body);
   font-weight: 600;
   color: var(--color-text-secondary);
   margin-bottom: 1rem;
