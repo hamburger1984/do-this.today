@@ -28,6 +28,7 @@ class DoThisApp {
       this.updateUI();
       this.updateStats();
       this.updateRandomizeButton();
+      this.updateDefaultTasksButton();
       this.checkActiveTask();
 
       // Run a quick data integrity check on startup
@@ -111,6 +112,9 @@ class DoThisApp {
       .addEventListener("click", () => this.toggleSettings());
 
     // Settings actions
+    document
+      .getElementById("addDefaultTasksBtn")
+      .addEventListener("click", () => this.addDefaultTasks());
     document
       .getElementById("exportDataBtn")
       .addEventListener("click", () => this.exportTasksAsJson());
@@ -231,82 +235,7 @@ class DoThisApp {
         localStorage.removeItem("dothis-tasks");
       }
     } else {
-      // Add some sample tasks for first-time users
-      this.tasks = [
-        {
-          id: this.nextTaskId++,
-          text: "Read a book for 30 minutes",
-          type: "repeatable",
-          cooldown: "daily",
-          executions: [],
-          completed: false,
-          createdAt: Date.now(),
-        },
-        {
-          id: this.nextTaskId++,
-          text: "Go for a 15-minute walk",
-          type: "repeatable",
-          cooldown: "daily",
-          executions: [],
-          completed: false,
-          createdAt: Date.now(),
-        },
-        {
-          id: this.nextTaskId++,
-          text: "Organize your desk",
-          type: "repeatable",
-          cooldown: "weekly",
-          executions: [],
-          completed: false,
-          createdAt: Date.now(),
-        },
-        {
-          id: this.nextTaskId++,
-          text: "Call a friend or family member",
-          type: "repeatable",
-          cooldown: "weekly",
-          executions: [],
-          completed: false,
-          createdAt: Date.now(),
-        },
-        {
-          id: this.nextTaskId++,
-          text: "Practice a hobby",
-          type: "repeatable",
-          cooldown: "daily",
-          executions: [],
-          completed: false,
-          createdAt: Date.now(),
-        },
-        {
-          id: this.nextTaskId++,
-          text: "Do 10 minutes of stretching",
-          type: "repeatable",
-          cooldown: "daily",
-          executions: [],
-          completed: false,
-          createdAt: Date.now(),
-        },
-        {
-          id: this.nextTaskId++,
-          text: "Write in a journal",
-          type: "repeatable",
-          cooldown: "daily",
-          executions: [],
-          completed: false,
-          createdAt: Date.now(),
-        },
-        {
-          id: this.nextTaskId++,
-          text: "Learn something new online",
-          type: "oneoff",
-          cooldown: "daily",
-          executions: [],
-          completed: false,
-          createdAt: Date.now(),
-        },
-      ];
-      this.saveTasks();
+      this.tasks = [];
     }
 
     if (deletedSaved) {
@@ -681,6 +610,7 @@ class DoThisApp {
 
     // Update randomize button state
     this.updateRandomizeButton();
+    this.updateDefaultTasksButton();
 
     // If current selected task was deleted, reset randomizer
     if (this.currentSelectedTask && this.currentSelectedTask.id === task.id) {
@@ -695,6 +625,7 @@ class DoThisApp {
       this.toggleEmptyState();
     }
     this.updateRandomizeButton();
+    this.updateDefaultTasksButton();
   }
 
   renderTasks() {
@@ -1094,6 +1025,15 @@ class DoThisApp {
             `;
       // Stop cooldown checking since tasks are available
       this.stopCooldownChecking();
+    }
+  }
+
+  updateDefaultTasksButton() {
+    const addDefaultTasksBtn = document.getElementById("addDefaultTasksBtn");
+    if (this.tasks.length === 0) {
+      addDefaultTasksBtn.style.display = "inline-flex";
+    } else {
+      addDefaultTasksBtn.style.display = "none";
     }
   }
 
@@ -1583,6 +1523,92 @@ class DoThisApp {
     }
   }
 
+  // Add default sample tasks
+  addDefaultTasks() {
+    const defaultTasks = [
+      {
+        id: this.nextTaskId++,
+        text: "Read a book for 30 minutes",
+        type: "repeatable",
+        cooldown: "daily",
+        executions: [],
+        completed: false,
+        createdAt: Date.now(),
+      },
+      {
+        id: this.nextTaskId++,
+        text: "Go for a 15-minute walk",
+        type: "repeatable",
+        cooldown: "daily",
+        executions: [],
+        completed: false,
+        createdAt: Date.now(),
+      },
+      {
+        id: this.nextTaskId++,
+        text: "Organize your desk",
+        type: "repeatable",
+        cooldown: "weekly",
+        executions: [],
+        completed: false,
+        createdAt: Date.now(),
+      },
+      {
+        id: this.nextTaskId++,
+        text: "Call a friend or family member",
+        type: "repeatable",
+        cooldown: "weekly",
+        executions: [],
+        completed: false,
+        createdAt: Date.now(),
+      },
+      {
+        id: this.nextTaskId++,
+        text: "Practice a hobby",
+        type: "repeatable",
+        cooldown: "daily",
+        executions: [],
+        completed: false,
+        createdAt: Date.now(),
+      },
+      {
+        id: this.nextTaskId++,
+        text: "Do 10 minutes of stretching",
+        type: "repeatable",
+        cooldown: "daily",
+        executions: [],
+        completed: false,
+        createdAt: Date.now(),
+      },
+      {
+        id: this.nextTaskId++,
+        text: "Write in a journal",
+        type: "repeatable",
+        cooldown: "daily",
+        executions: [],
+        completed: false,
+        createdAt: Date.now(),
+      },
+      {
+        id: this.nextTaskId++,
+        text: "Learn something new online",
+        type: "oneoff",
+        cooldown: "daily",
+        executions: [],
+        completed: false,
+        createdAt: Date.now(),
+      },
+    ];
+
+    this.tasks.push(...defaultTasks);
+    this.saveTasks();
+    this.updateUI();
+    this.updateStats();
+    this.updateRandomizeButton();
+    this.updateDefaultTasksButton();
+    this.showToast("Sample tasks added successfully", "success");
+  }
+
   // Public method to reset everything
   resetEverything() {
     if (
@@ -1624,6 +1650,7 @@ class DoThisApp {
       // Update UI
       this.updateUI();
       this.updateStats();
+      this.updateDefaultTasksButton();
       this.resetRandomizer();
 
       // Collapse settings after reset
