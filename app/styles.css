@@ -1087,6 +1087,8 @@ body {
   z-index: 1000;
   animation: fadeIn 0.15s ease;
   backdrop-filter: blur(4px);
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
 .modal-content {
