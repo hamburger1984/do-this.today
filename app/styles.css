@@ -737,7 +737,6 @@ body {
 
 .task-item:hover {
   background: var(--color-task-background-hover);
-  border-color: var(--color-task-border-hover);
   transform: translateY(-2px);
   box-shadow: var(--shadow-task-item-hover);
   color: var(--color-text-primary);
