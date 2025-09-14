@@ -724,7 +724,7 @@ body {
   background: var(--color-task-background);
   color: var(--color-text-primary);
   border: 2px solid var(--color-task-border);
-  padding: 1rem;
+  padding: 0.75rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -764,7 +764,7 @@ body {
 }
 
 .task-text {
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   color: var(--color-text-primary);
   margin-bottom: 0.5rem;
   word-break: break-word;
