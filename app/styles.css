@@ -128,28 +128,22 @@
   --modal-overlay: rgba(31, 41, 55, 0.5);
 
   /* === TYPOGRAPHY SIZES === */
-  /* App Title & Main Headers */
-  --font-size-app-title: 2.25rem; /* App main title */
-  --font-size-hero-heading: 1.75rem; /* Randomizer section, task display headings */
-  --font-size-section-heading: 1.5rem; /* Collapsible section headers, active task */
-  --font-size-modal-heading: 1.375rem; /* Modal titles */
-  --font-size-page-heading: 1.25rem; /* Page headers (h2) */
-  --font-size-subsection-heading: 1.125rem; /* App subtitle, empty state headings */
+  /* Consolidated system with clear visual hierarchy and less clutter */
 
-  /* Body & Content Text */
-  --font-size-body: 1rem; /* Standard body text, buttons, inputs */
-  --font-size-task-text: 1.1rem; /* Task item main text */
-  --font-size-description: 0.9rem; /* Task completed description, empty state text */
-  --font-size-body-small: 0.875rem; /* Form labels, button text, settings */
-
-  /* Small & Detail Text */
-  --font-size-caption: 0.8rem; /* Timer labels, stat labels */
-  --font-size-tiny: 0.75rem; /* Mobile responsive smaller text */
-  --font-size-badge: 0.7rem; /* Task meta badges, execution stats */
-
-  /* Special/Large Text */
+  /* Large Display & Titles */
   --font-size-display: 4rem; /* Large display text (empty icons) */
-  --font-size-large-display: 2rem; /* Stats numbers */
+  --font-size-title: 2.25rem; /* App main title */
+  --font-size-display-medium: 2rem; /* Stats numbers, large emphasis */
+
+  /* Headings - 3 clear levels */
+  --font-size-heading-large: 1.5rem; /* Hero sections, main task display, modals, active task */
+  --font-size-heading-medium: 1.25rem; /* Section headers (h2), page headers */
+  --font-size-heading-small: 1.125rem; /* App subtitle, empty states, subsection headings */
+
+  /* Body Text - 3 clear levels */
+  --font-size-body: 1rem; /* Standard text, buttons, inputs, task text */
+  --font-size-small: 0.875rem; /* Labels, descriptions, small buttons, captions */
+  --font-size-tiny: 0.75rem; /* Badges, metadata, very small details */
 }
 
 /* ===== BASE/RESET STYLES ===== */
@@ -235,7 +229,7 @@ body {
 }
 
 .app-title {
-  font-size: var(--font-size-app-title);
+  font-size: var(--font-size-title);
   font-weight: 800;
   margin-bottom: 0.75rem;
   letter-spacing: -0.02em;
@@ -244,7 +238,7 @@ body {
 }
 
 .app-subtitle {
-  font-size: var(--font-size-subsection-heading);
+  font-size: var(--font-size-heading-small);
   color: var(--color-text-secondary);
   font-weight: 500;
   opacity: 0.95;
@@ -259,7 +253,7 @@ body {
 }
 
 .section-header h2 {
-  font-size: var(--font-size-page-heading);
+  font-size: var(--font-size-heading-medium);
   font-weight: 700;
   color: var(--color-text-primary);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -276,7 +270,7 @@ body {
 }
 
 .page-header h2 {
-  font-size: var(--font-size-page-heading);
+  font-size: var(--font-size-heading-medium);
   font-weight: 600;
   color: var(--color-text-primary);
   margin: 0;
@@ -303,7 +297,7 @@ body {
   margin: 0;
   color: var(--color-text-secondary);
   font-weight: 600;
-  font-size: var(--font-size-section-heading);
+  font-size: var(--font-size-heading-large);
 }
 
 .header-actions {
@@ -380,7 +374,7 @@ body {
   border: 2px solid var(--color-border-medium);
   padding: 0.75rem 1.25rem;
   border-radius: 12px;
-  font-size: var(--font-size-body-small);
+  font-size: var(--font-size-small);
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -523,7 +517,7 @@ body {
   border: none;
   background: transparent;
   color: var(--color-text-secondary);
-  font-size: var(--font-size-body-small);
+  font-size: var(--font-size-small);
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -625,7 +619,7 @@ body {
 
 .option-group label {
   display: block;
-  font-size: var(--font-size-body-small);
+  font-size: var(--font-size-small);
   color: var(--color-text-secondary);
   margin-bottom: 0.5rem;
   font-weight: 600;
@@ -636,7 +630,7 @@ body {
   padding: 0.75rem;
   border: 2px solid var(--color-border-medium);
   border-radius: 12px;
-  font-size: var(--font-size-body-small);
+  font-size: var(--font-size-small);
   background: var(--color-background-elevated);
   color: var(--color-text-primary);
   transition: all 0.2s ease;
@@ -675,7 +669,7 @@ body {
   padding: 0.875rem;
   border: 2px solid var(--color-border-medium);
   border-radius: 8px;
-  font-size: var(--font-size-description);
+  font-size: var(--font-size-small);
   transition: all 0.1s ease;
   background: var(--color-background-elevated);
   font-family: inherit;
@@ -701,7 +695,7 @@ body {
 
 .edit-option-group label {
   display: block;
-  font-size: var(--font-size-caption);
+  font-size: var(--font-size-small);
   color: var(--color-text-secondary);
   margin-bottom: 0.5rem;
   font-weight: 500;
@@ -712,7 +706,7 @@ body {
   padding: 0.75rem;
   border: 2px solid var(--color-border-medium);
   border-radius: 8px;
-  font-size: var(--font-size-caption);
+  font-size: var(--font-size-small);
   background: var(--color-background-elevated);
   color: var(--color-text-primary);
   transition: all 0.1s ease;
@@ -788,7 +782,7 @@ body {
 }
 
 .task-text {
-  font-size: var(--font-size-task-text);
+  font-size: var(--font-size-body);
   color: var(--color-text-primary);
   margin-bottom: 0.5rem;
   word-break: break-word;
@@ -802,7 +796,7 @@ body {
 }
 
 .task-stat {
-  font-size: var(--font-size-badge);
+  font-size: var(--font-size-tiny);
   padding: 0.25rem 0.5rem;
   border-radius: 12px;
   font-weight: 500;
@@ -887,7 +881,7 @@ body {
 }
 
 .deleted-date {
-  font-size: var(--font-size-badge);
+  font-size: var(--font-size-tiny);
   color: var(--color-text-on-primary);
   background: var(--color-status-warning);
   padding: 0.25rem 0.5rem;
@@ -907,7 +901,7 @@ body {
 }
 
 .randomizer-start h3 {
-  font-size: var(--font-size-hero-heading);
+  font-size: var(--font-size-heading-large);
   font-weight: 700;
   color: var(--color-text-primary);
   margin-bottom: 0.75rem;
@@ -933,7 +927,7 @@ body {
 }
 
 .task-display h3 {
-  font-size: var(--font-size-hero-heading);
+  font-size: var(--font-size-heading-large);
   font-weight: 700;
   color: var(--color-text-primary);
   margin-bottom: 1.5rem;
@@ -945,7 +939,7 @@ body {
   color: var(--color-text-on-primary);
   padding: 2rem 1.5rem;
   border-radius: 20px;
-  font-size: var(--font-size-subsection-heading);
+  font-size: var(--font-size-heading-small);
   font-weight: 600;
   line-height: 1.6;
   margin: 0;
@@ -980,7 +974,7 @@ body {
 }
 
 .active-task-display h3 {
-  font-size: var(--font-size-section-heading);
+  font-size: var(--font-size-heading-large);
   font-weight: 600;
   color: var(--color-text-secondary);
   margin-bottom: 1rem;
@@ -1007,14 +1001,14 @@ body {
 }
 
 .timer-label {
-  font-size: var(--font-size-caption);
+  font-size: var(--font-size-small);
   color: var(--color-text-secondary);
   margin-bottom: 0.5rem;
   font-weight: 500;
 }
 
 .timer-value {
-  font-size: var(--font-size-large-display);
+  font-size: var(--font-size-display-medium);
   font-weight: 700;
   color: var(--color-primary-action);
   font-family: "Courier New", monospace;
@@ -1068,7 +1062,7 @@ body {
 }
 
 .task-completed h3 {
-  font-size: var(--font-size-section-heading);
+  font-size: var(--font-size-heading-large);
   font-weight: 600;
   color: var(--text-primary);
   margin-bottom: 0.5rem;
@@ -1077,7 +1071,7 @@ body {
 .task-completed p {
   color: var(--text-muted);
   margin-bottom: 2rem;
-  font-size: var(--font-size-description);
+  font-size: var(--font-size-small);
 }
 
 /* ===== MODAL AND OVERLAY COMPONENTS ===== */
@@ -1108,7 +1102,7 @@ body {
 }
 
 .modal-content h3 {
-  font-size: var(--font-size-modal-heading);
+  font-size: var(--font-size-heading-large);
   font-weight: 700;
   color: var(--color-text-primary);
   margin-bottom: 1.5rem;
@@ -1160,7 +1154,7 @@ body {
   color: var(--color-text-on-primary);
   padding: 1.25rem 2rem;
   border-radius: 16px;
-  font-size: var(--font-size-body-small);
+  font-size: var(--font-size-small);
   font-weight: 600;
   box-shadow: var(--shadow-elevated);
   opacity: 0;
@@ -1209,7 +1203,7 @@ body {
 
 .stat-number {
   display: block;
-  font-size: var(--font-size-large-display);
+  font-size: var(--font-size-display-medium);
   font-weight: 700;
   color: var(--color-primary-action);
   line-height: 1;
@@ -1290,7 +1284,7 @@ body {
   }
 
   .edit-option-group select {
-    font-size: var(--font-size-body-small);
+    font-size: var(--font-size-small);
   }
 }
 
@@ -1444,14 +1438,14 @@ body {
 }
 
 .empty-state h3 {
-  font-size: var(--font-size-subsection-heading);
+  font-size: var(--font-size-heading-small);
   font-weight: 500;
   margin-bottom: 0.5rem;
   color: var(--color-text-secondary);
 }
 
 .empty-state p {
-  font-size: var(--font-size-description);
+  font-size: var(--font-size-small);
 }
 
 .empty-trash-state {
@@ -1466,14 +1460,14 @@ body {
 }
 
 .empty-trash-state h3 {
-  font-size: var(--font-size-subsection-heading);
+  font-size: var(--font-size-heading-small);
   font-weight: 500;
   margin-bottom: 0.5rem;
   color: var(--color-text-secondary);
 }
 
 .empty-trash-state p {
-  font-size: var(--font-size-description);
+  font-size: var(--font-size-small);
 }
 
 .settings-content {
