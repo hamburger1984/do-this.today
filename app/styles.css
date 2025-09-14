@@ -627,7 +627,7 @@ body {
 
 .option-group select {
   width: 100%;
-  padding: 0.75rem;
+  padding: 1rem;
   border: 2px solid var(--color-border-medium);
   border-radius: 12px;
   font-size: var(--font-size-small);
@@ -703,7 +703,7 @@ body {
 
 .edit-option-group select {
   width: 100%;
-  padding: 0.75rem;
+  padding: 1rem;
   border: 2px solid var(--color-border-medium);
   border-radius: 8px;
   font-size: var(--font-size-small);
