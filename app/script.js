@@ -767,7 +767,7 @@ class DoThisApp {
                       data-type="oneoff"
                       onclick="app.handleEditTaskTypeToggle(event, ${index})"
                     >
-                      One-time task
+                      One-time
                     </button>
                     <button
                       type="button"
@@ -775,7 +775,7 @@ class DoThisApp {
                       data-type="repeatable"
                       onclick="app.handleEditTaskTypeToggle(event, ${index})"
                     >
-                      Repeatable task
+                      Repeatable
                     </button>
                   </div>
                   <input type="hidden" id="editTaskType-${index}" value="${task.type}" />
