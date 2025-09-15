@@ -1625,3 +1625,14 @@ html {
   animation: none;
   transform: scale(1.05);
 }
+
+/* Apply pulsate animation to accept task button when a task is suggested */
+#acceptTaskBtn {
+  animation: pulsate 2s ease-in-out infinite;
+}
+
+/* Remove animation on hover for accept button */
+#acceptTaskBtn:hover {
+  animation: none;
+  transform: scale(1.05);
+}
