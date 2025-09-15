@@ -44,15 +44,22 @@ graph TD
     B --> F[validateDataIntegrity]
 ```
 
-### 2. UI Update Pattern
+### 2. UI Update Pattern (Layered Approach)
 ```mermaid
 graph TD
-    A[Any Data Change] --> B[saveTasks]
-    A --> C[refreshUI]
-    C --> D[updateRandomizerSection]
-    C --> E[updateTaskListSection]
-    C --> F[updateControlButtons]
-    C --> G[updateStats]
+    A[Data Operation] --> B[Storage Operation]
+    B --> C[refreshUI - Main Orchestrator]
+    B --> D[updateStats - Immediate Feedback]
+    B --> E[updateRandomizeButton - Button State]
+    
+    C --> F[updateRandomizerSection]
+    C --> G[updateTaskListSection]
+    C --> H[updateControlButtons]
+    C --> I[updateStats - Also called here]
+    
+    J[Navigation/State] --> K[refreshUI Only]
+    L[Task Edit] --> M[saveTaskData - Fine-grained]
+    N[Major Operations] --> O[saveAllData - Bulk]
 ```
 
 ### 3. Task Lifecycle
