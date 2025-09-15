@@ -36,12 +36,12 @@ Due to the complexity of the full call graph (73 methods with hundreds of relati
 
 ### 1. Initialization Flow
 ```mermaid
-graph LR
-    constructor --> init
-    init --> loadTasks
-    init --> bindEvents
-    init --> refreshUI
-    init --> validateDataIntegrity
+graph TD
+    A[constructor] --> B[init]
+    B --> C[loadTasks]
+    B --> D[bindEvents]
+    B --> E[refreshUI]
+    B --> F[validateDataIntegrity]
 ```
 
 ### 2. UI Update Pattern
