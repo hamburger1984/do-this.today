@@ -1615,8 +1615,8 @@ html {
   }
 }
 
-/* Style randomize button to match selected task text dimensions */
-.randomize-btn {
+/* Style the initial 'Next Task' button to match selected task text dimensions */
+.randomizer-start .randomize-btn {
   background: var(--gradient-primary-action);
   color: var(--color-text-on-primary);
   padding: 2rem 1.5rem;
@@ -1634,7 +1634,7 @@ html {
   width: 100%;
 }
 
-.randomize-btn:hover {
+.randomizer-start .randomize-btn:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-primary-button-hover);
 }
