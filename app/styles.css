@@ -1336,9 +1336,24 @@ body {
     --color-task-text-muted: var(--dark-text-secondary);
 
     /* Action Colors */
+    --color-primary-action: var(--sunset-orange);
+    --color-primary-action-hover: var(--sunset-coral);
+    --color-primary-action-active: #e55a2b;
     --color-secondary-action: var(--ocean-light);
     --color-secondary-action-hover: var(--ocean-medium);
     --color-secondary-action-active: var(--ocean-deep);
+
+    /* Gradients */
+    --gradient-primary-action: linear-gradient(
+      135deg,
+      var(--sunset-orange) 0%,
+      var(--sunset-coral) 100%
+    );
+    --gradient-secondary-action: linear-gradient(
+      135deg,
+      var(--ocean-medium) 0%,
+      var(--ocean-deep) 100%
+    );
 
     /* Borders */
     --color-border-light: var(--dark-slate-light);
