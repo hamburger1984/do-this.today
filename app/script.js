@@ -160,13 +160,30 @@ class DoThisApp {
       });
   }
 
-  // Local storage management
-  saveTasks() {
+  // ===== LOCAL STORAGE MANAGEMENT =====
+  // Fine-grained localStorage operations for better control and performance
+
+  // Task data operations
+  saveTaskData() {
     localStorage.setItem("dothis-tasks", JSON.stringify(this.tasks));
+  }
+
+  saveDeletedTasks() {
     localStorage.setItem("dothis-deleted", JSON.stringify(this.deletedTasks));
-    localStorage.setItem("dothis-completed", this.completedTasks.toString());
+  }
+
+  saveActiveTask() {
     localStorage.setItem("dothis-active", JSON.stringify(this.activeTask));
+  }
+
+  // Statistics and counters
+  saveStatistics() {
+    localStorage.setItem("dothis-completed", this.completedTasks.toString());
     localStorage.setItem("dothis-nextid", this.nextTaskId.toString());
+  }
+
+  // UI state persistence
+  saveUIState() {
     localStorage.setItem(
       "dothis-tasklist-collapsed",
       this.taskListCollapsed.toString(),
@@ -177,7 +194,27 @@ class DoThisApp {
     );
   }
 
+  // Complete data persistence (calls all save methods)
+  saveAllData() {
+    this.saveTaskData();
+    this.saveDeletedTasks();
+    this.saveActiveTask();
+    this.saveStatistics();
+    this.saveUIState();
+  }
+
+  // Legacy method for backward compatibility
+  saveTasks() {
+    this.saveAllData();
+  }
+
+  // Legacy method for backward compatibility
   loadTasks() {
+    this.loadAllData();
+  }
+
+  // Original implementation preserved for reference (now replaced by loadAllData)
+  loadTasksOriginal() {
     const saved = localStorage.getItem("dothis-tasks");
     const deletedSaved = localStorage.getItem("dothis-deleted");
     const completedSaved = localStorage.getItem("dothis-completed");
@@ -334,6 +371,183 @@ class DoThisApp {
     if (settingsCollapsedSaved !== null) {
       this.settingsCollapsed = settingsCollapsedSaved === "true";
     }
+  }
+
+  // Task data loading with validation and migration
+  loadTaskData() {
+    const saved = localStorage.getItem("dothis-tasks");
+    if (saved) {
+      try {
+        this.tasks = JSON.parse(saved);
+        // Migrate and validate task objects
+        this.tasks = this.tasks.map((task, index) => {
+          if (typeof task === "string") {
+            return {
+              id: this.nextTaskId++,
+              text: task,
+              type: "oneoff",
+              cooldown: "daily",
+              executions: [],
+              completed: false,
+            };
+          }
+          // Validate and fix corrupted task objects
+          if (!task || typeof task !== "object") {
+            console.warn(`Invalid task at index ${index}:`, task);
+            return {
+              id: this.nextTaskId++,
+              text: "Corrupted task (please edit)",
+              type: "oneoff",
+              cooldown: "daily",
+              executions: [],
+              completed: false,
+            };
+          }
+          // Ensure all required properties exist and are valid
+          const validTask = {
+            id: task.id || this.nextTaskId++,
+            text:
+              typeof task.text === "string"
+                ? task.text
+                : String(task.text || "Corrupted task (please edit)"),
+            type:
+              task.type === "repeatable" || task.type === "oneoff"
+                ? task.type
+                : "oneoff",
+            cooldown: task.cooldown || "daily",
+            executions: Array.isArray(task.executions) ? task.executions : [],
+            completed: Boolean(task.completed),
+            createdAt: task.createdAt || Date.now(),
+          };
+          return validTask;
+        });
+        // Filter out any null/undefined tasks
+        this.tasks = this.tasks.filter((task) => task && task.text);
+      } catch (error) {
+        console.error("Error loading tasks from localStorage:", error);
+        this.tasks = [];
+        localStorage.removeItem("dothis-tasks");
+      }
+    } else {
+      this.tasks = [];
+    }
+  }
+
+  loadDeletedTasks() {
+    const deletedSaved = localStorage.getItem("dothis-deleted");
+    if (deletedSaved) {
+      try {
+        this.deletedTasks = JSON.parse(deletedSaved).map((task, index) => {
+          if (typeof task === "string") {
+            return {
+              id: this.nextTaskId++,
+              text: task,
+              type: "oneoff",
+              cooldown: "daily",
+              executions: [],
+              completed: false,
+              deletedAt: Date.now(),
+            };
+          }
+          // Validate deleted task objects
+          if (!task || typeof task !== "object") {
+            console.warn(`Invalid deleted task at index ${index}:`, task);
+            return {
+              id: this.nextTaskId++,
+              text: "Corrupted deleted task",
+              type: "oneoff",
+              cooldown: "daily",
+              executions: [],
+              completed: false,
+              deletedAt: Date.now(),
+            };
+          }
+          const validTask = {
+            id: task.id || this.nextTaskId++,
+            text:
+              typeof task.text === "string"
+                ? task.text
+                : String(task.text || "Corrupted deleted task"),
+            type:
+              task.type === "repeatable" || task.type === "oneoff"
+                ? task.type
+                : "oneoff",
+            cooldown: task.cooldown || "daily",
+            executions: Array.isArray(task.executions) ? task.executions : [],
+            completed: Boolean(task.completed),
+            deletedAt: task.deletedAt || Date.now(),
+          };
+          return validTask;
+        });
+        // Filter out any null/undefined tasks
+        this.deletedTasks = this.deletedTasks.filter(
+          (task) => task && task.text,
+        );
+      } catch (error) {
+        console.error("Error loading deleted tasks from localStorage:", error);
+        this.deletedTasks = [];
+        localStorage.removeItem("dothis-deleted");
+      }
+    } else {
+      this.deletedTasks = [];
+    }
+  }
+
+  loadActiveTask() {
+    const activeSaved = localStorage.getItem("dothis-active");
+    if (activeSaved && activeSaved !== "null") {
+      try {
+        this.activeTask = JSON.parse(activeSaved);
+      } catch (error) {
+        console.error("Error loading active task:", error);
+        this.activeTask = null;
+        localStorage.removeItem("dothis-active");
+      }
+    } else {
+      this.activeTask = null;
+    }
+  }
+
+  loadStatistics() {
+    const completedSaved = localStorage.getItem("dothis-completed");
+    const nextIdSaved = localStorage.getItem("dothis-nextid");
+
+    if (completedSaved) {
+      this.completedTasks = parseInt(completedSaved) || 0;
+    }
+
+    if (nextIdSaved) {
+      this.nextTaskId = Math.max(
+        parseInt(nextIdSaved) || 1,
+        this.getMaxTaskId() + 1,
+      );
+    }
+  }
+
+  loadUIState() {
+    const taskListCollapsedSaved = localStorage.getItem(
+      "dothis-tasklist-collapsed",
+    );
+    const settingsCollapsedSaved = localStorage.getItem(
+      "dothis-settings-collapsed",
+    );
+
+    if (taskListCollapsedSaved !== null) {
+      this.taskListCollapsed = taskListCollapsedSaved === "true";
+    }
+
+    if (settingsCollapsedSaved !== null) {
+      this.settingsCollapsed = settingsCollapsedSaved === "true";
+    }
+  }
+
+  // Complete data loading (calls all load methods)
+  loadAllData() {
+    this.loadTaskData();
+    this.loadDeletedTasks();
+    this.loadActiveTask();
+    this.loadStatistics();
+    this.loadUIState();
   }
 
   getMaxTaskId() {
