@@ -1195,7 +1195,7 @@ class DoThisApp {
                   <circle cx="8" cy="16" r="1.3" fill="currentColor"/>
                   <circle cx="16" cy="16" r="1.3" fill="currentColor"/>
                 </svg>
-                Pick Random Task (${availableTasks.length})
+                Pick Random Task
             `;
       // Stop cooldown checking since tasks are available
       this.stopCooldownChecking();
@@ -1223,9 +1223,18 @@ class DoThisApp {
       description.textContent =
         "Add some tasks below to get started with randomization";
     } else {
+      const availableTasks = this.getAvailableTasks();
       title.textContent = "Ready to pick a task?";
-      description.textContent =
-        "Click the button below to randomly select one of your tasks";
+
+      if (availableTasks.length === 0) {
+        description.textContent =
+          "All tasks are currently on cooldown. Check back later!";
+      } else if (availableTasks.length === 1) {
+        description.textContent =
+          "Click the button below to select the 1 available task";
+      } else {
+        description.textContent = `Click the button below to randomly select from ${availableTasks.length} available tasks`;
+      }
     }
   }
 

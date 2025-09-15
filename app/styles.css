@@ -1596,3 +1596,32 @@ html {
 ::-moz-selection {
   background: rgba(255, 107, 53, 0.3);
 }
+
+/* ===== ANIMATIONS ===== */
+
+/* Pulsate animation for randomize button */
+@keyframes pulsate {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.4);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(255, 107, 53, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 107, 53, 0);
+  }
+}
+
+/* Apply pulsate animation to randomize button when enabled */
+.randomize-btn:not(:disabled) {
+  animation: pulsate 2s ease-in-out infinite;
+}
+
+/* Remove animation on hover to avoid distraction during interaction */
+.randomize-btn:not(:disabled):hover {
+  animation: none;
+  transform: scale(1.05);
+}
