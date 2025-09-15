@@ -26,11 +26,7 @@ class DoThisApp {
       this.cleanupCompletedOneOffTasks(); // Clean up completed one-off tasks after 24h
       this.bindEvents();
       this.applySectionStates();
-      this.updateUI();
-      this.updateStats();
-      this.updateRandomizeButton();
-      this.updateDefaultTasksButton();
-      this.updateRandomizerText();
+      this.refreshUI();
       this.updateTaskListCollapse();
       this.checkActiveTask();
 
@@ -351,7 +347,7 @@ class DoThisApp {
     this.currentPage = "main";
     document.getElementById("mainPage").style.display = "block";
     document.getElementById("trashPage").style.display = "none";
-    this.updateUI();
+    this.refreshUI();
   }
 
   showTrashPage() {
@@ -372,7 +368,7 @@ class DoThisApp {
     } else {
       taskContent.style.display = "block";
       collapseIndicator.textContent = "▲";
-      this.updateUI();
+      this.refreshUI();
     }
 
     // Save state to localStorage
@@ -556,7 +552,7 @@ class DoThisApp {
 
     this.tasks.push(newTask);
     this.saveTasks();
-    this.updateUI();
+    this.refreshUI();
     this.updateStats();
     this.updateRandomizeButton();
 
@@ -650,7 +646,7 @@ class DoThisApp {
     }
 
     this.saveTasks();
-    this.updateUI();
+    this.refreshUI();
     this.updateStats();
     this.updateRandomizeButton();
     this.hideTaskEdit();
@@ -663,7 +659,7 @@ class DoThisApp {
     this.deletedTasks.push(task);
     this.tasks.splice(index, 1);
     this.saveTasks();
-    this.updateUI();
+    this.refreshUI();
     this.updateStats();
     this.showToast(`"${task.text}" moved to trash`, "success");
 
@@ -683,8 +679,7 @@ class DoThisApp {
    * UI Update Organization:
    *
    * 1. MAIN ORCHESTRATOR:
-   *    - refreshUI() - Call this after any data changes (new recommended method)
-   *    - updateUI() - Legacy method, calls refreshUI() for backward compatibility
+   *    - refreshUI() - Call this after any data changes
    *
    * 2. SECTION UPDATES:
    *    - updateRandomizerSection() - Updates randomizer text and button
@@ -707,6 +702,7 @@ class DoThisApp {
     this.updateRandomizerSection();
     this.updateTaskListSection();
     this.updateControlButtons();
+    this.updateStats();
   }
 
   // Updates the randomizer section text and behavior
@@ -727,11 +723,6 @@ class DoThisApp {
   // Updates control buttons (sample tasks, etc.)
   updateControlButtons() {
     this.updateDefaultTasksButton();
-  }
-
-  // Legacy method for backward compatibility - calls new refreshUI
-  updateUI() {
-    this.refreshUI();
   }
 
   renderTasks() {
@@ -1267,7 +1258,7 @@ class DoThisApp {
       duration: 8 * 60 * 60 * 1000, // 8 hours in milliseconds
     };
     this.saveTasks();
-    this.updateUI(); // Update task list to reflect active state
+    this.refreshUI(); // Update task list to reflect active state
     this.showActiveTask();
     this.startActiveTaskTimer();
     this.showToast(
@@ -1359,7 +1350,7 @@ class DoThisApp {
       this.activeTask = null;
       this.clearActiveTaskTimer();
       this.saveTasks();
-      this.updateUI();
+      this.refreshUI();
       this.updateStats();
       this.updateRandomizeButton();
       this.showTaskCompleted();
@@ -1412,7 +1403,7 @@ class DoThisApp {
       this.activeTask = null;
       this.clearActiveTaskTimer();
       this.saveTasks();
-      this.updateUI();
+      this.refreshUI();
       this.resetRandomizer();
       this.hideAbandonReasonModal();
       this.showToast("Task abandoned with reason recorded", "default");
@@ -1571,7 +1562,7 @@ class DoThisApp {
 
     if (cleaned) {
       this.saveTasks();
-      this.updateUI();
+      this.refreshUI();
       this.updateStats();
       const removedTasks =
         originalTaskCount -
@@ -1769,7 +1760,7 @@ class DoThisApp {
 
     this.tasks.push(...defaultTasks);
     this.saveTasks();
-    this.updateUI();
+    this.refreshUI();
     this.updateStats();
     this.updateRandomizeButton();
     this.updateDefaultTasksButton();
@@ -1817,7 +1808,7 @@ class DoThisApp {
       this.clearActiveTaskTimer();
 
       // Update UI
-      this.updateUI();
+      this.refreshUI();
       this.updateStats();
       this.updateDefaultTasksButton();
       this.resetRandomizer();
