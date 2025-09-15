@@ -48,6 +48,27 @@ For basic development, you can open `app/index.html` directly in a browser.
 - `dothis-completed` - Completion count (integer)
 - `dothis-active` - Currently active task (JSON object)
 - `dothis-nextid` - Next task ID (integer)
+- `dothis-tasklist-collapsed` - Task list collapse state (boolean)
+- `dothis-settings-collapsed` - Settings collapse state (boolean)
+
+### localStorage Management Methods
+The app uses fine-grained localStorage operations for better performance:
+
+**Save Methods:**
+- `saveTaskData()` - Save only tasks array
+- `saveDeletedTasks()` - Save only deleted/trash tasks
+- `saveActiveTask()` - Save only active task state
+- `saveStatistics()` - Save completion count and next ID
+- `saveUIState()` - Save UI collapse states
+- `saveAllData()` - Save all data (orchestrator method)
+
+**Load Methods:**
+- `loadTaskData()` - Load and validate tasks with migration
+- `loadDeletedTasks()` - Load and validate deleted tasks
+- `loadActiveTask()` - Load active task with error handling
+- `loadStatistics()` - Load completion stats and ID counter
+- `loadUIState()` - Load UI collapse states
+- `loadAllData()` - Load all data (orchestrator method)
 
 ### Task Object Schema
 ```javascript

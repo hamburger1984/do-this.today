@@ -75,12 +75,34 @@ do-this-today/
 The app uses the following localStorage keys:
 
 ```javascript
-'dothis-tasks'      // JSON array of active tasks
-'dothis-deleted'    // JSON array of deleted tasks (trash)
-'dothis-completed'  // Integer count of completed tasks
-'dothis-active'     // JSON object of currently active task
-'dothis-nextid'     // Integer for next task ID assignment
+'dothis-tasks'              // JSON array of active tasks
+'dothis-deleted'            // JSON array of deleted tasks (trash)
+'dothis-completed'          // Integer count of completed tasks
+'dothis-active'             // JSON object of currently active task
+'dothis-nextid'             // Integer for next task ID assignment
+'dothis-tasklist-collapsed' // Boolean for task list collapse state
+'dothis-settings-collapsed' // Boolean for settings collapse state
 ```
+
+### localStorage Management Architecture
+
+The app uses fine-grained localStorage operations for better performance and precision:
+
+**Save Operations:**
+- `saveTaskData()` - Saves only the tasks array
+- `saveDeletedTasks()` - Saves only deleted tasks
+- `saveActiveTask()` - Saves only active task state
+- `saveStatistics()` - Saves completion count and next ID
+- `saveUIState()` - Saves UI collapse states
+- `saveAllData()` - Orchestrator that saves all data types
+
+**Load Operations:**
+- `loadTaskData()` - Loads and validates tasks with migration
+- `loadDeletedTasks()` - Loads and validates deleted tasks
+- `loadActiveTask()` - Loads active task with error handling
+- `loadStatistics()` - Loads completion stats and ID counter
+- `loadUIState()` - Loads UI collapse states
+- `loadAllData()` - Orchestrator that loads all data types
 
 ### Task Data Structure
 
@@ -154,7 +176,7 @@ The main application is implemented as an ES6 class with the following key metho
 #### Initialization
 - `constructor()`: Sets up initial state
 - `init()`: Binds events, loads data, validates integrity
-- `loadTasks()`: Loads and validates data from localStorage
+- `loadAllData()`: Loads and validates all data from localStorage
 - `bindEvents()`: Attaches event listeners to DOM elements
 
 #### Task Management
@@ -370,8 +392,16 @@ app.cleanupCorruptedData()      // Fix corrupted entries
 app.resetEverything()           // Nuclear reset (with confirmations)
 
 // Internal methods (for development)
-app.saveTasks()                 // Force save to localStorage
-app.loadTasks()                 // Reload from localStorage
+app.saveAllData()               // Force save all data to localStorage
+app.loadAllData()               // Reload all data from localStorage
+
+// Fine-grained localStorage operations
+app.saveTaskData()              // Save only tasks array
+app.saveActiveTask()            // Save only active task
+app.saveUIState()               // Save only UI state
+app.loadTaskData()              // Load only tasks array
+app.loadActiveTask()            // Load only active task
+app.loadUIState()               // Load only UI state
 ```
 
 ### Debug Test Tool
