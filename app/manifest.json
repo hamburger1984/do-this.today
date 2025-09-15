@@ -2,7 +2,7 @@
   "name": "do this - today!",
   "short_name": "do this",
   "description": "A mobile-first app to help you decide what to do next",
-  "start_url": "/",
+  "start_url": "/app/",
   "display": "standalone",
   "background_color": "#fef9f3",
   "theme_color": "#ff6b35",
