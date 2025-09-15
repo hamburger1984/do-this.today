@@ -17,6 +17,7 @@ class DoThisApp {
     this.settingsCollapsed = true;
     this.currentPage = "main";
     this.editingTaskIndex = null;
+    this.abandonDueToExpiration = false;
     this.init();
   }
 
@@ -1423,6 +1424,7 @@ class DoThisApp {
 
   abandonActiveTask() {
     if (this.activeTask) {
+      this.abandonDueToExpiration = false; // Manual abandonment, not due to expiration
       this.showAbandonReasonModal();
     }
   }
@@ -1437,6 +1439,15 @@ class DoThisApp {
   }
 
   hideAbandonReasonModal() {
+    // Don't allow hiding the modal if task expired and no reason was provided
+    if (this.abandonDueToExpiration && this.activeTask) {
+      this.showToast(
+        "You must provide a reason for abandoning the expired task",
+        "error",
+      );
+      return;
+    }
+
     const modal = document.getElementById("abandonReasonModal");
     modal.style.display = "none";
   }
@@ -1464,6 +1475,7 @@ class DoThisApp {
 
       this.activeTask = null;
       this.clearActiveTaskTimer();
+      this.abandonDueToExpiration = false; // Reset the flag
       this.saveAllData();
       this.refreshUI();
       this.resetRandomizer();
@@ -1495,14 +1507,13 @@ class DoThisApp {
       const remaining = this.activeTask.duration - elapsed;
 
       if (remaining <= 0) {
-        // Task expired
-        this.activeTask = null;
-        this.saveActiveTask();
+        // Task expired - show abandon reason modal
+        this.abandonDueToExpiration = true;
+        this.showAbandonReasonModal();
         this.showToast(
-          "Active task expired! Time to try another one.",
+          "Active task expired! Please provide a reason for abandoning.",
           "error",
         );
-        this.resetRandomizer();
       } else {
         // Task still active
         this.showActiveTask();
@@ -1526,11 +1537,13 @@ class DoThisApp {
       const remaining = this.activeTask.duration - elapsed;
 
       if (remaining <= 0) {
-        this.activeTask = null;
         this.clearActiveTaskTimer();
-        this.saveActiveTask();
-        this.showToast("Time's up! Task expired.", "error");
-        this.resetRandomizer();
+        this.abandonDueToExpiration = true;
+        this.showAbandonReasonModal();
+        this.showToast(
+          "Time's up! Please provide a reason for abandoning.",
+          "error",
+        );
       } else {
         this.updateActiveTaskTimer(remaining);
       }
