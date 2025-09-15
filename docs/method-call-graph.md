@@ -7,7 +7,7 @@ This Mermaid flowchart shows all methods in the DoThisApp class and their callin
 ```mermaid
 graph TD
     A[constructor] --> B[init]
-    B --> C[loadTasks]
+    B --> C[loadAllData]
     B --> D[bindEvents]
     B --> E[refreshUI]
     
@@ -16,7 +16,7 @@ graph TD
     E --> H[updateControlButtons]
     E --> I[updateStats]
     
-    J[saveTask] --> K[saveTasks]
+    J[saveTask] --> K[saveAllData]
     J --> E
     
     L[randomizeTask] --> M[acceptTask]
@@ -38,7 +38,7 @@ Due to the complexity of the full call graph (73 methods with hundreds of relati
 ```mermaid
 graph TD
     A[constructor] --> B[init]
-    B --> C[loadTasks]
+    B --> C[loadAllData]
     B --> D[bindEvents]
     B --> E[refreshUI]
     B --> F[validateDataIntegrity]
