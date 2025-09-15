@@ -977,6 +977,7 @@ body {
   margin-bottom: 2rem;
 }
 
+.task-completed h3,
 .randomizer-start h3,
 .task-display h3,
 .active-task-display h3 {
@@ -1066,13 +1067,6 @@ body {
   100% {
     transform: scale(1) rotate(0deg);
   }
-}
-
-.task-completed h3 {
-  font-size: var(--font-size-heading-large);
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 0.5rem;
 }
 
 .task-completed p {
@@ -1604,6 +1598,7 @@ html {
 
 /* Style the initial 'Next Task' button to match selected task text dimensions */
 .randomizer-start .randomize-btn {
+  animation: pulsate 2s ease-in-out infinite;
   background: var(--gradient-primary-action);
   color: var(--color-text-on-primary);
   padding: 2rem 1.5rem;
@@ -1619,6 +1614,10 @@ html {
   align-items: center;
   justify-content: center;
   width: 100%;
+}
+
+.randomizer-start .randomize-btn:disabled {
+  animation: none;
 }
 
 .randomizer-start .randomize-btn:hover {
