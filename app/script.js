@@ -1195,7 +1195,7 @@ class DoThisApp {
                   <circle cx="8" cy="16" r="1.3" fill="currentColor"/>
                   <circle cx="16" cy="16" r="1.3" fill="currentColor"/>
                 </svg>
-                Next Task
+                Roll the dice
             `;
       // Stop cooldown checking since tasks are available
       this.stopCooldownChecking();
