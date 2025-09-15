@@ -920,14 +920,6 @@ body {
   box-shadow: var(--shadow-elevated);
 }
 
-.randomizer-start h3 {
-  font-size: var(--font-size-heading-large);
-  font-weight: 700;
-  color: var(--color-text-primary);
-  margin-bottom: 0.75rem;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
 .randomizer-start p {
   color: var(--color-text-secondary);
   margin-bottom: 2.5rem;
@@ -944,14 +936,6 @@ body {
 
 .task-display {
   margin-bottom: 2.5rem;
-}
-
-.task-display h3 {
-  font-size: var(--font-size-heading-large);
-  font-weight: 700;
-  color: var(--color-text-primary);
-  margin-bottom: 1.5rem;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .task-display .task-text {
@@ -993,11 +977,14 @@ body {
   margin-bottom: 2rem;
 }
 
+.randomizer-start h3,
+.task-display h3,
 .active-task-display h3 {
   font-size: var(--font-size-heading-large);
-  font-weight: 600;
-  color: var(--color-text-secondary);
-  margin-bottom: 1rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 0.75rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .active-task-display .task-text {
