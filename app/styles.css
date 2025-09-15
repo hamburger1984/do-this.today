@@ -1615,15 +1615,28 @@ html {
   }
 }
 
-/* Apply pulsate animation to randomize button when enabled */
-.randomize-btn:not(:disabled) {
-  animation: pulsate 2s ease-in-out infinite;
+/* Style randomize button to match selected task text dimensions */
+.randomize-btn {
+  background: var(--gradient-primary-action);
+  color: var(--color-text-on-primary);
+  padding: 2rem 1.5rem;
+  border-radius: 20px;
+  font-size: var(--font-size-heading-small);
+  font-weight: 600;
+  line-height: 1.6;
+  box-shadow: var(--shadow-primary-button);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
-/* Remove animation on hover to avoid distraction during interaction */
-.randomize-btn:not(:disabled):hover {
-  animation: none;
-  transform: scale(1.05);
+.randomize-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-primary-button-hover);
 }
 
 /* Apply pulsate animation to accept task button when a task is suggested */
