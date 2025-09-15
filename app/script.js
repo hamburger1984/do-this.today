@@ -819,7 +819,9 @@ class DoThisApp {
               </div>
           </div>
           <div class="task-actions">
-              <button class="edit-btn" onclick="app.showTaskEdit(${index})" aria-label="Edit task">
+              <button class="edit-btn${this.isTaskActive(task) ? " disabled" : ""}"
+                      ${this.isTaskActive(task) ? 'disabled title="Cannot edit active task"' : `onclick="app.showTaskEdit(${index})"`}
+                      aria-label="Edit task">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="m18 2 4 4-14 14H4v-4L18 2z"></path>
                     <path d="m14.5 5.5 4 4"></path>
@@ -848,25 +850,30 @@ class DoThisApp {
     }
 
     if (task.type === "repeatable" && task.executions.length > 0) {
-      const lastExecution = Math.max(
-        ...task.executions.map((e) => e.timestamp),
-      );
+      // Only consider successful (non-abandoned) executions for cooldown
+      const successfulExecutions = task.executions.filter((e) => !e.abandoned);
 
-      // Zero cooldown means always available
-      if (task.cooldown === "0") {
-        return { type: "available" };
-      }
+      if (successfulExecutions.length > 0) {
+        const lastSuccessfulExecution = Math.max(
+          ...successfulExecutions.map((e) => e.timestamp),
+        );
 
-      const nextAvailable = this.calculateNextAvailableTime(
-        lastExecution,
-        task.cooldown,
-      );
+        // Zero cooldown means always available
+        if (task.cooldown === "0") {
+          return { type: "available" };
+        }
 
-      if (Date.now() < nextAvailable) {
-        return {
-          type: "cooldown",
-          availableAt: this.formatCooldownTime(nextAvailable),
-        };
+        const nextAvailable = this.calculateNextAvailableTime(
+          lastSuccessfulExecution,
+          task.cooldown,
+        );
+
+        if (Date.now() < nextAvailable) {
+          return {
+            type: "cooldown",
+            availableAt: this.formatCooldownTime(nextAvailable),
+          };
+        }
       }
     }
 
@@ -1211,6 +1218,7 @@ class DoThisApp {
       duration: 8 * 60 * 60 * 1000, // 8 hours in milliseconds
     };
     this.saveTasks();
+    this.updateUI(); // Update task list to reflect active state
     this.showActiveTask();
     this.startActiveTaskTimer();
     this.showToast(

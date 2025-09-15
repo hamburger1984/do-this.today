@@ -449,6 +449,16 @@ body {
   background: var(--color-background-subtle);
 }
 
+.edit-btn.disabled {
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.edit-btn.disabled:hover {
+  background: none;
+}
+
 .delete-btn {
   background: none;
   border: none;

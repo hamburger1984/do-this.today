@@ -1,5 +1,4 @@
 * review ui logic - we have a lot of update this and that functions but no clear logic when to call which
 * task list might need another refresh when a task becomes the active one, completed, or abandoned
-* prevent editing the active task
 * abandoning a task will refresh the task list
 * abandoned task executions will not be considered for cooldown
