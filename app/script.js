@@ -678,16 +678,60 @@ class DoThisApp {
   }
 
   // UI update methods
-  updateUI() {
-    this.updateRandomizerText();
-    this.updateTaskListCollapse();
+  // ===== UI SYNCHRONIZATION METHODS =====
+  /*
+   * UI Update Organization:
+   *
+   * 1. MAIN ORCHESTRATOR:
+   *    - refreshUI() - Call this after any data changes (new recommended method)
+   *    - updateUI() - Legacy method, calls refreshUI() for backward compatibility
+   *
+   * 2. SECTION UPDATES:
+   *    - updateRandomizerSection() - Updates randomizer text and button
+   *    - updateTaskListSection() - Updates task list display and expansion
+   *    - updateControlButtons() - Updates control buttons (sample tasks, etc.)
+   *
+   * 3. COMPONENT-SPECIFIC UPDATES:
+   *    - updateRandomizeButton() - Enables/disables randomize button, updates text
+   *    - updateRandomizerText() - Updates encouraging text in randomizer
+   *    - updateTaskListCollapse() - Manages auto-expansion for empty states
+   *    - updateDefaultTasksButton() - Shows/hides "Add Sample Tasks" button
+   *    - updateStats() - Updates task count and completion statistics
+   *
+   * 4. STATE VALIDATION:
+   *    - checkActiveTask() - Validates and handles active task timer expiration
+   */
 
+  // Main UI refresh - call this after any data changes
+  refreshUI() {
+    this.updateRandomizerSection();
+    this.updateTaskListSection();
+    this.updateControlButtons();
+  }
+
+  // Updates the randomizer section text and behavior
+  updateRandomizerSection() {
+    this.updateRandomizerText();
+    this.updateRandomizeButton();
+  }
+
+  // Updates task list display and expansion state
+  updateTaskListSection() {
+    this.updateTaskListCollapse();
     if (!this.taskListCollapsed || this.currentPage !== "main") {
       this.renderTasks();
       this.toggleEmptyState();
     }
-    this.updateRandomizeButton();
+  }
+
+  // Updates control buttons (sample tasks, etc.)
+  updateControlButtons() {
     this.updateDefaultTasksButton();
+  }
+
+  // Legacy method for backward compatibility - calls new refreshUI
+  updateUI() {
+    this.refreshUI();
   }
 
   renderTasks() {
@@ -1057,6 +1101,7 @@ class DoThisApp {
     }
   }
 
+  // ===== COMPONENT-SPECIFIC UPDATE METHODS =====
   updateRandomizeButton() {
     const randomizeBtn = document.getElementById("randomizeBtn");
     const availableTasks = this.getAvailableTasks();
@@ -1103,6 +1148,7 @@ class DoThisApp {
     }
   }
 
+  // Shows/hides "Add Sample Tasks" button based on task count
   updateDefaultTasksButton() {
     const addDefaultTasksBtn = document.getElementById("addDefaultTasksBtn");
     if (this.tasks.length === 0) {
@@ -1112,6 +1158,7 @@ class DoThisApp {
     }
   }
 
+  // Updates encouraging text in randomizer section based on task availability
   updateRandomizerText() {
     const randomizerStart = document.getElementById("randomizerStart");
     const title = randomizerStart.querySelector("h3");
@@ -1128,6 +1175,7 @@ class DoThisApp {
     }
   }
 
+  // Manages task list auto-expansion logic for empty states
   updateTaskListCollapse() {
     // Auto-expand task list when no tasks exist and no saved state exists (first-time user)
     const savedState = localStorage.getItem("dothis-tasklist-collapsed");
@@ -1151,6 +1199,7 @@ class DoThisApp {
     }
   }
 
+  // Updates statistics display (task counts, completion stats)
   updateStats() {
     document.getElementById("totalTasks").textContent = this.tasks.length;
     document.getElementById("completedTasks").textContent = this.completedTasks;
@@ -1384,6 +1433,8 @@ class DoThisApp {
     this.currentSelectedTask = null;
   }
 
+  // ===== STATE VALIDATION METHODS =====
+  // Validates active task timer and handles expiration
   checkActiveTask() {
     if (this.activeTask) {
       const now = Date.now();
