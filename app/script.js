@@ -22,7 +22,7 @@ class DoThisApp {
 
   init() {
     try {
-      this.loadTasks();
+      this.loadAllData();
       this.cleanupCompletedOneOffTasks(); // Clean up completed one-off tasks after 24h
       this.bindEvents();
       this.applySectionStates();
@@ -203,174 +203,22 @@ class DoThisApp {
     this.saveUIState();
   }
 
-  // Legacy method for backward compatibility
-  saveTasks() {
-    this.saveAllData();
-  }
+  getMaxTaskId() {
+    let maxId = 0;
 
-  // Legacy method for backward compatibility
-  loadTasks() {
-    this.loadAllData();
-  }
-
-  // Original implementation preserved for reference (now replaced by loadAllData)
-  loadTasksOriginal() {
-    const saved = localStorage.getItem("dothis-tasks");
-    const deletedSaved = localStorage.getItem("dothis-deleted");
-    const completedSaved = localStorage.getItem("dothis-completed");
-    const activeSaved = localStorage.getItem("dothis-active");
-    const nextIdSaved = localStorage.getItem("dothis-nextid");
-
-    if (saved) {
-      try {
-        this.tasks = JSON.parse(saved);
-        // Migrate and validate task objects
-        this.tasks = this.tasks.map((task, index) => {
-          if (typeof task === "string") {
-            return {
-              id: this.nextTaskId++,
-              text: task,
-              type: "oneoff",
-              cooldown: "daily",
-              executions: [],
-              completed: false,
-            };
-          }
-
-          // Validate and fix corrupted task objects
-          if (!task || typeof task !== "object") {
-            console.warn(`Invalid task at index ${index}:`, task);
-            return {
-              id: this.nextTaskId++,
-              text: "Corrupted task (please edit)",
-              type: "oneoff",
-              cooldown: "daily",
-              executions: [],
-              completed: false,
-            };
-          }
-
-          // Ensure all required properties exist and are valid
-          const validTask = {
-            id: task.id || this.nextTaskId++,
-            text:
-              typeof task.text === "string"
-                ? task.text
-                : String(task.text || "Corrupted task (please edit)"),
-            type:
-              task.type === "repeatable" || task.type === "oneoff"
-                ? task.type
-                : "oneoff",
-            cooldown: task.cooldown || "daily",
-            executions: Array.isArray(task.executions) ? task.executions : [],
-            completed: Boolean(task.completed),
-            createdAt: task.createdAt || Date.now(),
-          };
-
-          return validTask;
-        });
-
-        // Filter out any null/undefined tasks
-        this.tasks = this.tasks.filter((task) => task && task.text);
-      } catch (error) {
-        console.error("Error loading tasks from localStorage:", error);
-        this.tasks = [];
-        // Clear corrupted data
-        localStorage.removeItem("dothis-tasks");
-      }
-    } else {
-      this.tasks = [];
+    // Check tasks array
+    if (this.tasks && this.tasks.length > 0) {
+      const taskMaxId = Math.max(...this.tasks.map((t) => t.id || 0));
+      maxId = Math.max(maxId, taskMaxId);
     }
 
-    if (deletedSaved) {
-      try {
-        this.deletedTasks = JSON.parse(deletedSaved).map((task, index) => {
-          if (typeof task === "string") {
-            return {
-              id: this.nextTaskId++,
-              text: task,
-              type: "oneoff",
-              cooldown: "daily",
-              executions: [],
-              completed: false,
-              deletedAt: Date.now(),
-            };
-          }
-
-          // Validate deleted task objects
-          if (!task || typeof task !== "object") {
-            console.warn(`Invalid deleted task at index ${index}:`, task);
-            return {
-              id: this.nextTaskId++,
-              text: "Corrupted deleted task",
-              type: "oneoff",
-              cooldown: "daily",
-              executions: [],
-              completed: false,
-              deletedAt: Date.now(),
-            };
-          }
-
-          const validTask = {
-            id: task.id || this.nextTaskId++,
-            text:
-              typeof task.text === "string"
-                ? task.text
-                : String(task.text || "Corrupted deleted task"),
-            type:
-              task.type === "repeatable" || task.type === "oneoff"
-                ? task.type
-                : "oneoff",
-            cooldown: task.cooldown || "daily",
-            executions: Array.isArray(task.executions) ? task.executions : [],
-            completed: Boolean(task.completed),
-            deletedAt: task.deletedAt || Date.now(),
-          };
-
-          return validTask;
-        });
-
-        // Filter out any null/undefined tasks
-        this.deletedTasks = this.deletedTasks.filter(
-          (task) => task && task.text,
-        );
-      } catch (error) {
-        console.error("Error loading deleted tasks from localStorage:", error);
-        this.deletedTasks = [];
-        localStorage.removeItem("dothis-deleted");
-      }
+    // Check deleted tasks array
+    if (this.deletedTasks && this.deletedTasks.length > 0) {
+      const deletedMaxId = Math.max(...this.deletedTasks.map((t) => t.id || 0));
+      maxId = Math.max(maxId, deletedMaxId);
     }
 
-    if (completedSaved) {
-      this.completedTasks = parseInt(completedSaved);
-    }
-
-    if (activeSaved && activeSaved !== "null") {
-      this.activeTask = JSON.parse(activeSaved);
-    }
-
-    if (nextIdSaved) {
-      this.nextTaskId = Math.max(
-        parseInt(nextIdSaved),
-        this.getMaxTaskId() + 1,
-      );
-    }
-
-    // Load section collapse states
-    const taskListCollapsedSaved = localStorage.getItem(
-      "dothis-tasklist-collapsed",
-    );
-    const settingsCollapsedSaved = localStorage.getItem(
-      "dothis-settings-collapsed",
-    );
-
-    if (taskListCollapsedSaved !== null) {
-      this.taskListCollapsed = taskListCollapsedSaved === "true";
-    }
-
-    if (settingsCollapsedSaved !== null) {
-      this.settingsCollapsed = settingsCollapsedSaved === "true";
-    }
+    return maxId;
   }
 
   // Task data loading with validation and migration
@@ -586,7 +434,7 @@ class DoThisApp {
     }
 
     // Save state to localStorage
-    this.saveTasks();
+    this.saveUIState();
   }
 
   toggleSettings() {
@@ -605,7 +453,7 @@ class DoThisApp {
     }
 
     // Save state to localStorage
-    this.saveTasks();
+    this.saveUIState();
   }
 
   applySectionStates() {
@@ -765,7 +613,7 @@ class DoThisApp {
     };
 
     this.tasks.push(newTask);
-    this.saveTasks();
+    this.saveAllData();
     this.refreshUI();
     this.updateStats();
     this.updateRandomizeButton();
@@ -859,7 +707,7 @@ class DoThisApp {
       task.completed = false;
     }
 
-    this.saveTasks();
+    this.saveTaskData();
     this.refreshUI();
     this.updateStats();
     this.updateRandomizeButton();
@@ -872,7 +720,7 @@ class DoThisApp {
     task.deletedAt = Date.now();
     this.deletedTasks.push(task);
     this.tasks.splice(index, 1);
-    this.saveTasks();
+    this.saveAllData();
     this.refreshUI();
     this.updateStats();
     this.showToast(`"${task.text}" moved to trash`, "success");
@@ -1400,7 +1248,7 @@ class DoThisApp {
       collapseIndicator.textContent = "▲";
 
       // Save the new state
-      this.saveTasks();
+      this.saveUIState();
     }
   }
 
@@ -1471,7 +1319,7 @@ class DoThisApp {
       startTime: Date.now(),
       duration: 8 * 60 * 60 * 1000, // 8 hours in milliseconds
     };
-    this.saveTasks();
+    this.saveActiveTask();
     this.refreshUI(); // Update task list to reflect active state
     this.showActiveTask();
     this.startActiveTaskTimer();
@@ -1563,7 +1411,7 @@ class DoThisApp {
       this.completedTasks++;
       this.activeTask = null;
       this.clearActiveTaskTimer();
-      this.saveTasks();
+      this.saveAllData();
       this.refreshUI();
       this.updateStats();
       this.updateRandomizeButton();
@@ -1616,7 +1464,7 @@ class DoThisApp {
 
       this.activeTask = null;
       this.clearActiveTaskTimer();
-      this.saveTasks();
+      this.saveAllData();
       this.refreshUI();
       this.resetRandomizer();
       this.hideAbandonReasonModal();
@@ -1649,7 +1497,7 @@ class DoThisApp {
       if (remaining <= 0) {
         // Task expired
         this.activeTask = null;
-        this.saveTasks();
+        this.saveActiveTask();
         this.showToast(
           "Active task expired! Time to try another one.",
           "error",
@@ -1680,7 +1528,7 @@ class DoThisApp {
       if (remaining <= 0) {
         this.activeTask = null;
         this.clearActiveTaskTimer();
-        this.saveTasks();
+        this.saveActiveTask();
         this.showToast("Time's up! Task expired.", "error");
         this.resetRandomizer();
       } else {
@@ -1775,7 +1623,7 @@ class DoThisApp {
     });
 
     if (cleaned) {
-      this.saveTasks();
+      this.saveAllData();
       this.refreshUI();
       this.updateStats();
       const removedTasks =
@@ -1973,7 +1821,7 @@ class DoThisApp {
     ];
 
     this.tasks.push(...defaultTasks);
-    this.saveTasks();
+    this.saveAllData();
     this.refreshUI();
     this.updateStats();
     this.updateRandomizeButton();
@@ -2085,7 +1933,7 @@ class DoThisApp {
     });
 
     if (tasksToMove.length > 0) {
-      this.saveTasks();
+      this.saveAllData();
       console.log(
         `Moved ${tasksToMove.length} completed one-off tasks to trash after 24h`,
       );
@@ -2153,7 +2001,7 @@ class DoThisApp {
     delete task.deletedAt;
     this.tasks.push(task);
     this.deletedTasks.splice(index, 1);
-    this.saveTasks();
+    this.saveAllData();
     this.renderTrashList();
     this.showToast(`"${task.text}" restored`, "success");
   }
@@ -2166,7 +2014,7 @@ class DoThisApp {
     ) {
       const task = this.deletedTasks[index];
       this.deletedTasks.splice(index, 1);
-      this.saveTasks();
+      this.saveDeletedTasks();
       this.renderTrashList();
       this.showToast(`"${task.text}" deleted permanently`, "success");
     }
@@ -2184,7 +2032,7 @@ class DoThisApp {
       )
     ) {
       this.deletedTasks = [];
-      this.saveTasks();
+      this.saveDeletedTasks();
       this.renderTrashList();
       this.showToast("All trash cleared", "success");
     }
@@ -2238,7 +2086,7 @@ document.addEventListener("keydown", (e) => {
 // Handle visibility change to save data
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "hidden" && window.app) {
-    window.app.saveTasks();
+    window.app.saveAllData();
   }
 });
 

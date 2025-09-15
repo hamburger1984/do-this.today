@@ -1,9 +1,9 @@
 const CACHE_NAME = "dothis-v1";
 const urlsToCache = [
-  "/app/",
-  "/app/index.html",
-  "/app/styles.css",
-  "/app/script.js",
+  "/",
+  "/index.html",
+  "/styles.css",
+  "/script.js",
   "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap",
 ];
 
