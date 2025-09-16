@@ -34,7 +34,7 @@ do-this-today/
 ├── app/
 │   ├── index.html              # Main application entry point
 │   ├── styles.css              # Mobile-first CSS with CSS variables
-│   ├── script.js               # Core application logic (TaskDiceApp class)
+│   ├── script.js               # Core application logic (DoThisApp class)
 │   ├── manifest.json           # PWA manifest for app installation
 │   ├── sw.js                   # Service Worker for offline support
 │   ├── favicon.svg             # App icon in SVG format
@@ -192,9 +192,15 @@ The main application is implemented as an ES6 class with the following key metho
 
 #### Active Task System
 - `startActiveTaskTimer()`: Begins countdown timer
-- `updateActiveTaskTimer(remaining)`: Updates display every second
+- `updateActiveTaskTimer(remaining)`: Updates display every second and checks for notification triggers
 - `completeActiveTask()`: Records completion and updates stats
 - `abandonActiveTask()`: Records abandonment with reason
+
+### Notification System
+- `requestNotificationPermission()`: Requests browser notification permissions on app startup
+- `sendTaskTimerNotification(title, body)`: Sends notifications via service worker or direct API
+- **Progress notifications**: Automatic notifications at 50% (4 hours) and 75% (6 hours) of active task completion
+- **Development testing**: `testNotifications()` method for localhost testing (visible only on localhost)
 
 ### Data Integrity
 - `validateDataIntegrity()`: Checks for corrupted task objects
@@ -345,6 +351,7 @@ Cache-first strategy for offline support:
 1. **Install**: Cache critical resources
 2. **Fetch**: Serve from cache, fallback to network
 3. **Activate**: Clean up old caches
+4. **Notifications**: Handle notification display and user interaction
 
 ### Cached Resources
 - Main application files (HTML, CSS, JS)

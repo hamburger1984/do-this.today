@@ -251,8 +251,8 @@ app.cleanupCorruptedData()      // Fix corruption
 app.resetEverything()           // Clear all data
 ```
 
-### Debug Test Tool
-For debugging, use the browser console commands available when the main app is loaded
+### Debug Tools
+For debugging, use the browser console commands available when the main app is loaded. Additionally, when developing on localhost, a "Test Notifications" button appears in Settings → Debug Information to test the notification system.
 
 ### Common Issues
 - **localStorage disabled**: App fails to save data

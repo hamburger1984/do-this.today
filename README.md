@@ -10,7 +10,7 @@ A mobile-first Progressive Web App that helps you decide what to do next by rand
 
 - **Random task selection** - Can't decide what to do? Let the app pick for you!
 - **Two task types** - One-time tasks you complete once, or repeatable tasks with cooldowns
-- **8-hour focus timer** - When you accept a task, you get 8 hours to complete it
+- **8-hour focus timer** - When you accept a task, you get 8 hours to complete it with progress notifications
 - **Works offline** - Install as an app on your phone and use anywhere
 - **Privacy-first** - All your data stays on your device, no accounts needed
 
@@ -57,7 +57,7 @@ A mobile-first Progressive Web App that helps you decide what to do next by rand
 ### Working with Tasks
 1. **Pick a random task** - Click the "Pick Random Task" button
 2. **Try another** - Don't like it? Pick again
-3. **Accept it** - Click "Let's Do It!" to start the timer
+3. **Accept it** - Click "Let's Do It!" to start the timer (you'll get notifications at 50% and 75% progress)
 4. **Complete or abandon** - Mark done when finished, or give up with a reason
 
 
@@ -86,7 +86,7 @@ A mobile-first Progressive Web App that helps you decide what to do next by rand
 
 ### Troubleshooting
 - **Data problems?** Use Settings → "Debug Data" or "Cleanup Corrupted Data"
-- **Need help?** Check the debug tool at `debug-test.html`
+- **Need help?** Use browser console commands when app is loaded (see development docs)
 - **Want to start over?** Settings → "Reset Everything"
 
 ## 🎨 Design & Theming

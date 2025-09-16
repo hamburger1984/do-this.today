@@ -33,6 +33,7 @@ class DoThisApp {
       this.updateTaskListCollapse();
       this.checkActiveTask();
       this.requestNotificationPermission();
+      this.setupDevelopmentFeatures();
 
       // Run a quick data integrity check on startup
       this.validateDataIntegrity();
@@ -130,6 +131,11 @@ class DoThisApp {
     document
       .getElementById("cleanupDataBtn")
       .addEventListener("click", () => this.cleanupCorruptedData());
+
+    // Test notifications button (localhost only)
+    document
+      .getElementById("testNotificationsBtn")
+      .addEventListener("click", () => this.testNotifications());
 
     // Navigation
     document
@@ -1308,6 +1314,44 @@ class DoThisApp {
         tag: "task-timer",
       });
     }
+  }
+
+  setupDevelopmentFeatures() {
+    // Show test notifications button only on localhost
+    if (
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1"
+    ) {
+      const testNotificationsBtn = document.getElementById(
+        "testNotificationsBtn",
+      );
+      if (testNotificationsBtn) {
+        testNotificationsBtn.style.display = "inline-flex";
+      }
+    }
+  }
+
+  async testNotifications() {
+    if (!this.notificationsGranted) {
+      this.showToast("Please allow notifications first!", "error");
+      return;
+    }
+
+    // Test 50% notification
+    await this.sendTaskTimerNotification(
+      "Task Progress: 50% Complete",
+      'You\'re halfway through your task: "Sample Task for Testing". 4 hours remaining.',
+    );
+
+    // Wait 2 seconds, then test 75% notification
+    setTimeout(async () => {
+      await this.sendTaskTimerNotification(
+        "Task Progress: 75% Complete",
+        'You\'re three-quarters done with: "Sample Task for Testing". 2 hours remaining.',
+      );
+    }, 2000);
+
+    this.showToast("Test notifications sent!", "success");
   }
 
   // Randomizer methods
