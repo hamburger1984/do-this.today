@@ -12,16 +12,19 @@
     "reroll": "Reroll",
     "letsDoIt": "Let's Do It!",
     "nextTaskBtn": "Next Task",
-    "completed": {
-      "title": "Great job!",
-      "message": "Task completed. Ready for the next one?",
-      "continueBtn": "Sure!"
-    }
-  },
-  "activeTask": {
     "timeRemaining": "Time Remaining:",
     "giveUp": "Give Up",
-    "markAsDone": "Mark as Done"
+    "markAsDone": "Done",
+    "greatJob": "Great job!",
+    "taskCompletedMessage": "Task completed. Ready for the next one?",
+    "sure": "Sure!",
+    "addTasksFirst": "Add tasks first",
+    "allTasksOnCooldown": "All tasks on cooldown",
+    "rollTheDice": "Roll the dice",
+    "addTasksToGetStarted": "Add some tasks below to get started with randomization",
+    "allTasksCooldownMessage": "All tasks are currently on cooldown. Check back later!",
+    "clickSelectOneTask": "Click to select the 1 available task",
+    "clickSelectMultipleTasks": "Click to randomly select from {{count}} available tasks"
   },
   "tasks": {
     "myTasks": "My Tasks",
@@ -60,17 +63,15 @@
   "trash": {
     "title": "Trash",
     "clearAll": "Clear All",
-    "emptyState": {
-      "title": "Trash is empty",
-      "message": "Deleted tasks will appear here. You can restore or permanently delete them."
-    }
+    "emptyTitle": "Trash is empty",
+    "emptyMessage": "Deleted tasks will appear here. You can restore or permanently delete them."
   },
   "stats": {
     "totalTasks": "Total Tasks",
     "completed": "Completed"
   },
   "modals": {
-    "abandonTask": {
+    "abandonReason": {
       "title": "Why are you abandoning this task?",
       "placeholder": "Enter reason for abandoning (e.g., 'Too difficult right now', 'Need more resources', 'Changed priorities')...",
       "cancel": "Cancel",
@@ -85,7 +86,7 @@
   },
   "taskStatus": {
     "available": "Available",
-    "cooldown": "On cooldown",
+    "cooldown": "Cooldown until {{availableAt}}",
     "completed": "Completed",
     "active": "Active"
   },
@@ -135,5 +136,11 @@
       "testFiftyPercent": "You're halfway through your task: \"Sample Task for Testing\". 4 hours remaining.",
       "testSeventyFivePercent": "You're three-quarters done with: \"Sample Task for Testing\". 2 hours remaining."
     }
+  },
+  "confirmDialogs": {
+    "resetWarning": "⚠️ WARNING: This will permanently delete ALL your tasks, progress, and settings. Are you absolutely sure?",
+    "resetConfirm": "This action cannot be undone. You will lose all tasks, completion history, and statistics. Please confirm you want to reset everything.",
+    "deleteTaskForever": "Are you sure you want to permanently delete this task? This cannot be undone.",
+    "clearAllTrash": "Are you sure you want to permanently delete all {{count}} tasks in trash? This cannot be undone."
   }
 }

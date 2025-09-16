@@ -134,7 +134,9 @@ Licensed under the MIT License. See LICENSE file for details.
               <div class="active-task-display">
                 <div class="task-text" id="activeTaskText"></div>
                 <div class="timer-display">
-                  <div class="timer-label">Time Remaining:</div>
+                  <div class="timer-label" data-i18n="randomizer.timeRemaining">
+                    Time Remaining:
+                  </div>
                   <div class="timer-value" id="activeTaskTimer">8:00:00</div>
                 </div>
               </div>
@@ -151,7 +153,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <line x1="18" y1="6" x2="6" y2="18"></line>
                     <line x1="6" y1="6" x2="18" y2="18"></line>
                   </svg>
-                  Give Up
+                  <span data-i18n="randomizer.giveUp">Give Up</span>
                 </button>
                 <button class="btn-primary" id="completeActiveBtn">
                   <svg
@@ -164,7 +166,7 @@ Licensed under the MIT License. See LICENSE file for details.
                   >
                     <polyline points="20 6 9 17 4 12"></polyline>
                   </svg>
-                  Mark as Done
+                  <span data-i18n="randomizer.markAsDone">Mark as Done</span>
                 </button>
               </div>
             </div>
@@ -180,9 +182,17 @@ Licensed under the MIT License. See LICENSE file for details.
                   class="animated-checkmark"
                 />
               </div>
-              <h3>Great job!</h3>
-              <p>Task completed. Ready for the next one?</p>
-              <button class="btn-primary" id="nextTaskBtn">Sure!</button>
+              <h3 data-i18n="randomizer.greatJob">Great job!</h3>
+              <p data-i18n="randomizer.taskCompletedMessage">
+                Task completed. Ready for the next one?
+              </p>
+              <button
+                class="btn-primary"
+                id="nextTaskBtn"
+                data-i18n="randomizer.sure"
+              >
+                Sure!
+              </button>
             </div>
           </section>
           <!-- Task List Section -->
@@ -210,7 +220,7 @@ Licensed under the MIT License. See LICENSE file for details.
                   />
                   <div class="task-options">
                     <div class="option-group">
-                      <label>Task Type:</label>
+                      <label data-i18n="tasks.taskType">Task Type:</label>
                       <div class="task-type-toggle" id="taskTypeToggle">
                         <button
                           type="button"
@@ -218,7 +228,7 @@ Licensed under the MIT License. See LICENSE file for details.
                           data-type="oneoff"
                           id="toggleOneoff"
                         >
-                          One-time
+                          <span data-i18n="tasks.oneTime">One-time</span>
                         </button>
                         <button
                           type="button"
@@ -226,7 +236,7 @@ Licensed under the MIT License. See LICENSE file for details.
                           data-type="repeatable"
                           id="toggleRepeatable"
                         >
-                          Repeatable
+                          <span data-i18n="tasks.repeatable">Repeatable</span>
                         </button>
                       </div>
                       <input type="hidden" id="taskType" value="oneoff" />
@@ -236,22 +246,40 @@ Licensed under the MIT License. See LICENSE file for details.
                       id="cooldownContainer"
                       style="display: none"
                     >
-                      <label for="cooldownPeriod">Cooldown:</label>
+                      <label for="cooldownPeriod" data-i18n="tasks.cooldown"
+                        >Cooldown:</label
+                      >
                       <select id="cooldownPeriod">
-                        <option value="0">No cooldown</option>
-                        <option value="1">1 hour</option>
-                        <option value="3">3 hours</option>
-                        <option value="6">6 hours</option>
-                        <option value="12">12 hours</option>
-                        <option value="daily">Daily (24h)</option>
-                        <option value="weekly">Weekly (7 days)</option>
-                        <option value="monthly">Monthly (30 days)</option>
+                        <option value="0" data-i18n="tasks.noCooldown">
+                          No cooldown
+                        </option>
+                        <option value="1" data-i18n="tasks.oneHour">
+                          1 hour
+                        </option>
+                        <option value="3" data-i18n="tasks.threeHours">
+                          3 hours
+                        </option>
+                        <option value="6" data-i18n="tasks.sixHours">
+                          6 hours
+                        </option>
+                        <option value="12" data-i18n="tasks.twelveHours">
+                          12 hours
+                        </option>
+                        <option value="daily" data-i18n="tasks.daily">
+                          Daily (24h)
+                        </option>
+                        <option value="weekly" data-i18n="tasks.weekly">
+                          Weekly (7 days)
+                        </option>
+                        <option value="monthly" data-i18n="tasks.monthly">
+                          Monthly (30 days)
+                        </option>
                       </select>
                     </div>
                   </div>
                   <div class="input-actions">
                     <button class="btn-primary save-btn" id="saveTaskBtn">
-                      Add Task
+                      <span data-i18n="tasks.addTask">Add Task</span>
                     </button>
                   </div>
                 </div>
@@ -260,8 +288,10 @@ Licensed under the MIT License. See LICENSE file for details.
                 <!-- Tasks will be dynamically inserted here -->
               </div>
               <div class="empty-state" id="emptyState">
-                <h3>No tasks yet</h3>
-                <p>Add some tasks to get started with randomization</p>
+                <h3 data-i18n="tasks.emptyState.title">No tasks yet</h3>
+                <p data-i18n="tasks.emptyState.message">
+                  Add some tasks to get started with randomization
+                </p>
               </div>
             </div>
           </section>
@@ -269,7 +299,7 @@ Licensed under the MIT License. See LICENSE file for details.
           <section class="settings-section">
             <div class="section-header">
               <div class="collapsible-header" id="settingsHeader">
-                <h2>Settings</h2>
+                <h2 data-i18n="settings.title">Settings</h2>
                 <div class="collapse-indicator" id="settingsCollapseIndicator">
                   ▼
                 </div>
@@ -281,7 +311,7 @@ Licensed under the MIT License. See LICENSE file for details.
               style="display: none"
             >
               <div class="settings-group">
-                <h3>Data Management</h3>
+                <h3 data-i18n="settings.dataManagement">Data Management</h3>
                 <div class="settings-actions">
                   <button
                     class="btn-secondary"
@@ -299,7 +329,9 @@ Licensed under the MIT License. See LICENSE file for details.
                       <line x1="12" y1="5" x2="12" y2="19"></line>
                       <line x1="5" y1="12" x2="19" y2="12"></line>
                     </svg>
-                    Add Sample Tasks
+                    <span data-i18n="settings.addSampleTasks"
+                      >Add Sample Tasks</span
+                    >
                   </button>
                   <button class="btn-secondary" id="exportDataBtn">
                     <svg
@@ -316,7 +348,9 @@ Licensed under the MIT License. See LICENSE file for details.
                       <polyline points="7 10 12 15 17 10"></polyline>
                       <line x1="12" y1="15" x2="12" y2="3"></line>
                     </svg>
-                    Export Tasks as JSON
+                    <span data-i18n="settings.exportTasks"
+                      >Export Tasks as JSON</span
+                    >
                   </button>
                   <button class="btn-secondary" id="trashBtn">
                     <svg
@@ -331,7 +365,7 @@ Licensed under the MIT License. See LICENSE file for details.
                       <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
                       <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
                     </svg>
-                    View Trash
+                    <span data-i18n="settings.viewTrash">View Trash</span>
                   </button>
                   <button class="btn-secondary danger" id="resetAllBtn">
                     <svg
@@ -346,7 +380,9 @@ Licensed under the MIT License. See LICENSE file for details.
                       <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
                       <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
                     </svg>
-                    Reset Everything
+                    <span data-i18n="settings.resetEverything"
+                      >Reset Everything</span
+                    >
                   </button>
                 </div>
               </div>
@@ -375,7 +411,7 @@ Licensed under the MIT License. See LICENSE file for details.
                       <line x1="12" y1="16" x2="12" y2="12"></line>
                       <line x1="12" y1="8" x2="12.01" y2="8"></line>
                     </svg>
-                    Debug Data
+                    <span data-i18n="settings.debugData">Debug Data</span>
                   </button>
                   <button class="btn-secondary" id="cleanupDataBtn">
                     <svg
@@ -391,7 +427,9 @@ Licensed under the MIT License. See LICENSE file for details.
                       <path d="M20.49 9A9 9 0 0 0 5.64 5.64l1.27 1.27"></path>
                       <path d="M3.51 15a9 9 0 0 0 14.85 3.36l-1.27-1.27"></path>
                     </svg>
-                    Cleanup Corrupted Data
+                    <span data-i18n="settings.cleanupData"
+                      >Cleanup Corrupted Data</span
+                    >
                   </button>
                   <button
                     class="btn-secondary"
@@ -411,7 +449,9 @@ Licensed under the MIT License. See LICENSE file for details.
                       ></path>
                       <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
                     </svg>
-                    Test Notifications
+                    <span data-i18n="settings.testNotifications"
+                      >Test Notifications</span
+                    >
                   </button>
                 </div>
               </div>
@@ -438,9 +478,9 @@ Licensed under the MIT License. See LICENSE file for details.
                 <polyline points="12 19 5 12 12 5"></polyline>
               </svg>
             </button>
-            <h2>Trash</h2>
+            <h2 data-i18n="trash.title">Trash</h2>
             <button class="btn-secondary clear-all-btn" id="clearAllTrashBtn">
-              Clear All
+              <span data-i18n="trash.clearAll">Clear All</span>
             </button>
           </div>
           <div class="trash-list" id="trashList">
@@ -448,8 +488,8 @@ Licensed under the MIT License. See LICENSE file for details.
           </div>
           <div class="empty-trash-state" id="emptyTrashState">
             <div class="empty-icon">🗑️</div>
-            <h3>Trash is empty</h3>
-            <p>
+            <h3 data-i18n="trash.emptyTitle">Trash is empty</h3>
+            <p data-i18n="trash.emptyMessage">
               Deleted tasks will appear here. You can restore or permanently
               delete them.
             </p>
@@ -461,11 +501,15 @@ Licensed under the MIT License. See LICENSE file for details.
         <div class="stats">
           <div class="stat-item">
             <span class="stat-number" id="totalTasks">0</span>
-            <span class="stat-label">Total Tasks</span>
+            <span class="stat-label" data-i18n="stats.totalTasks"
+              >Total Tasks</span
+            >
           </div>
           <div class="stat-item">
             <span class="stat-number" id="completedTasks">0</span>
-            <span class="stat-label">Completed</span>
+            <span class="stat-label" data-i18n="stats.completed"
+              >Completed</span
+            >
           </div>
         </div>
       </footer>
@@ -475,19 +519,22 @@ Licensed under the MIT License. See LICENSE file for details.
     <!-- Abandon Reason Modal -->
     <div class="modal-overlay" id="abandonReasonModal" style="display: none">
       <div class="modal-content">
-        <h3>Why are you abandoning this task?</h3>
+        <h3 data-i18n="modals.abandonReason.title">
+          Why are you abandoning this task?
+        </h3>
         <textarea
           id="abandonReasonInput"
           placeholder="Enter reason for abandoning (e.g., 'Too difficult right now', 'Need more resources', 'Changed priorities')..."
+          data-i18n="modals.abandonReason.placeholder"
           rows="4"
           maxlength="300"
         ></textarea>
         <div class="modal-actions">
           <button class="btn-secondary" id="cancelAbandonReasonBtn">
-            Cancel
+            <span data-i18n="modals.abandonReason.cancel">Cancel</span>
           </button>
           <button class="btn-primary" id="saveAbandonReasonBtn">
-            Abandon Task
+            <span data-i18n="modals.abandonReason.abandon">Abandon Task</span>
           </button>
         </div>
       </div>

@@ -1,7 +1,7 @@
 {
   "app": {
-    "title": "mach das - heute!",
-    "subtitle": "Lass uns entscheiden, was als nächstes zu tun ist"
+    "title": "do this - today!",
+    "subtitle": "Lass die Würfel entscheiden, was als nächstes zu tun ist"
   },
   "navigation": {
     "backToMain": "Zurück zur Hauptseite"
@@ -12,16 +12,19 @@
     "reroll": "Neu würfeln",
     "letsDoIt": "Los geht's!",
     "nextTaskBtn": "Nächste Aufgabe",
-    "completed": {
-      "title": "Großartig!",
-      "message": "Aufgabe erledigt. Bereit für die nächste?",
-      "continueBtn": "Klar!"
-    }
-  },
-  "activeTask": {
     "timeRemaining": "Verbleibende Zeit:",
     "giveUp": "Aufgeben",
-    "markAsDone": "Als erledigt markieren"
+    "markAsDone": "Erledigt",
+    "greatJob": "Großartig!",
+    "taskCompletedMessage": "Aufgabe erledigt. Bereit für die nächste?",
+    "sure": "Klar!",
+    "addTasksFirst": "Zuerst Aufgaben hinzufügen",
+    "allTasksOnCooldown": "Alle Aufgaben in Abklingzeit",
+    "rollTheDice": "Würfeln",
+    "addTasksToGetStarted": "Füge unten einige Aufgaben hinzu, um mit der Zufallsauswahl zu beginnen",
+    "allTasksCooldownMessage": "Alle Aufgaben sind derzeit in Abklingzeit. Schau später nochmal vorbei!",
+    "clickSelectOneTask": "Klicken, um die 1 verfügbare Aufgabe auszuwählen",
+    "clickSelectMultipleTasks": "Klicken, um zufällig aus {{count}} verfügbaren Aufgaben zu wählen"
   },
   "tasks": {
     "myTasks": "Meine Aufgaben",
@@ -60,17 +63,15 @@
   "trash": {
     "title": "Papierkorb",
     "clearAll": "Alle löschen",
-    "emptyState": {
-      "title": "Papierkorb ist leer",
-      "message": "Gelöschte Aufgaben werden hier angezeigt. Du kannst sie wiederherstellen oder dauerhaft löschen."
-    }
+    "emptyTitle": "Papierkorb ist leer",
+    "emptyMessage": "Gelöschte Aufgaben werden hier angezeigt. Du kannst sie wiederherstellen oder dauerhaft löschen."
   },
   "stats": {
     "totalTasks": "Aufgaben gesamt",
     "completed": "Erledigt"
   },
   "modals": {
-    "abandonTask": {
+    "abandonReason": {
       "title": "Warum gibst du diese Aufgabe auf?",
       "placeholder": "Grund für das Aufgeben eingeben (z.B. 'Momentan zu schwierig', 'Brauche mehr Ressourcen', 'Prioritäten haben sich geändert')...",
       "cancel": "Abbrechen",
@@ -85,7 +86,7 @@
   },
   "taskStatus": {
     "available": "Verfügbar",
-    "cooldown": "In Abklingzeit",
+    "cooldown": "Abklingzeit bis {{availableAt}}",
     "completed": "Erledigt",
     "active": "Aktiv"
   },
@@ -135,5 +136,11 @@
       "testFiftyPercent": "Du bist zur Hälfte durch deine Aufgabe: \"Beispielaufgabe zum Testen\". 4 Stunden verbleibend.",
       "testSeventyFivePercent": "Du bist zu drei Vierteln fertig mit: \"Beispielaufgabe zum Testen\". 2 Stunden verbleibend."
     }
+  },
+  "confirmDialogs": {
+    "resetWarning": "⚠️ WARNUNG: Dies wird ALLE deine Aufgaben, Fortschritte und Einstellungen dauerhaft löschen. Bist du dir absolut sicher?",
+    "resetConfirm": "Diese Aktion kann nicht rückgängig gemacht werden. Du verlierst alle Aufgaben, den Verlauf und die Statistiken. Bitte bestätige, dass du alles zurücksetzen möchtest.",
+    "deleteTaskForever": "Bist du sicher, dass du diese Aufgabe dauerhaft löschen möchtest? Dies kann nicht rückgängig gemacht werden.",
+    "clearAllTrash": "Bist du sicher, dass du alle {{count}} Aufgaben im Papierkorb dauerhaft löschen möchtest? Dies kann nicht rückgängig gemacht werden."
   }
 }

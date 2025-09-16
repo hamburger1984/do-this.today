@@ -802,7 +802,7 @@ class DoThisApp {
 
     if (!input || !taskTypeSelect || !cooldownSelect) {
       console.error("Edit form elements not found");
-      this.showToast("Error: Edit form not available", "error");
+      this.showToast(this.t("messages.errors.editFormNotAvailable"), "error");
       return;
     }
 
@@ -816,18 +816,18 @@ class DoThisApp {
       this.editingTaskIndex >= this.tasks.length
     ) {
       console.error("Invalid editing task index:", this.editingTaskIndex);
-      this.showToast("Error: Invalid task to edit", "error");
+      this.showToast(this.t("messages.errors.invalidTaskEdit"), "error");
       this.hideTaskEdit();
       return;
     }
 
     if (!taskText) {
-      this.showToast("Please enter a task", "error");
+      this.showToast(this.t("messages.errors.pleaseEnterTask"), "error");
       return;
     }
 
     if (taskText.length > 200) {
-      this.showToast("Task is too long (max 200 characters)", "error");
+      this.showToast(this.t("messages.errors.taskTooLong"), "error");
       return;
     }
 
@@ -837,7 +837,7 @@ class DoThisApp {
         task.text === taskText && index !== this.editingTaskIndex,
     );
     if (existingTask) {
-      this.showToast("This task already exists", "error");
+      this.showToast(this.t("messages.errors.taskExists"), "error");
       return;
     }
 
@@ -862,7 +862,7 @@ class DoThisApp {
     this.updateStats();
     this.updateRandomizeButton();
     this.hideTaskEdit();
-    this.showToast("Task updated successfully", "success");
+    this.showToast(this.t("messages.success.taskUpdated"), "success");
   }
 
   deleteTask(index) {
@@ -967,17 +967,19 @@ class DoThisApp {
         case "available":
           statusIcon =
             '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="vertical-align: text-top; margin-right: 4px;"><path d="M13.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.793l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>';
-          statusText = "Available";
+          statusText = this.t("taskStatus.available");
           break;
         case "cooldown":
           statusIcon =
             '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="vertical-align: text-top; margin-right: 4px;"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/></svg>';
-          statusText = `Cooldown until ${status.availableAt}`;
+          statusText = this.t("taskStatus.cooldown", {
+            availableAt: status.availableAt,
+          });
           break;
         case "completed":
           statusIcon =
             '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="vertical-align: text-top; margin-right: 4px;"><rect x="1" y="0" width="1" height="16"/><rect x="2" y="2" width="2" height="2"/><rect x="6" y="2" width="2" height="2"/><rect x="10" y="2" width="2" height="2"/><rect x="14" y="2" width="1" height="2"/><rect x="4" y="4" width="2" height="2"/><rect x="8" y="4" width="2" height="2"/><rect x="12" y="4" width="2" height="2"/><rect x="2" y="6" width="2" height="2"/><rect x="6" y="6" width="2" height="2"/><rect x="10" y="6" width="2" height="2"/><rect x="14" y="6" width="1" height="2"/><rect x="4" y="8" width="2" height="2"/><rect x="8" y="8" width="2" height="2"/><rect x="12" y="8" width="2" height="2"/><path d="M2 2h13v8H2V2z" stroke="currentColor" stroke-width="0.5" fill="none"/></svg>';
-          statusText = "Completed";
+          statusText = this.t("taskStatus.completed");
           break;
       }
 
@@ -1324,7 +1326,7 @@ class DoThisApp {
                   <circle cx="8" cy="16" r="1.3" fill="currentColor"/>
                   <circle cx="16" cy="16" r="1.3" fill="currentColor"/>
                 </svg>
-                Add tasks first
+                ${this.t("randomizer.addTasksFirst")}
             `;
     } else if (availableTasks.length === 0) {
       randomizeBtn.innerHTML = `
@@ -1332,7 +1334,7 @@ class DoThisApp {
                   <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                   <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
                 </svg>
-                All tasks on cooldown
+                ${this.t("randomizer.allTasksOnCooldown")}
             `;
       // Start checking for tasks coming off cooldown
       this.startCooldownChecking();
@@ -1347,7 +1349,7 @@ class DoThisApp {
                   <circle cx="8" cy="16" r="1.3" fill="currentColor"/>
                   <circle cx="16" cy="16" r="1.3" fill="currentColor"/>
                 </svg>
-                Roll the dice
+                ${this.t("randomizer.rollTheDice")}
             `;
       // Stop cooldown checking since tasks are available
       this.stopCooldownChecking();
@@ -1370,18 +1372,19 @@ class DoThisApp {
     const description = randomizerStart.querySelector("p");
 
     if (this.tasks.length === 0) {
-      description.textContent =
-        "Add some tasks below to get started with randomization";
+      description.textContent = this.t("randomizer.addTasksToGetStarted");
     } else {
       const availableTasks = this.getAvailableTasks();
 
       if (availableTasks.length === 0) {
-        description.textContent =
-          "All tasks are currently on cooldown. Check back later!";
+        description.textContent = this.t("randomizer.allTasksCooldownMessage");
       } else if (availableTasks.length === 1) {
-        description.textContent = "Click to select the 1 available task";
+        description.textContent = this.t("randomizer.clickSelectOneTask");
       } else {
-        description.textContent = `Click to randomly select from ${availableTasks.length} available tasks`;
+        description.textContent = this.t(
+          "randomizer.clickSelectMultipleTasks",
+          { count: availableTasks.length },
+        );
       }
     }
   }
@@ -1497,7 +1500,7 @@ class DoThisApp {
       );
     }, 2000);
 
-    this.showToast("Test notifications sent!", "success");
+    this.showToast(this.t("messages.success.testNotificationsSent"), "success");
   }
 
   // Randomizer methods
@@ -1508,7 +1511,7 @@ class DoThisApp {
     const availableTasks = this.getAvailableTasks();
 
     if (availableTasks.length === 0) {
-      this.showToast("No tasks available for selection!", "error");
+      this.showToast(this.t("messages.errors.noTasksAvailable"), "error");
       return;
     }
 
@@ -1701,7 +1704,7 @@ class DoThisApp {
     const reason = reasonInput.value.trim();
 
     if (!reason) {
-      this.showToast("Please enter a reason for abandoning", "error");
+      this.showToast(this.t("messages.errors.pleaseEnterReason"), "error");
       return;
     }
 
@@ -1724,7 +1727,7 @@ class DoThisApp {
       this.refreshUI();
       this.resetRandomizer();
       this.hideAbandonReasonModal();
-      this.showToast("Task abandoned with reason recorded", "default");
+      this.showToast(this.t("messages.success.taskAbandoned"), "default");
     }
   }
 
@@ -1925,9 +1928,12 @@ class DoThisApp {
         originalTaskCount -
         this.tasks.length +
         (originalDeletedCount - this.deletedTasks.length);
-      this.showToast(`Cleaned up ${removedTasks} corrupted tasks`, "success");
+      this.showToast(
+        this.t("messages.success.cleanedUpTasks", { count: removedTasks }),
+        "success",
+      );
     } else {
-      this.showToast("No corrupted data found", "default");
+      this.showToast(this.t("messages.success.noCorruptedData"), "default");
     }
   }
 
@@ -2031,10 +2037,10 @@ class DoThisApp {
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
 
-      this.showToast("Tasks exported successfully", "success");
+      this.showToast(this.t("messages.success.tasksExported"), "success");
     } catch (error) {
       console.error("Error exporting tasks:", error);
-      this.showToast("Error exporting tasks", "error");
+      this.showToast(this.t("messages.errors.exportError"), "error");
     }
   }
 
@@ -2121,24 +2127,16 @@ class DoThisApp {
     this.updateStats();
     this.updateRandomizeButton();
     this.updateDefaultTasksButton();
-    this.showToast("Sample tasks added successfully", "success");
+    this.showToast(this.t("messages.success.sampleTasksAdded"), "success");
   }
 
   // Public method to reset everything
   resetEverything() {
-    if (
-      !confirm(
-        "⚠️ WARNING: This will permanently delete ALL your tasks, progress, and settings. Are you absolutely sure?",
-      )
-    ) {
+    if (!confirm(this.t("confirmDialogs.resetWarning"))) {
       return;
     }
 
-    if (
-      !confirm(
-        "This action cannot be undone. You will lose all tasks, completion history, and statistics. Please confirm you want to reset everything.",
-      )
-    ) {
+    if (!confirm(this.t("confirmDialogs.resetConfirm"))) {
       return;
     }
 
@@ -2175,10 +2173,10 @@ class DoThisApp {
         this.toggleSettings();
       }
 
-      this.showToast("Everything has been reset successfully", "success");
+      this.showToast(this.t("messages.success.everythingReset"), "success");
     } catch (error) {
       console.error("Error during reset:", error);
-      this.showToast("Error during reset", "error");
+      this.showToast(this.t("messages.errors.resetError"), "error");
     }
   }
 
@@ -2188,7 +2186,7 @@ class DoThisApp {
     console.log("📊 Task Dice - Debug Information");
     console.log("===============================");
     const debugInfo = this.debugData();
-    this.showToast("Debug information logged to console", "default");
+    this.showToast(this.t("messages.success.debugLogged"), "default");
     return debugInfo;
   }
 
@@ -2298,38 +2296,44 @@ class DoThisApp {
     this.deletedTasks.splice(index, 1);
     this.saveAllData();
     this.renderTrashList();
-    this.showToast(`"${task.text}" restored`, "success");
+    this.showToast(
+      this.t("messages.success.taskRestored", { taskText: task.text }),
+      "success",
+    );
   }
 
   deleteTaskForever(index) {
-    if (
-      confirm(
-        "Are you sure you want to permanently delete this task? This cannot be undone.",
-      )
-    ) {
+    if (confirm(this.t("confirmDialogs.deleteTaskForever"))) {
       const task = this.deletedTasks[index];
       this.deletedTasks.splice(index, 1);
       this.saveDeletedTasks();
       this.renderTrashList();
-      this.showToast(`"${task.text}" deleted permanently`, "success");
+      this.showToast(
+        this.t("messages.success.taskDeletedPermanently", {
+          taskText: task.text,
+        }),
+        "success",
+      );
     }
   }
 
   clearAllTrash() {
     if (this.deletedTasks.length === 0) {
-      this.showToast("Trash is already empty", "default");
+      this.showToast(this.t("messages.info.trashAlreadyEmpty"), "default");
       return;
     }
 
     if (
       confirm(
-        `Are you sure you want to permanently delete all ${this.deletedTasks.length} tasks in trash? This cannot be undone.`,
+        this.t("confirmDialogs.clearAllTrash", {
+          count: this.deletedTasks.length,
+        }),
       )
     ) {
       this.deletedTasks = [];
       this.saveDeletedTasks();
       this.renderTrashList();
-      this.showToast("All trash cleared", "success");
+      this.showToast(this.t("messages.success.allTrashCleared"), "success");
     }
   }
 }
