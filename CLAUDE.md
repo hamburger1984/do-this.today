@@ -30,12 +30,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 Since this is a static web app, no build commands are needed. For development:
 
 ```bash
+cd ./app
 # Serve locally for PWA testing (choose one):
 python -m http.server 8000
 npx serve
 php -S localhost:8000
 
-# Then visit: http://localhost:8000/app/
+# Then visit: http://localhost:8000/
 ```
 
 For basic development, you can open `app/index.html` directly in a browser.
@@ -44,7 +45,7 @@ For basic development, you can open `app/index.html` directly in a browser.
 
 ### localStorage Keys
 - `dothis-tasks` - Active tasks array (JSON)
-- `dothis-deleted` - Trash/deleted tasks (JSON)  
+- `dothis-deleted` - Trash/deleted tasks (JSON)
 - `dothis-completed` - Completion count (integer)
 - `dothis-active` - Currently active task (JSON object)
 - `dothis-nextid` - Next task ID (integer)
@@ -142,7 +143,7 @@ Always use semantic variables instead of raw colors:
 3. Update `getTaskStatus()` for new type behavior
 4. Add CSS styling for new type indicators
 
-### Adding New Cooldown Options  
+### Adding New Cooldown Options
 1. Add option to select elements in app/index.html
 2. Update `getCooldownMs()` method in app/script.js for duration calculation
 3. Update `formatCooldown()` method in app/script.js for display text
@@ -175,7 +176,7 @@ app.exportTasksAsJson()         // Download backup
 ## File Locations to Remember
 
 - Main app logic: `app/script.js` (DoThisApp class)
-- Styles: `app/styles.css` 
+- Styles: `app/styles.css`
 - Documentation: `docs/development.md`, `docs/technical-details.md`
 - Debug tools: Available via browser console commands
 - Icons: `app/img/*.svg`
@@ -203,10 +204,11 @@ Before committing any change, verify:
 - **Offline-first**: Maintain functionality without internet connection
 
 ### Commit Guidelines
-- Always create a commit after completing changes
+- **ALWAYS create a commit AND push after completing changes** - Never leave work uncommitted
 - Use descriptive commit messages (avoid "fix stuff" or "changes")
 - Test functionality before committing
 - Include affected areas in commit description when significant
+- Push commits immediately after creating them to ensure changes are saved
 
 ### What NOT to Do
 - Don't add external dependencies without strong justification
