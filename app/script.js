@@ -1304,13 +1304,13 @@ class DoThisApp {
         type: "TASK_TIMER_NOTIFICATION",
         title: title,
         body: body,
-        icon: "/icon-192.png",
+        icon: "/pwa/icon-192.png",
       });
     } else {
       // Fallback to direct notification
       new Notification(title, {
         body: body,
-        icon: "/icon-192.png",
+        icon: "/pwa/icon-192.png",
         tag: "task-timer",
       });
     }
@@ -2197,7 +2197,7 @@ document.addEventListener("DOMContentLoaded", () => {
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
-      .register("/sw.js")
+      .register("/pwa/sw.js")
       .then((registration) => {
         console.log("SW registered: ", registration);
       })

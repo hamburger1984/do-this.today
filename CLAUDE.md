@@ -20,9 +20,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `app/index.html` - Main application entry point
 - `app/script.js` - Core application logic (DoThisApp class)
 - `app/styles.css` - Mobile-first CSS with sunset color theme
-- `app/manifest.json` - PWA manifest
-- `app/sw.js` - Service Worker for offline support
-- `app/favicon.svg` - App icon
+- `app/pwa/manifest.json` - PWA manifest
+- `app/pwa/sw.js` - Service Worker for offline support
+- `app/pwa/favicon.svg` - App icon (SVG)
+- `app/pwa/favicon.ico` - App icon (ICO)
+- `app/pwa/icon-192.png` - PWA icon 192x192
+- `app/pwa/icon-512.png` - PWA icon 512x512
 - `app/img/` - SVG icons (16x16, 20x20, 24x24)
 
 ## Development Commands
@@ -177,9 +180,10 @@ app.exportTasksAsJson()         // Download backup
 
 - Main app logic: `app/script.js` (DoThisApp class)
 - Styles: `app/styles.css`
+- PWA files: `app/pwa/` (manifest, service worker, icons)
 - Documentation: `docs/development.md`, `docs/technical-details.md`
 - Debug tools: Available via browser console commands
-- Icons: `app/img/*.svg`
+- UI icons: `app/img/*.svg`
 
 ## Development Guidelines
 

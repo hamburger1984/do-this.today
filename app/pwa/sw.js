@@ -4,10 +4,10 @@ const urlsToCache = [
   "/index.html",
   "/styles.css",
   "/script.js",
-  "/favicon.svg",
-  "/favicon.ico",
-  "/icon-192.png",
-  "/icon-512.png",
+  "/pwa/favicon.svg",
+  "/pwa/favicon.ico",
+  "/pwa/icon-192.png",
+  "/pwa/icon-512.png",
   "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap",
 ];
 
@@ -70,8 +70,8 @@ self.addEventListener("message", (event) => {
 
     self.registration.showNotification(title, {
       body: body,
-      icon: icon || "/icon-192.png",
-      badge: "/favicon.ico",
+      icon: icon || "/pwa/icon-192.png",
+      badge: "/pwa/favicon.ico",
       tag: "task-timer",
       requireInteraction: false,
       actions: [
