@@ -1,0 +1,139 @@
+{
+  "app": {
+    "title": "mach das - heute!",
+    "subtitle": "Lass uns entscheiden, was als nächstes zu tun ist"
+  },
+  "navigation": {
+    "backToMain": "Zurück zur Hauptseite"
+  },
+  "randomizer": {
+    "nextTask": "Nächste Aufgabe:",
+    "clickToSelect": "Klicken, um zufällig aus deinen verfügbaren Aufgaben zu wählen",
+    "reroll": "Neu würfeln",
+    "letsDoIt": "Los geht's!",
+    "nextTaskBtn": "Nächste Aufgabe",
+    "completed": {
+      "title": "Großartig!",
+      "message": "Aufgabe erledigt. Bereit für die nächste?",
+      "continueBtn": "Klar!"
+    }
+  },
+  "activeTask": {
+    "timeRemaining": "Verbleibende Zeit:",
+    "giveUp": "Aufgeben",
+    "markAsDone": "Als erledigt markieren"
+  },
+  "tasks": {
+    "myTasks": "Meine Aufgaben",
+    "taskType": "Aufgabentyp:",
+    "oneTime": "Einmalig",
+    "repeatable": "Wiederholbar",
+    "cooldown": "Abklingzeit:",
+    "noCooldown": "Keine Abklingzeit",
+    "oneHour": "1 Stunde",
+    "threeHours": "3 Stunden",
+    "sixHours": "6 Stunden",
+    "twelveHours": "12 Stunden",
+    "daily": "Täglich (24h)",
+    "weekly": "Wöchentlich (7 Tage)",
+    "monthly": "Monatlich (30 Tage)",
+    "addTask": "Aufgabe hinzufügen",
+    "placeholder": "Neue Aufgabe eingeben...",
+    "emptyState": {
+      "title": "Noch keine Aufgaben",
+      "message": "Füge einige Aufgaben hinzu, um mit der Zufallsauswahl zu beginnen"
+    }
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "language": "Sprache",
+    "dataManagement": "Datenverwaltung",
+    "debugInfo": "Debug-Informationen",
+    "addSampleTasks": "Beispielaufgaben hinzufügen",
+    "exportTasks": "Aufgaben als JSON exportieren",
+    "viewTrash": "Papierkorb anzeigen",
+    "resetEverything": "Alles zurücksetzen",
+    "debugData": "Daten debuggen",
+    "cleanupData": "Beschädigte Daten bereinigen",
+    "testNotifications": "Benachrichtigungen testen"
+  },
+  "trash": {
+    "title": "Papierkorb",
+    "clearAll": "Alle löschen",
+    "emptyState": {
+      "title": "Papierkorb ist leer",
+      "message": "Gelöschte Aufgaben werden hier angezeigt. Du kannst sie wiederherstellen oder dauerhaft löschen."
+    }
+  },
+  "stats": {
+    "totalTasks": "Aufgaben gesamt",
+    "completed": "Erledigt"
+  },
+  "modals": {
+    "abandonTask": {
+      "title": "Warum gibst du diese Aufgabe auf?",
+      "placeholder": "Grund für das Aufgeben eingeben (z.B. 'Momentan zu schwierig', 'Brauche mehr Ressourcen', 'Prioritäten haben sich geändert')...",
+      "cancel": "Abbrechen",
+      "abandon": "Aufgabe aufgeben"
+    }
+  },
+  "buttons": {
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "restore": "Wiederherstellen",
+    "deletePermanently": "Dauerhaft löschen"
+  },
+  "taskStatus": {
+    "available": "Verfügbar",
+    "cooldown": "In Abklingzeit",
+    "completed": "Erledigt",
+    "active": "Aktiv"
+  },
+  "messages": {
+    "errors": {
+      "taskNotFound": "Fehler: Aufgabe nicht gefunden",
+      "pleaseEnterTask": "Bitte gib eine Aufgabe ein",
+      "taskTooLong": "Aufgabe ist zu lang (max. 200 Zeichen)",
+      "taskExists": "Diese Aufgabe existiert bereits",
+      "editFormNotAvailable": "Fehler: Bearbeitungsformular nicht verfügbar",
+      "invalidTaskEdit": "Fehler: Ungültige Aufgabe zum Bearbeiten",
+      "noTasksAvailable": "Keine Aufgaben zur Auswahl verfügbar!",
+      "notificationsNotAllowed": "Bitte erlaube zuerst Benachrichtigungen!",
+      "timeUp": "Zeit ist um! Bitte gib einen Grund für das Aufgeben an.",
+      "taskExpired": "Aktive Aufgabe ist abgelaufen! Bitte gib einen Grund für das Aufgeben an.",
+      "mustProvideReason": "Du musst einen Grund für das Aufgeben der abgelaufenen Aufgabe angeben",
+      "pleaseEnterReason": "Bitte gib einen Grund für das Aufgeben ein",
+      "exportError": "Fehler beim Exportieren der Aufgaben",
+      "resetError": "Fehler beim Zurücksetzen"
+    },
+    "success": {
+      "taskAdded": "Aufgabe erfolgreich hinzugefügt",
+      "taskUpdated": "Aufgabe erfolgreich aktualisiert",
+      "taskMovedToTrash": "\"{{taskText}}\" in den Papierkorb verschoben",
+      "testNotificationsSent": "Test-Benachrichtigungen gesendet!",
+      "taskActive": "Aufgabe ist jetzt aktiv! Du hast 8 Stunden Zeit, sie zu erledigen.",
+      "taskAbandoned": "Aufgabe mit Begründung aufgegeben",
+      "cleanedUpTasks": "{{count}} beschädigte Aufgaben bereinigt",
+      "noCorruptedData": "Keine beschädigten Daten gefunden",
+      "tasksExported": "Aufgaben erfolgreich exportiert",
+      "sampleTasksAdded": "Beispielaufgaben erfolgreich hinzugefügt",
+      "everythingReset": "Alles wurde erfolgreich zurückgesetzt",
+      "debugLogged": "Debug-Informationen in der Konsole protokolliert",
+      "taskRestored": "\"{{taskText}}\" wiederhergestellt",
+      "taskDeletedPermanently": "\"{{taskText}}\" dauerhaft gelöscht",
+      "allTrashCleared": "Papierkorb geleert"
+    },
+    "info": {
+      "trashAlreadyEmpty": "Papierkorb ist bereits leer",
+      "dataIntegrityIssues": "Datenintegritätsprobleme erkannt. Erwäge app.cleanupCorruptedData() in der Konsole auszuführen."
+    },
+    "notifications": {
+      "fiftyPercent": "Aufgaben-Fortschritt: 50% erledigt",
+      "fiftyPercentBody": "Du bist zur Hälfte durch deine Aufgabe: \"{{taskText}}\". {{hours}} Stunden verbleibend.",
+      "seventyFivePercent": "Aufgaben-Fortschritt: 75% erledigt",
+      "seventyFivePercentBody": "Du bist zu drei Vierteln fertig mit: \"{{taskText}}\". {{hours}} Stunden verbleibend.",
+      "testFiftyPercent": "Du bist zur Hälfte durch deine Aufgabe: \"Beispielaufgabe zum Testen\". 4 Stunden verbleibend.",
+      "testSeventyFivePercent": "Du bist zu drei Vierteln fertig mit: \"Beispielaufgabe zum Testen\". 2 Stunden verbleibend."
+    }
+  }
+}

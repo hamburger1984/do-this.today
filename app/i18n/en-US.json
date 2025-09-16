@@ -1,0 +1,139 @@
+{
+  "app": {
+    "title": "do this - today!",
+    "subtitle": "Let us decide what to do next"
+  },
+  "navigation": {
+    "backToMain": "Back to main"
+  },
+  "randomizer": {
+    "nextTask": "Next task:",
+    "clickToSelect": "Click to randomly select from your available tasks",
+    "reroll": "Reroll",
+    "letsDoIt": "Let's Do It!",
+    "nextTaskBtn": "Next Task",
+    "completed": {
+      "title": "Great job!",
+      "message": "Task completed. Ready for the next one?",
+      "continueBtn": "Sure!"
+    }
+  },
+  "activeTask": {
+    "timeRemaining": "Time Remaining:",
+    "giveUp": "Give Up",
+    "markAsDone": "Mark as Done"
+  },
+  "tasks": {
+    "myTasks": "My Tasks",
+    "taskType": "Task Type:",
+    "oneTime": "One-time",
+    "repeatable": "Repeatable",
+    "cooldown": "Cooldown:",
+    "noCooldown": "No cooldown",
+    "oneHour": "1 hour",
+    "threeHours": "3 hours",
+    "sixHours": "6 hours",
+    "twelveHours": "12 hours",
+    "daily": "Daily (24h)",
+    "weekly": "Weekly (7 days)",
+    "monthly": "Monthly (30 days)",
+    "addTask": "Add Task",
+    "placeholder": "Enter a new task...",
+    "emptyState": {
+      "title": "No tasks yet",
+      "message": "Add some tasks to get started with randomization"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "dataManagement": "Data Management",
+    "debugInfo": "Debug Information",
+    "addSampleTasks": "Add Sample Tasks",
+    "exportTasks": "Export Tasks as JSON",
+    "viewTrash": "View Trash",
+    "resetEverything": "Reset Everything",
+    "debugData": "Debug Data",
+    "cleanupData": "Cleanup Corrupted Data",
+    "testNotifications": "Test Notifications"
+  },
+  "trash": {
+    "title": "Trash",
+    "clearAll": "Clear All",
+    "emptyState": {
+      "title": "Trash is empty",
+      "message": "Deleted tasks will appear here. You can restore or permanently delete them."
+    }
+  },
+  "stats": {
+    "totalTasks": "Total Tasks",
+    "completed": "Completed"
+  },
+  "modals": {
+    "abandonTask": {
+      "title": "Why are you abandoning this task?",
+      "placeholder": "Enter reason for abandoning (e.g., 'Too difficult right now', 'Need more resources', 'Changed priorities')...",
+      "cancel": "Cancel",
+      "abandon": "Abandon Task"
+    }
+  },
+  "buttons": {
+    "edit": "Edit",
+    "delete": "Delete",
+    "restore": "Restore",
+    "deletePermanently": "Delete Forever"
+  },
+  "taskStatus": {
+    "available": "Available",
+    "cooldown": "On cooldown",
+    "completed": "Completed",
+    "active": "Active"
+  },
+  "messages": {
+    "errors": {
+      "taskNotFound": "Error: Task not found",
+      "pleaseEnterTask": "Please enter a task",
+      "taskTooLong": "Task is too long (max 200 characters)",
+      "taskExists": "This task already exists",
+      "editFormNotAvailable": "Error: Edit form not available",
+      "invalidTaskEdit": "Error: Invalid task to edit",
+      "noTasksAvailable": "No tasks available for selection!",
+      "notificationsNotAllowed": "Please allow notifications first!",
+      "timeUp": "Time's up! Please provide a reason for abandoning.",
+      "taskExpired": "Active task expired! Please provide a reason for abandoning.",
+      "mustProvideReason": "You must provide a reason for abandoning the expired task",
+      "pleaseEnterReason": "Please enter a reason for abandoning",
+      "exportError": "Error exporting tasks",
+      "resetError": "Error during reset"
+    },
+    "success": {
+      "taskAdded": "Task added successfully",
+      "taskUpdated": "Task updated successfully",
+      "taskMovedToTrash": "\"{{taskText}}\" moved to trash",
+      "testNotificationsSent": "Test notifications sent!",
+      "taskActive": "Task is now active! You have 8 hours to complete it.",
+      "taskAbandoned": "Task abandoned with reason recorded",
+      "cleanedUpTasks": "Cleaned up {{count}} corrupted tasks",
+      "noCorruptedData": "No corrupted data found",
+      "tasksExported": "Tasks exported successfully",
+      "sampleTasksAdded": "Sample tasks added successfully",
+      "everythingReset": "Everything has been reset successfully",
+      "debugLogged": "Debug information logged to console",
+      "taskRestored": "\"{{taskText}}\" restored",
+      "taskDeletedPermanently": "\"{{taskText}}\" deleted permanently",
+      "allTrashCleared": "All trash cleared"
+    },
+    "info": {
+      "trashAlreadyEmpty": "Trash is already empty",
+      "dataIntegrityIssues": "Data integrity issues detected. Consider running app.cleanupCorruptedData() from console."
+    },
+    "notifications": {
+      "fiftyPercent": "Task Progress: 50% Complete",
+      "fiftyPercentBody": "You're halfway through your task: \"{{taskText}}\". {{hours}} hours remaining.",
+      "seventyFivePercent": "Task Progress: 75% Complete",
+      "seventyFivePercentBody": "You're three-quarters done with: \"{{taskText}}\". {{hours}} hours remaining.",
+      "testFiftyPercent": "You're halfway through your task: \"Sample Task for Testing\". 4 hours remaining.",
+      "testSeventyFivePercent": "You're three-quarters done with: \"Sample Task for Testing\". 2 hours remaining."
+    }
+  }
+}
