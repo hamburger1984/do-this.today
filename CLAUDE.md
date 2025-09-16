@@ -105,7 +105,13 @@ Tasks have four states:
 ### Active Task System
 - 8-hour timer starts when task is accepted
 - Timer persists across browser sessions
+- Progress notifications at 50% (4 hours) and 75% (6 hours)
 - Tasks can be completed or abandoned with reason
+
+### Notification System
+- Requests browser notification permissions on startup
+- Sends progress notifications via service worker or direct browser API
+- Development test button available on localhost only (Settings → Debug Information)
 
 ## CSS Theme System
 
@@ -173,6 +179,41 @@ app.exportTasksAsJson()         // Download backup
 - Documentation: `docs/development.md`, `docs/technical-details.md`
 - Debug tools: Available via browser console commands
 - Icons: `app/img/*.svg`
+
+## Development Guidelines
+
+### Change Checklist
+Before committing any change, verify:
+- [ ] App loads and functions correctly in browser
+- [ ] Mobile layout remains responsive
+- [ ] No console errors or warnings
+- [ ] localStorage functionality preserved
+- [ ] Update documentation if user-facing changes made
+
+### Code Style Principles
+- **Minimize external dependencies** - Keep the app self-contained
+- **Preserve data integrity** - Never break existing localStorage data structures
+- **Maintain mobile-first design** - Always consider mobile experience first
+- **Test before committing** - Ensure changes work across major browsers
+
+### Quality Standards
+- **Performance**: Keep app responsive on mobile devices, minimize DOM manipulation
+- **Accessibility**: Ensure keyboard navigation works, maintain proper ARIA labels
+- **Privacy & Security**: Never add tracking, keep all data local to device
+- **Offline-first**: Maintain functionality without internet connection
+
+### Commit Guidelines
+- Always create a commit after completing changes
+- Use descriptive commit messages (avoid "fix stuff" or "changes")
+- Test functionality before committing
+- Include affected areas in commit description when significant
+
+### What NOT to Do
+- Don't add external dependencies without strong justification
+- Don't break existing data migration paths
+- Don't remove debug/recovery tools
+- Don't commit broken functionality
+- Don't create outdated documentation
 
 ## Important Notes
 
