@@ -18,6 +18,8 @@ class DoThisApp {
     this.currentPage = "main";
     this.editingTaskIndex = null;
     this.abandonDueToExpiration = false;
+    this.notificationsGranted = false;
+    this.notificationsSent = { halfTime: false, threeQuarterTime: false };
     this.init();
   }
 
@@ -30,6 +32,7 @@ class DoThisApp {
       this.refreshUI();
       this.updateTaskListCollapse();
       this.checkActiveTask();
+      this.requestNotificationPermission();
 
       // Run a quick data integrity check on startup
       this.validateDataIntegrity();
@@ -1264,6 +1267,49 @@ class DoThisApp {
     document.getElementById("completedTasks").textContent = this.completedTasks;
   }
 
+  // Notification methods
+  async requestNotificationPermission() {
+    if (!("Notification" in window)) {
+      console.log("This browser does not support desktop notifications.");
+      return;
+    }
+
+    if (Notification.permission === "granted") {
+      this.notificationsGranted = true;
+      return;
+    }
+
+    if (Notification.permission !== "denied") {
+      try {
+        const permission = await Notification.requestPermission();
+        this.notificationsGranted = permission === "granted";
+      } catch (error) {
+        console.log("Notification permission request failed:", error);
+      }
+    }
+  }
+
+  async sendTaskTimerNotification(title, body) {
+    if (!this.notificationsGranted) return;
+
+    if ("serviceWorker" in navigator && navigator.serviceWorker.controller) {
+      // Send through service worker
+      navigator.serviceWorker.controller.postMessage({
+        type: "TASK_TIMER_NOTIFICATION",
+        title: title,
+        body: body,
+        icon: "/icon-192.png",
+      });
+    } else {
+      // Fallback to direct notification
+      new Notification(title, {
+        body: body,
+        icon: "/icon-192.png",
+        tag: "task-timer",
+      });
+    }
+  }
+
   // Randomizer methods
   randomizeTask() {
     // Stop cooldown checking since we're moving to task selection
@@ -1319,6 +1365,9 @@ class DoThisApp {
   acceptTask() {
     // Stop cooldown checking since we're leaving the initial screen
     this.stopCooldownChecking();
+
+    // Reset notification flags for new task
+    this.notificationsSent = { halfTime: false, threeQuarterTime: false };
 
     this.activeTask = {
       task: this.currentSelectedTask,
@@ -1510,6 +1559,19 @@ class DoThisApp {
       const now = Date.now();
       const elapsed = now - this.activeTask.startTime;
       const remaining = this.activeTask.duration - elapsed;
+      const progress = elapsed / this.activeTask.duration;
+
+      // Initialize notification flags based on current progress
+      // (for tasks that were already active when the app loads)
+      if (!this.notificationsSent) {
+        this.notificationsSent = { halfTime: false, threeQuarterTime: false };
+      }
+      if (progress >= 0.5) {
+        this.notificationsSent.halfTime = true;
+      }
+      if (progress >= 0.75) {
+        this.notificationsSent.threeQuarterTime = true;
+      }
 
       if (remaining <= 0) {
         // Task expired - show abandon reason modal
@@ -1570,6 +1632,31 @@ class DoThisApp {
     const timerElement = document.getElementById("activeTaskTimer");
     if (timerElement) {
       timerElement.textContent = `${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+    }
+
+    // Check for notification triggers
+    if (this.activeTask) {
+      const elapsed = Date.now() - this.activeTask.startTime;
+      const totalDuration = this.activeTask.duration;
+      const progress = elapsed / totalDuration;
+
+      // 50% notification (4 hours)
+      if (progress >= 0.5 && !this.notificationsSent.halfTime) {
+        this.notificationsSent.halfTime = true;
+        this.sendTaskTimerNotification(
+          "Task Progress: 50% Complete",
+          `You're halfway through your task: "${this.activeTask.task.text}". ${hours} hours remaining.`,
+        );
+      }
+
+      // 75% notification (6 hours)
+      if (progress >= 0.75 && !this.notificationsSent.threeQuarterTime) {
+        this.notificationsSent.threeQuarterTime = true;
+        this.sendTaskTimerNotification(
+          "Task Progress: 75% Complete",
+          `You're three-quarters done with: "${this.activeTask.task.text}". ${hours} hours remaining.`,
+        );
+      }
     }
   }
 

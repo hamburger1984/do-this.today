@@ -1,9 +1,13 @@
-const CACHE_NAME = "dothis-v1";
+const CACHE_NAME = "dothis-v2";
 const urlsToCache = [
   "/",
   "/index.html",
   "/styles.css",
   "/script.js",
+  "/favicon.svg",
+  "/favicon.ico",
+  "/icon-192.png",
+  "/icon-512.png",
   "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap",
 ];
 
@@ -36,4 +40,46 @@ self.addEventListener("activate", (event) => {
       );
     }),
   );
+});
+
+// Handle notification clicks
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+
+  // Focus or open the app when notification is clicked
+  event.waitUntil(
+    clients.matchAll({ type: "window" }).then((clientList) => {
+      // If app is already open, focus it
+      for (const client of clientList) {
+        if (client.url.includes("do-this.today") && "focus" in client) {
+          return client.focus();
+        }
+      }
+      // Otherwise open a new window
+      if (clients.openWindow) {
+        return clients.openWindow("/");
+      }
+    }),
+  );
+});
+
+// Handle messages from the main app
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "TASK_TIMER_NOTIFICATION") {
+    const { title, body, icon } = event.data;
+
+    self.registration.showNotification(title, {
+      body: body,
+      icon: icon || "/icon-192.png",
+      badge: "/favicon.ico",
+      tag: "task-timer",
+      requireInteraction: false,
+      actions: [
+        {
+          action: "focus",
+          title: "Open App",
+        },
+      ],
+    });
+  }
 });
