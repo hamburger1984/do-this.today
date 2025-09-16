@@ -1304,13 +1304,13 @@ class DoThisApp {
         type: "TASK_TIMER_NOTIFICATION",
         title: title,
         body: body,
-        icon: "/pwa/icon-192.png",
+        icon: "/img/icon-192.png",
       });
     } else {
       // Fallback to direct notification
       new Notification(title, {
         body: body,
-        icon: "/pwa/icon-192.png",
+        icon: "/img/icon-192.png",
         tag: "task-timer",
       });
     }
