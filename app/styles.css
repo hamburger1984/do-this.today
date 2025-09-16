@@ -663,6 +663,25 @@ body {
   box-shadow: var(--focus-ring-primary);
 }
 
+/* Language selector styling (match cooldown dropdown) */
+.language-select {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid var(--color-border-medium);
+  border-radius: 12px;
+  font-size: var(--font-size-small);
+  background: var(--color-background-elevated);
+  color: var(--color-text-primary);
+  transition: all 0.2s ease;
+}
+
+.language-select:focus {
+  outline: none;
+  border-color: var(--color-border-focus);
+  background: var(--color-background-elevated);
+  box-shadow: var(--focus-ring-primary);
+}
+
 .task-type-toggle {
   display: flex;
   background: var(--color-background-elevated);
