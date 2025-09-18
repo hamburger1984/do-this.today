@@ -1,7 +1,7 @@
 {
   "app": {
     "title": "do this - today!",
-    "subtitle": "Lass die Würfel entscheiden, was als nächstes zu tun ist"
+    "subtitle": "Was tun wir als nächstes?"
   },
   "navigation": {
     "backToMain": "Zurück zur Hauptseite"
@@ -19,7 +19,7 @@
     "taskCompletedMessage": "Aufgabe erledigt. Bereit für die nächste?",
     "sure": "Klar!",
     "addTasksFirst": "Zuerst Aufgaben hinzufügen",
-    "allTasksOnCooldown": "Alle Aufgaben in Abklingzeit",
+    "allTasksOnCooldown": "Momentan keine Aufgaben",
     "rollTheDice": "Würfeln",
     "addTasksToGetStarted": "Füge unten einige Aufgaben hinzu, um mit der Zufallsauswahl zu beginnen",
     "allTasksCooldownMessage": "Alle Aufgaben sind derzeit in Abklingzeit. Schau später nochmal vorbei!",
