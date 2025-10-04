@@ -6,6 +6,10 @@
   "navigation": {
     "backToMain": "Back to main"
   },
+  "images": {
+    "appLogo": "App Logo",
+    "success": "Success"
+  },
   "randomizer": {
     "nextTask": "Next task:",
     "clickToSelect": "Click to randomly select from your available tasks",
