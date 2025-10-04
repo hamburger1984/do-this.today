@@ -82,6 +82,7 @@ The app uses fine-grained localStorage operations for better performance:
   text: string,                  // Task description (max 200 chars)
   type: "oneoff"|"repeatable",   // Task type
   cooldown: string,              // "0"|"1"|"3"|"6"|"12"|"daily"|"weekly"|"monthly"
+  deadline: number|null,         // Optional deadline timestamp (milliseconds)
   executions: [{                 // Execution history
     timestamp: number,
     duration: number,
@@ -104,7 +105,7 @@ Tasks have four states:
 
 ### Randomization Logic
 - Only selects from available tasks
-- Avoids immediate repeats when possible
+- Uses weighted selection based on deadline urgency (overdue: 20x, today: 10x, 3-7 days: 3x, etc.)
 - Updates button text to show available task count
 
 ### Active Task System

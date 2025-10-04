@@ -884,6 +884,42 @@ body {
   border: 1px solid var(--completed-alpha-30);
 }
 
+.task-stat.task-deadline {
+  color: var(--color-text-on-primary);
+  font-weight: 600;
+}
+
+.task-stat.task-deadline.deadline-overdue {
+  background: #dc2626;
+  animation: pulse-deadline 2s ease-in-out infinite;
+}
+
+.task-stat.task-deadline.deadline-today {
+  background: #ea580c;
+}
+
+.task-stat.task-deadline.deadline-soon {
+  background: #f59e0b;
+}
+
+.task-stat.task-deadline.deadline-week {
+  background: var(--ocean-medium);
+}
+
+.task-stat.task-deadline.deadline-future {
+  background: var(--slate-soft);
+}
+
+@keyframes pulse-deadline {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
 .task-actions {
   display: flex;
   gap: 0.5rem;

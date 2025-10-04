@@ -416,6 +416,7 @@ class DoThisApp {
             executions: Array.isArray(task.executions) ? task.executions : [],
             completed: Boolean(task.completed),
             createdAt: task.createdAt || Date.now(),
+            deadline: task.deadline || null,
           };
           return validTask;
         });
@@ -474,6 +475,7 @@ class DoThisApp {
             executions: Array.isArray(task.executions) ? task.executions : [],
             completed: Boolean(task.completed),
             deletedAt: task.deletedAt || Date.now(),
+            deadline: task.deadline || null,
           };
           return validTask;
         });
@@ -752,6 +754,8 @@ class DoThisApp {
       return;
     }
 
+    const deadline = document.getElementById("taskDeadline").value || null;
+
     const newTask = {
       id: this.nextTaskId++,
       text: taskText,
@@ -760,6 +764,7 @@ class DoThisApp {
       executions: [],
       completed: false,
       createdAt: Date.now(),
+      deadline: deadline ? new Date(deadline).getTime() : null,
     };
 
     this.tasks.push(newTask);
@@ -772,6 +777,7 @@ class DoThisApp {
     document.getElementById("taskInput").value = "";
     document.getElementById("taskType").value = "oneoff";
     document.getElementById("cooldownPeriod").value = "daily";
+    document.getElementById("taskDeadline").value = "";
 
     // Reset toggle buttons
     document.querySelectorAll(".toggle-btn").forEach((btn) => {
@@ -799,8 +805,11 @@ class DoThisApp {
     const cooldownSelect = document.getElementById(
       `editCooldownPeriod-${this.editingTaskIndex}`,
     );
+    const deadlineInput = document.getElementById(
+      `editTaskDeadline-${this.editingTaskIndex}`,
+    );
 
-    if (!input || !taskTypeSelect || !cooldownSelect) {
+    if (!input || !taskTypeSelect || !cooldownSelect || !deadlineInput) {
       console.error("Edit form elements not found");
       this.showToast(this.t("messages.errors.editFormNotAvailable"), "error");
       return;
@@ -809,6 +818,7 @@ class DoThisApp {
     const taskText = input.value.trim();
     const taskType = taskTypeSelect.value;
     const cooldownPeriod = cooldownSelect.value;
+    const deadline = deadlineInput.value || null;
 
     // Validate task index
     if (
@@ -848,6 +858,7 @@ class DoThisApp {
     task.text = taskText;
     task.type = taskType;
     task.cooldown = cooldownPeriod;
+    task.deadline = deadline ? new Date(deadline).getTime() : null;
 
     // If changing from repeatable to oneoff or vice versa, reset completed status
     if (
@@ -992,6 +1003,16 @@ class DoThisApp {
       const execStats = this.getExecutionStats(task);
       const execStatsHtml = execStats.html;
 
+      // Format deadline if present
+      const deadlineInfo = this.formatDeadline(task.deadline);
+      const deadlineHtml = deadlineInfo
+        ? `<span class="task-stat task-deadline ${deadlineInfo.className}" title="${deadlineInfo.title}">
+             <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="vertical-align: text-top; margin-right: 4px;">
+               <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+             </svg>${deadlineInfo.text}
+           </span>`
+        : "";
+
       // Check if this task is being edited
       if (this.editingTaskIndex === index) {
         taskItem.innerHTML = `
@@ -1041,6 +1062,10 @@ class DoThisApp {
                     <option value="monthly" ${task.cooldown === "monthly" ? "selected" : ""}>Monthly (30 days)</option>
                   </select>
                 </div>
+                <div class="edit-option-group">
+                  <label for="editTaskDeadline-${index}">Deadline (optional):</label>
+                  <input type="date" id="editTaskDeadline-${index}" value="${task.deadline ? new Date(task.deadline).toISOString().split("T")[0] : ""}" />
+                </div>
               </div>
               <div class="edit-actions">
                 <button class="btn-secondary edit-cancel" onclick="app.hideTaskEdit()">
@@ -1067,6 +1092,7 @@ class DoThisApp {
               <div class="task-meta">
                   ${typeDisplay ? `<span class="task-stat task-type ${task.type}" title="${this.escapeHtml(task.type)}">${typeDisplay}</span>` : ""}
                   <span class="task-stat task-status ${status.type}" title="${this.escapeHtml(statusText)}">${statusIcon} ${statusText}</span>
+                  ${deadlineHtml}
                   ${execStatsHtml}
               </div>
           </div>
@@ -1130,6 +1156,48 @@ class DoThisApp {
     }
 
     return { type: "available" };
+  }
+
+  formatDeadline(deadline) {
+    if (!deadline) return null;
+
+    const now = Date.now();
+    const deadlineDate = new Date(deadline);
+    const daysUntil = (deadline - now) / (1000 * 60 * 60 * 24);
+
+    if (daysUntil < 0) {
+      const daysOverdue = Math.ceil(Math.abs(daysUntil));
+      return {
+        text:
+          daysOverdue === 1 ? "1 day overdue" : `${daysOverdue} days overdue`,
+        className: "deadline-overdue",
+        title: `Overdue since ${deadlineDate.toLocaleDateString()}`,
+      };
+    } else if (daysUntil < 1) {
+      return {
+        text: "Due today",
+        className: "deadline-today",
+        title: `Due ${deadlineDate.toLocaleDateString()}`,
+      };
+    } else if (daysUntil < 2) {
+      return {
+        text: "Due tomorrow",
+        className: "deadline-soon",
+        title: `Due ${deadlineDate.toLocaleDateString()}`,
+      };
+    } else if (daysUntil <= 7) {
+      return {
+        text: `Due in ${Math.ceil(daysUntil)} days`,
+        className: "deadline-week",
+        title: `Due ${deadlineDate.toLocaleDateString()}`,
+      };
+    } else {
+      return {
+        text: `Due ${deadlineDate.toLocaleDateString()}`,
+        className: "deadline-future",
+        title: `Due ${deadlineDate.toLocaleDateString()}`,
+      };
+    }
   }
 
   getExecutionStats(task) {
@@ -1504,6 +1572,33 @@ class DoThisApp {
   }
 
   // Randomizer methods
+  getTaskWeight(task) {
+    if (!task.deadline) {
+      return 1.0; // Normal weight for tasks without deadlines
+    }
+
+    const now = Date.now();
+    const deadline = task.deadline;
+    const daysUntilDeadline = (deadline - now) / (1000 * 60 * 60 * 24);
+
+    if (daysUntilDeadline < 0) {
+      // Overdue
+      return 20.0;
+    } else if (daysUntilDeadline <= 1) {
+      // Due today or tomorrow
+      return 10.0;
+    } else if (daysUntilDeadline <= 2) {
+      // Due in 1-2 days
+      return 6.0;
+    } else if (daysUntilDeadline <= 7) {
+      // Due in 3-7 days
+      return 3.0;
+    } else {
+      // Due in >7 days
+      return 1.5;
+    }
+  }
+
   randomizeTask() {
     // Stop cooldown checking since we're moving to task selection
     this.stopCooldownChecking();
@@ -1524,17 +1619,31 @@ class DoThisApp {
     setTimeout(() => {
       let selectedTask;
 
-      // If there are at least 2 tasks and we have a current selection, avoid repeating it
+      // Filter out current task if we have multiple options
+      let tasksToChooseFrom = availableTasks;
       if (availableTasks.length >= 2 && this.currentSelectedTask) {
-        const filteredTasks = availableTasks.filter(
+        tasksToChooseFrom = availableTasks.filter(
           (task) => task.id !== this.currentSelectedTask.id,
         );
-        const randomIndex = Math.floor(Math.random() * filteredTasks.length);
-        selectedTask = filteredTasks[randomIndex];
-      } else {
-        const randomIndex = Math.floor(Math.random() * availableTasks.length);
-        selectedTask = availableTasks[randomIndex];
       }
+
+      // Calculate weights for each task
+      const weights = tasksToChooseFrom.map((task) => this.getTaskWeight(task));
+      const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
+
+      // Weighted random selection
+      let random = Math.random() * totalWeight;
+      let selectedIndex = 0;
+
+      for (let i = 0; i < weights.length; i++) {
+        random -= weights[i];
+        if (random <= 0) {
+          selectedIndex = i;
+          break;
+        }
+      }
+
+      selectedTask = tasksToChooseFrom[selectedIndex];
 
       this.currentSelectedTask = selectedTask;
       this.showSelectedTask();
@@ -2055,6 +2164,7 @@ class DoThisApp {
         executions: [],
         completed: false,
         createdAt: Date.now(),
+        deadline: null,
       },
       {
         id: this.nextTaskId++,
@@ -2064,6 +2174,7 @@ class DoThisApp {
         executions: [],
         completed: false,
         createdAt: Date.now(),
+        deadline: null,
       },
       {
         id: this.nextTaskId++,
@@ -2073,6 +2184,7 @@ class DoThisApp {
         executions: [],
         completed: false,
         createdAt: Date.now(),
+        deadline: null,
       },
       {
         id: this.nextTaskId++,
@@ -2082,6 +2194,7 @@ class DoThisApp {
         executions: [],
         completed: false,
         createdAt: Date.now(),
+        deadline: null,
       },
       {
         id: this.nextTaskId++,
@@ -2091,6 +2204,7 @@ class DoThisApp {
         executions: [],
         completed: false,
         createdAt: Date.now(),
+        deadline: null,
       },
       {
         id: this.nextTaskId++,
@@ -2100,6 +2214,7 @@ class DoThisApp {
         executions: [],
         completed: false,
         createdAt: Date.now(),
+        deadline: null,
       },
       {
         id: this.nextTaskId++,
@@ -2109,6 +2224,7 @@ class DoThisApp {
         executions: [],
         completed: false,
         createdAt: Date.now(),
+        deadline: null,
       },
       {
         id: this.nextTaskId++,
@@ -2118,6 +2234,7 @@ class DoThisApp {
         executions: [],
         completed: false,
         createdAt: Date.now(),
+        deadline: null,
       },
     ];
 

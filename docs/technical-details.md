@@ -114,6 +114,7 @@ Each task is stored as a JavaScript object with the following schema:
   text: "Clean kitchen",    // Task description (string, max 200 chars)
   type: "repeatable",       // Task type: "oneoff" | "repeatable"
   cooldown: "daily",        // Cooldown period (see options below)
+  deadline: 1234567890,     // Optional deadline timestamp (number, milliseconds) or null
   executions: [             // Array of execution history
     {
       timestamp: 1234567890,    // Unix timestamp (number)
@@ -180,14 +181,17 @@ The main application is implemented as an ES6 class with the following key metho
 - `bindEvents()`: Attaches event listeners to DOM elements
 
 #### Task Management
-- `saveTask()`: Creates new tasks with validation
+- `saveTask()`: Creates new tasks with validation (including optional deadlines)
 - `saveTaskEdit()`: Updates existing tasks
 - `deleteTask(index)`: Moves tasks to trash
 - `getTaskStatus(task)`: Determines availability status
+- `formatDeadline(deadline)`: Formats deadline display with urgency indicators
+- `getTaskWeight(task)`: Calculates task priority weight based on deadline urgency
 
 #### Randomization Logic
-- `randomizeTask()`: Selects random available task (avoids immediate repeats)
+- `randomizeTask()`: Selects random available task using weighted selection based on deadlines
 - `getAvailableTasks()`: Filters tasks by availability status
+- `getTaskWeight(task)`: Assigns weights to tasks based on deadline urgency (overdue: 20x, today: 10x, etc.)
 - `acceptTask()`: Activates selected task with 8-hour timer
 
 #### Active Task System
@@ -227,6 +231,29 @@ Tasks have four possible states:
 
 4. **Active**: Currently being worked on
    - Referenced in `activeTask` localStorage entry
+
+### Deadline Weighting System
+
+Tasks with deadlines are weighted during randomization to prioritize urgent tasks:
+
+- **Overdue tasks**: 20x weight (highest priority)
+- **Due today/tomorrow**: 10x weight
+- **Due in 1-2 days**: 6x weight
+- **Due in 3-7 days**: 3x weight
+- **Due in >7 days**: 1.5x weight
+- **No deadline**: 1x weight (baseline)
+
+This ensures urgent tasks are more likely to be selected while still maintaining randomness.
+
+### Deadline Display
+
+Deadlines are displayed with color-coded urgency indicators:
+
+- **Overdue**: Red indicator with "X days overdue" text
+- **Due today**: Yellow/amber indicator
+- **Due tomorrow**: Orange indicator (deadline-soon)
+- **Due within 7 days**: Blue indicator showing days remaining
+- **Due later**: Neutral indicator showing date
 
 ### Execution Statistics
 

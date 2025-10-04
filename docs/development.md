@@ -105,6 +105,7 @@ The app uses fine-grained localStorage operations for better performance:
   text: string,            // Task description (max 200 chars)
   type: "oneoff"|"repeatable",
   cooldown: string,        // "0"|"1"|"3"|"6"|"12"|"daily"|"weekly"|"monthly"
+  deadline: number|null,   // Optional deadline timestamp (milliseconds)
   executions: [{           // Execution history
     timestamp: number,
     duration: number,

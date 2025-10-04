@@ -40,6 +40,7 @@ A mobile-first Progressive Web App that helps you decide what to do next by rand
 
 ### Managing Your Tasks
 - **Add tasks** - Expand "My Tasks" and use the form at the top
+- **Set deadlines** - Optional deadline field helps prioritize urgent tasks
 - **Edit tasks** - Click the pencil icon to edit any task
 - **Delete tasks** - Click the trash icon (they go to recoverable trash)
 - **Choose types** - One-time tasks or repeatable with cooldown periods
