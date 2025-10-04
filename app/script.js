@@ -1356,17 +1356,17 @@ class DoThisApp {
     let statsHtml = "";
 
     if (successful.length > 0) {
-      statsHtml += `<span class="task-stat success" title="Successful completions"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="vertical-align: text-top; margin-right: 4px;"><path d="M13.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.793l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>${successful.length}</span>`;
+      statsHtml += `<span class="task-stat success" title="${this.t("timeAgo.successfulCompletions")}"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="vertical-align: text-top; margin-right: 4px;"><path d="M13.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.793l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>${successful.length}</span>`;
     }
 
     if (abandoned.length > 0) {
-      statsHtml += `<span class="task-stat abandoned" title="Abandoned attempts"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="vertical-align: text-top; margin-right: 4px;"><path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/></svg>${abandoned.length}</span>`;
+      statsHtml += `<span class="task-stat abandoned" title="${this.t("timeAgo.abandonedAttempts")}"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="vertical-align: text-top; margin-right: 4px;"><path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/></svg>${abandoned.length}</span>`;
     }
 
     if (lastSuccessful) {
       const lastDate = new Date(lastSuccessful);
       const timeAgo = this.getTimeAgo(lastSuccessful);
-      statsHtml += `<span class="task-stat last-completed" title="Last completed: ${lastDate.toLocaleString()}"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="vertical-align: text-top; margin-right: 4px;"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/></svg>${timeAgo}</span>`;
+      statsHtml += `<span class="task-stat last-completed" title="${this.t("timeAgo.lastCompleted", { date: lastDate.toLocaleString() })}"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="vertical-align: text-top; margin-right: 4px;"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/></svg>${timeAgo}</span>`;
     }
 
     return {
@@ -1384,10 +1384,10 @@ class DoThisApp {
     const hours = Math.floor(diff / (1000 * 60 * 60));
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
 
-    if (days > 0) return `${days}d ago`;
-    if (hours > 0) return `${hours}h ago`;
-    if (minutes > 0) return `${minutes}m ago`;
-    return "just now";
+    if (days > 0) return this.t("timeAgo.daysAgo", { days });
+    if (hours > 0) return this.t("timeAgo.hoursAgo", { hours });
+    if (minutes > 0) return this.t("timeAgo.minutesAgo", { minutes });
+    return this.t("timeAgo.justNow");
   }
 
   getCooldownMs(cooldown) {

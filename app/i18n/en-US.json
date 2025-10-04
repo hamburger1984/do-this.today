@@ -105,6 +105,15 @@
     "overdueSince": "Overdue since {{date}}",
     "due": "Due {{date}}"
   },
+  "timeAgo": {
+    "justNow": "just now",
+    "minutesAgo": "{{minutes}}m ago",
+    "hoursAgo": "{{hours}}h ago",
+    "daysAgo": "{{days}}d ago",
+    "lastCompleted": "Last completed: {{date}}",
+    "successfulCompletions": "Successful completions",
+    "abandonedAttempts": "Abandoned attempts"
+  },
   "messages": {
     "errors": {
       "taskNotFound": "Error: Task not found",

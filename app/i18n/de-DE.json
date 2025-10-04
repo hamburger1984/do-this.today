@@ -105,6 +105,15 @@
     "overdueSince": "Überfällig seit {{date}}",
     "due": "Fällig {{date}}"
   },
+  "timeAgo": {
+    "justNow": "gerade eben",
+    "minutesAgo": "vor {{minutes}}m",
+    "hoursAgo": "vor {{hours}}h",
+    "daysAgo": "vor {{days}}d",
+    "lastCompleted": "Zuletzt erledigt: {{date}}",
+    "successfulCompletions": "Erfolgreiche Abschlüsse",
+    "abandonedAttempts": "Abgebrochene Versuche"
+  },
   "messages": {
     "errors": {
       "taskNotFound": "Fehler: Aufgabe nicht gefunden",
