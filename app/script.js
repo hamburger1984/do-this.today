@@ -678,7 +678,10 @@ class DoThisApp {
   }
 
   handleTaskTypeToggle(event) {
-    const clickedBtn = event.target;
+    // Find the button element (could be clicked on span child)
+    const clickedBtn = event.target.closest(".toggle-btn");
+    if (!clickedBtn) return;
+
     const taskType = clickedBtn.dataset.type;
 
     // Update hidden input
@@ -739,7 +742,10 @@ class DoThisApp {
   }
 
   handleEditTaskTypeToggle(event, taskIndex) {
-    const clickedBtn = event.target;
+    // Find the button element (could be clicked on span child)
+    const clickedBtn = event.target.closest(".toggle-btn");
+    if (!clickedBtn) return;
+
     const taskType = clickedBtn.dataset.type;
 
     // Update hidden input

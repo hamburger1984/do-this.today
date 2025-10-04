@@ -691,7 +691,19 @@ body {
   box-shadow: var(--shadow-soft);
 }
 
-/* Deadline input styling */
+/* Deadline section styling */
+.deadline-section {
+  margin-top: 1rem;
+}
+
+.deadline-section > label {
+  display: block;
+  font-size: var(--font-size-small);
+  color: var(--color-text-secondary);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
 .deadline-toggle-wrapper {
   display: flex;
   gap: 0.5rem;
@@ -700,8 +712,8 @@ body {
 
 .deadline-toggle-btn {
   flex-shrink: 0;
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
   display: flex;
   align-items: center;
   justify-content: center;

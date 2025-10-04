@@ -32,6 +32,7 @@
     "oneTime": "Einmalig",
     "repeatable": "Wiederholbar",
     "cooldown": "Abklingzeit:",
+    "deadline": "Frist:",
     "noCooldown": "Keine Abklingzeit",
     "oneHour": "1 Stunde",
     "threeHours": "3 Stunden",

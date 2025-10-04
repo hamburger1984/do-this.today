@@ -32,6 +32,7 @@
     "oneTime": "One-time",
     "repeatable": "Repeatable",
     "cooldown": "Cooldown:",
+    "deadline": "Deadline:",
     "noCooldown": "No cooldown",
     "oneHour": "1 hour",
     "threeHours": "3 hours",
