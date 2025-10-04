@@ -144,6 +144,26 @@
   --font-size-body: 1rem; /* Standard text, buttons, inputs, task text */
   --font-size-small: 0.875rem; /* Labels, descriptions, small buttons, captions */
   --font-size-tiny: 0.75rem; /* Badges, metadata, very small details */
+
+  /* === SPACING SCALE === */
+  /* Consistent spacing system based on 0.25rem (4px) increments */
+  --spacing-xs: 0.25rem; /* 4px - tight spacing, badge padding */
+  --spacing-sm: 0.5rem; /* 8px - compact spacing, small gaps */
+  --spacing-md: 0.75rem; /* 12px - standard spacing, button padding */
+  --spacing-lg: 1rem; /* 16px - comfortable spacing, default gap */
+  --spacing-xl: 1.25rem; /* 20px - loose spacing */
+  --spacing-2xl: 1.5rem; /* 24px - section spacing */
+  --spacing-3xl: 2rem; /* 32px - large section spacing */
+  --spacing-4xl: 2.5rem; /* 40px - extra large spacing */
+  --spacing-5xl: 3rem; /* 48px - maximum spacing */
+
+  /* === BORDER RADIUS SCALE === */
+  /* Consistent rounding system */
+  --radius-sm: 8px; /* Small elements, inputs in edit mode */
+  --radius-md: 12px; /* Standard elements, buttons, cards */
+  --radius-lg: 16px; /* Large elements, primary inputs */
+  --radius-xl: 20px; /* Extra large elements, modals, task display */
+  --radius-2xl: 24px; /* Maximum rounding, randomizer section */
 }
 
 /* ===== BASE/RESET STYLES ===== */
@@ -183,26 +203,26 @@ body {
 
 .main-content {
   flex: 1;
-  padding: 0.75rem;
+  padding: var(--spacing-md);
   overflow-y: auto;
 }
 
 .quick-add-section {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--spacing-2xl);
   padding-bottom: 1.5rem;
   border-bottom: 1px solid var(--color-border-light);
 }
 
 .settings-section,
 .task-section {
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-lg);
 }
 
 /* ===== HEADER COMPONENTS ===== */
 .app-header {
   background: var(--gradient-sunset-accent);
   color: var(--color-text-primary);
-  padding: 2rem 1.5rem 1.5rem;
+  padding: var(--spacing-3xl) var(--spacing-2xl) var(--spacing-2xl);
   text-align: center;
   position: relative;
   box-shadow: var(--shadow-soft);
@@ -212,7 +232,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: var(--spacing-lg);
 }
 
 .header-logo {
@@ -231,7 +251,7 @@ body {
 .app-title {
   font-size: var(--font-size-title);
   font-weight: 800;
-  margin-bottom: 0.75rem;
+  margin-bottom: var(--spacing-md);
   letter-spacing: -0.02em;
   color: var(--color-text-primary);
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -249,7 +269,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-lg);
 }
 
 .section-header h2 {
@@ -263,10 +283,10 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
-  padding: 1rem;
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-lg);
   background: var(--bg-light);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
 }
 
 .page-header h2 {
@@ -280,8 +300,8 @@ body {
 .collapsible-header {
   cursor: pointer;
   transition: all 0.1s ease;
-  padding: 1rem;
-  border-radius: 12px;
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
   margin-bottom: 0;
   display: flex;
   align-items: center;
@@ -324,8 +344,8 @@ body {
   background: var(--gradient-primary-action);
   color: var(--color-text-on-primary);
   border: none;
-  padding: 1rem 2rem;
-  border-radius: 16px;
+  padding: var(--spacing-lg) var(--spacing-3xl);
+  border-radius: var(--radius-lg);
   font-size: var(--font-size-body);
   font-weight: 700;
   cursor: pointer;
@@ -372,15 +392,15 @@ body {
   background: var(--color-background-elevated);
   color: var(--color-secondary-action);
   border: 2px solid var(--color-border-medium);
-  padding: 0.75rem 1.25rem;
-  border-radius: 12px;
+  padding: var(--spacing-md) var(--spacing-xl);
+  border-radius: var(--radius-md);
   font-size: var(--font-size-small);
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--spacing-sm);
   min-height: 44px;
   justify-content: center;
   box-shadow: var(--shadow-secondary-button);
@@ -412,8 +432,8 @@ body {
 .btn-icon {
   background: none;
   border: none;
-  padding: 0.75rem;
-  border-radius: 12px;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
   cursor: pointer;
   transition: all 0.2s ease;
   color: var(--color-secondary-action);
@@ -430,97 +450,58 @@ body {
   transform: scale(1.05);
 }
 
-.edit-btn {
+/* Base class for all icon-only buttons */
+.btn-icon-base {
   background: none;
   border: none;
-  color: var(--color-text-secondary);
   cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 8px;
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-sm);
   transition: all 0.1s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   min-width: 36px;
   min-height: 36px;
+}
+
+.btn-icon-base.disabled {
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.btn-icon-base.disabled:hover {
+  background: none;
+}
+
+.edit-btn {
+  color: var(--color-text-secondary);
 }
 
 .edit-btn:hover {
   background: var(--color-background-subtle);
 }
 
-.edit-btn.disabled {
-  color: var(--color-text-muted);
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-.edit-btn.disabled:hover {
-  background: none;
-}
-
 .quick-log-btn {
-  background: none;
-  border: none;
   color: var(--color-status-success);
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 8px;
-  transition: all 0.1s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 36px;
-  min-height: 36px;
 }
 
 .quick-log-btn:hover {
-  background: rgba(16, 185, 129, 0.1);
+  background: var(--success-alpha-10);
   transform: scale(1.05);
 }
 
 .delete-btn {
-  background: none;
-  border: none;
   color: var(--color-status-error);
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 8px;
-  transition: all 0.1s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 36px;
-  min-height: 36px;
 }
 
 .delete-btn:hover {
   background: var(--error-alpha-10);
 }
 
-.delete-btn.disabled {
-  color: var(--color-text-muted);
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-.delete-btn.disabled:hover {
-  background: none;
-}
-
 .restore-btn {
-  background: none;
-  border: none;
   color: var(--color-status-available);
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 8px;
-  transition: all 0.1s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 36px;
-  min-height: 36px;
 }
 
 .restore-btn:hover {
@@ -528,18 +509,7 @@ body {
 }
 
 .delete-forever-btn {
-  background: none;
-  border: none;
   color: var(--color-status-error);
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 8px;
-  transition: all 0.1s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 36px;
-  min-height: 36px;
 }
 
 .delete-forever-btn:hover {
@@ -548,12 +518,12 @@ body {
 
 .clear-all-btn {
   min-width: auto;
-  padding: 0.75rem 1rem;
+  padding: var(--spacing-md) var(--spacing-lg);
 }
 
 .toggle-btn {
   flex: 1;
-  padding: 1rem;
+  padding: var(--spacing-lg);
   border: none;
   background: transparent;
   color: var(--color-text-secondary);
@@ -589,7 +559,7 @@ body {
 .edit-cancel,
 .edit-save {
   min-width: 100px;
-  padding: 0.75rem 1rem;
+  padding: var(--spacing-md) var(--spacing-lg);
 }
 
 /* SVG styling */
@@ -623,14 +593,14 @@ body {
 .input-group {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--spacing-lg);
 }
 
 #taskInput {
   width: 100%;
-  padding: 1rem;
+  padding: var(--spacing-lg);
   border: 2px solid var(--color-border-medium);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   font-size: var(--font-size-body);
   transition: all 0.2s ease;
   background: var(--color-background-elevated);
@@ -648,7 +618,7 @@ body {
 
 .task-options {
   display: flex;
-  gap: 1rem;
+  gap: var(--spacing-lg);
   flex-wrap: wrap;
 }
 
@@ -661,15 +631,15 @@ body {
   display: block;
   font-size: var(--font-size-small);
   color: var(--color-text-secondary);
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--spacing-sm);
   font-weight: 600;
 }
 
 .option-group select {
   width: 100%;
-  padding: 1rem;
+  padding: var(--spacing-lg);
   border: 2px solid var(--color-border-medium);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   font-size: var(--font-size-small);
   background: var(--color-background-elevated);
   color: var(--color-text-primary);
@@ -692,9 +662,9 @@ body {
 /* Language selector styling (match cooldown dropdown) */
 .language-select {
   width: 100%;
-  padding: 1rem;
+  padding: var(--spacing-lg);
   border: 2px solid var(--color-border-medium);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   font-size: var(--font-size-small);
   background: var(--color-background-elevated);
   color: var(--color-text-primary);
@@ -712,7 +682,7 @@ body {
   display: flex;
   background: var(--color-background-elevated);
   border: 2px solid var(--color-border-medium);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: var(--shadow-soft);
 }
@@ -732,13 +702,13 @@ body {
   display: block;
   font-size: var(--font-size-small);
   color: var(--color-text-secondary);
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--spacing-sm);
   font-weight: 600;
 }
 
 .deadline-toggle-wrapper {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--spacing-sm);
   align-items: stretch;
 }
 
@@ -750,7 +720,7 @@ body {
   align-items: center;
   justify-content: center;
   border: 2px solid var(--color-border-medium);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   background: var(--color-background-elevated);
   color: var(--color-text-secondary);
   cursor: pointer;
@@ -776,9 +746,9 @@ body {
 
 #taskDeadline {
   flex: 1;
-  padding: 0.75rem 1rem;
+  padding: var(--spacing-md) var(--spacing-lg);
   border: 2px solid var(--color-border-medium);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   font-size: var(--font-size-body);
   transition: all 0.2s ease;
   background: var(--color-background-elevated);
@@ -802,21 +772,21 @@ body {
 
 .input-actions {
   display: flex;
-  gap: 0.75rem;
+  gap: var(--spacing-md);
   justify-content: flex-end;
 }
 
 .edit-input-group {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--spacing-lg);
 }
 
 .edit-task-input {
   width: 100%;
-  padding: 0.875rem;
+  padding: var(--spacing-md);
   border: 2px solid var(--color-border-medium);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   font-size: var(--font-size-small);
   transition: all 0.1s ease;
   background: var(--color-background-elevated);
@@ -832,7 +802,7 @@ body {
 
 .edit-task-options {
   display: flex;
-  gap: 1rem;
+  gap: var(--spacing-lg);
   flex-wrap: wrap;
 }
 
@@ -845,15 +815,15 @@ body {
   display: block;
   font-size: var(--font-size-small);
   color: var(--color-text-secondary);
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--spacing-sm);
   font-weight: 500;
 }
 
 .edit-option-group select {
   width: 100%;
-  padding: 1rem;
+  padding: var(--spacing-lg);
   border: 2px solid var(--color-border-medium);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   font-size: var(--font-size-small);
   background: var(--color-background-elevated);
   color: var(--color-text-primary);
@@ -868,9 +838,9 @@ body {
 
 .edit-option-group input[type="date"] {
   flex: 1;
-  padding: 0.75rem 1rem;
+  padding: var(--spacing-md) var(--spacing-lg);
   border: 2px solid var(--color-border-medium);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   font-size: var(--font-size-small);
   background: var(--color-background-elevated);
   color: var(--color-text-primary);
@@ -887,7 +857,7 @@ body {
 
 .edit-actions {
   display: flex;
-  gap: 1rem;
+  gap: var(--spacing-lg);
   justify-content: flex-end;
   margin-top: 0.5rem;
 }
@@ -896,27 +866,27 @@ body {
 .task-content {
   overflow: hidden;
   animation: fadeIn 0.15s ease;
-  padding: 0.25rem 0.75rem;
+  padding: var(--spacing-xs) var(--spacing-md);
 }
 
 .task-list {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--spacing-sm);
 }
 
 .task-item {
   background: var(--color-task-background);
   color: var(--color-text-primary);
   border: 2px solid var(--color-task-border);
-  padding: 0.75rem;
+  padding: var(--spacing-md);
   display: flex;
   justify-content: space-between;
   align-items: center;
   transition: all 0.2s ease;
   animation: slideIn 0.15s ease;
-  border-radius: 16px;
-  margin: 8px 0;
+  border-radius: var(--radius-lg);
+  margin: var(--spacing-sm) 0;
   box-shadow: var(--shadow-task-item);
 }
 
@@ -951,21 +921,21 @@ body {
 .task-text {
   font-size: var(--font-size-body);
   color: var(--color-text-primary);
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--spacing-sm);
   word-break: break-word;
 }
 
 .task-meta {
   display: flex;
-  gap: 1rem;
+  gap: var(--spacing-lg);
   align-items: center;
   flex-wrap: wrap;
 }
 
 .task-stat {
   font-size: var(--font-size-tiny);
-  padding: 0.25rem 0.5rem;
-  border-radius: 12px;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-md);
   font-weight: 500;
   display: inline-flex;
   align-items: center;
@@ -1050,13 +1020,13 @@ body {
 
 .task-actions {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--spacing-sm);
 }
 
 .task-edit-form {
   background: var(--color-background-elevated);
-  border-radius: 12px;
-  padding: 1rem;
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
   width: 100%;
   box-shadow: var(--shadow-soft);
 }
@@ -1064,13 +1034,13 @@ body {
 .trash-list {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--spacing-md);
 }
 
 .trash-item {
   background: var(--bg-lighter);
-  border-radius: 12px;
-  padding: 1rem;
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1087,25 +1057,25 @@ body {
   font-size: var(--font-size-tiny);
   color: var(--color-text-on-primary);
   background: var(--color-status-warning);
-  padding: 0.25rem 0.5rem;
-  border-radius: 12px;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-md);
   font-weight: 500;
 }
 
 /* ===== RANDOMIZER COMPONENTS ===== */
 .randomizer-section {
-  margin-bottom: 2rem;
+  margin-bottom: var(--spacing-3xl);
   text-align: center;
   background: var(--gradient-background-subtle);
-  padding: 2rem 1.5rem;
-  border-radius: 24px;
+  padding: var(--spacing-3xl) var(--spacing-2xl);
+  border-radius: var(--radius-2xl);
   border: 2px solid var(--color-border-light);
   box-shadow: var(--shadow-elevated);
 }
 
 .randomizer-start p {
   color: var(--color-text-secondary);
-  margin-bottom: 2.5rem;
+  margin-bottom: var(--spacing-4xl);
   font-size: var(--font-size-body);
   font-weight: 500;
   max-width: 300px;
@@ -1118,14 +1088,14 @@ body {
 }
 
 .task-display {
-  margin-bottom: 2.5rem;
+  margin-bottom: var(--spacing-4xl);
 }
 
 .task-display .task-text {
   background: var(--gradient-primary-action);
   color: var(--color-text-on-primary);
-  padding: 2rem 1.5rem;
-  border-radius: 20px;
+  padding: var(--spacing-3xl) var(--spacing-2xl);
+  border-radius: var(--radius-xl);
   font-size: var(--font-size-heading-small);
   font-weight: 600;
   line-height: 1.6;
@@ -1141,7 +1111,7 @@ body {
 
 .current-task .task-actions {
   display: flex;
-  gap: 1.25rem;
+  gap: var(--spacing-xl);
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -1157,7 +1127,7 @@ body {
 }
 
 .active-task-display {
-  margin-bottom: 2rem;
+  margin-bottom: var(--spacing-3xl);
 }
 
 .task-completed h3,
@@ -1167,7 +1137,7 @@ body {
   font-size: var(--font-size-heading-large);
   font-weight: 700;
   color: var(--color-text-primary);
-  margin-bottom: 0.75rem;
+  margin-bottom: var(--spacing-md);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
@@ -1175,8 +1145,8 @@ body {
   font-size: var(--font-size-heading-large);
   background: var(--gradient-secondary-action);
   color: var(--color-text-on-primary);
-  padding: 1.5rem;
-  border-radius: 12px;
+  padding: var(--spacing-2xl);
+  border-radius: var(--radius-md);
   font-weight: 600;
   line-height: 1.5;
   margin: 0 0 1.5rem 0;
@@ -1185,16 +1155,16 @@ body {
 
 .timer-display {
   text-align: center;
-  padding: 1rem;
+  padding: var(--spacing-lg);
   background: var(--color-background-subtle);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--color-border-light);
 }
 
 .timer-label {
   font-size: var(--font-size-small);
   color: var(--color-text-secondary);
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--spacing-sm);
   font-weight: 500;
 }
 
@@ -1208,7 +1178,7 @@ body {
 
 .active-task-actions {
   display: flex;
-  gap: 1rem;
+  gap: var(--spacing-lg);
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -1225,7 +1195,7 @@ body {
 
 .success-icon {
   font-size: var(--font-size-display);
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-lg);
 }
 
 .animated-checkmark {
@@ -1254,7 +1224,7 @@ body {
 
 .task-completed p {
   color: var(--text-muted);
-  margin-bottom: 2rem;
+  margin-bottom: var(--spacing-3xl);
   font-size: var(--font-size-small);
 }
 
@@ -1272,15 +1242,15 @@ body {
   z-index: 1000;
   animation: fadeIn 0.15s ease;
   backdrop-filter: blur(4px);
-  padding: 1rem;
+  padding: var(--spacing-lg);
   box-sizing: border-box;
 }
 
 .modal-content {
   background: var(--color-background-elevated);
   border: 2px solid var(--color-border-light);
-  border-radius: 20px;
-  padding: 2.5rem;
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-4xl);
   margin: auto;
   max-width: 440px;
   width: 90%;
@@ -1292,23 +1262,23 @@ body {
   font-size: var(--font-size-heading-large);
   font-weight: 700;
   color: var(--color-text-primary);
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--spacing-2xl);
   text-align: center;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .modal-content textarea {
   width: 100%;
-  padding: 1.25rem;
+  padding: var(--spacing-xl);
   border: 2px solid var(--color-border-medium);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   font-size: var(--font-size-body);
   font-family: inherit;
   background: var(--color-background-elevated);
   color: var(--color-text-primary);
   resize: vertical;
   min-height: 120px;
-  margin-bottom: 2rem;
+  margin-bottom: var(--spacing-3xl);
   transition: all 0.2s ease;
 }
 
@@ -1321,7 +1291,7 @@ body {
 
 .modal-actions {
   display: flex;
-  gap: 1.25rem;
+  gap: var(--spacing-xl);
   justify-content: flex-end;
 }
 
@@ -1339,8 +1309,8 @@ body {
   transform: translateX(-50%);
   background: var(--color-text-primary);
   color: var(--color-text-on-primary);
-  padding: 1.25rem 2rem;
-  border-radius: 16px;
+  padding: var(--spacing-xl) var(--spacing-3xl);
+  border-radius: var(--radius-lg);
   font-size: var(--font-size-small);
   font-weight: 600;
   box-shadow: var(--shadow-elevated);
@@ -1376,7 +1346,7 @@ body {
 .app-footer {
   background: var(--color-background-card);
   border-top: 2px solid var(--color-border-light);
-  padding: 2rem 1.5rem;
+  padding: var(--spacing-3xl) var(--spacing-2xl);
 }
 
 .stats {
@@ -1425,7 +1395,7 @@ body {
   }
 
   .main-content {
-    padding: 2rem;
+    padding: var(--spacing-3xl);
   }
 
   .current-task .task-actions {
@@ -1457,17 +1427,17 @@ body {
   }
 
   .task-item {
-    padding: 1rem 0.75rem;
+    padding: var(--spacing-lg) var(--spacing-md);
   }
 
   .task-stat {
     font-size: var(--font-size-tiny);
-    padding: 0.25rem 0.75rem;
+    padding: var(--spacing-xs) var(--spacing-md);
   }
 
   .edit-task-input {
     font-size: var(--font-size-body);
-    padding: 1rem 1.25rem;
+    padding: var(--spacing-lg) var(--spacing-xl);
   }
 
   .edit-option-group select {
@@ -1620,18 +1590,22 @@ body {
 }
 
 /* ===== UTILITY CLASSES ===== */
+.hidden {
+  display: none;
+}
+
 .empty-state {
   text-align: center;
-  padding: 3rem 1rem;
+  padding: var(--spacing-5xl) var(--spacing-lg);
   color: var(--color-text-muted);
   background: var(--color-background-subtle);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   border: 2px dashed var(--color-border-light);
 }
 
 .empty-icon {
   font-size: var(--font-size-display);
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-lg);
 }
 
 .empty-icon img {
@@ -1642,7 +1616,7 @@ body {
 .empty-state h3 {
   font-size: var(--font-size-heading-small);
   font-weight: 500;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--spacing-sm);
   color: var(--color-text-secondary);
 }
 
@@ -1652,19 +1626,19 @@ body {
 
 .empty-trash-state {
   text-align: center;
-  padding: 3rem 1rem;
+  padding: var(--spacing-5xl) var(--spacing-lg);
   color: var(--color-text-muted);
 }
 
 .empty-trash-state .empty-icon {
   font-size: var(--font-size-display);
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-lg);
 }
 
 .empty-trash-state h3 {
   font-size: var(--font-size-heading-small);
   font-weight: 500;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--spacing-sm);
   color: var(--color-text-secondary);
 }
 
@@ -1675,11 +1649,11 @@ body {
 .settings-content {
   overflow: hidden;
   animation: fadeIn 0.15s ease;
-  padding: 0.25rem 0.75rem;
+  padding: var(--spacing-xs) var(--spacing-md);
 }
 
 .settings-group {
-  margin-bottom: 2rem;
+  margin-bottom: var(--spacing-3xl);
 }
 
 .settings-group:last-child {
@@ -1690,13 +1664,13 @@ body {
   font-size: var(--font-size-body);
   font-weight: 600;
   color: var(--color-text-secondary);
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-lg);
 }
 
 .settings-actions {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--spacing-md);
 }
 
 .settings-actions button {
@@ -1799,8 +1773,8 @@ html {
   animation: pulsate 2s ease-in-out infinite;
   background: var(--gradient-primary-action);
   color: var(--color-text-on-primary);
-  padding: 2rem 1.5rem;
-  border-radius: 20px;
+  padding: var(--spacing-3xl) var(--spacing-2xl);
+  border-radius: var(--radius-xl);
   font-size: var(--font-size-heading-small);
   font-weight: 600;
   line-height: 1.6;

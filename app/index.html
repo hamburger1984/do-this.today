@@ -55,7 +55,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <div id="mainPage">
           <!-- Randomizer Section -->
           <section class="randomizer-section">
-            <div class="current-task" id="currentTask" style="display: none">
+            <div class="current-task hidden" id="currentTask">
               <div class="task-display">
                 <h3 data-i18n="randomizer.nextTask">Next task:</h3>
                 <div class="task-text" id="selectedTaskText"></div>
@@ -131,7 +131,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 Click to randomly select from your available tasks
               </p>
             </div>
-            <div class="active-task" id="activeTask" style="display: none">
+            <div class="active-task hidden" id="activeTask">
               <div class="active-task-display">
                 <div class="task-text" id="activeTaskText"></div>
                 <div class="timer-display">
@@ -171,11 +171,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 </button>
               </div>
             </div>
-            <div
-              class="task-completed"
-              id="taskCompleted"
-              style="display: none"
-            >
+            <div class="task-completed hidden" id="taskCompleted">
               <div class="success-icon">
                 <img
                   src="img/checkmark.svg"
@@ -209,7 +205,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 </div>
               </div>
             </div>
-            <div class="task-content" id="taskContent" style="display: none">
+            <div class="task-content hidden" id="taskContent">
               <!-- Add New Task Section -->
               <div class="quick-add-section">
                 <div class="input-group">
@@ -327,19 +323,11 @@ Licensed under the MIT License. See LICENSE file for details.
                 </div>
               </div>
             </div>
-            <div
-              class="settings-content"
-              id="settingsContent"
-              style="display: none"
-            >
+            <div class="settings-content" id="settingsContent">
               <div class="settings-group">
                 <h3 data-i18n="settings.dataManagement">Data Management</h3>
                 <div class="settings-actions">
-                  <button
-                    class="btn-secondary"
-                    id="addDefaultTasksBtn"
-                    style="display: none"
-                  >
+                  <button class="btn-secondary hidden" id="addDefaultTasksBtn">
                     <svg
                       width="16"
                       height="16"
@@ -454,9 +442,8 @@ Licensed under the MIT License. See LICENSE file for details.
                     >
                   </button>
                   <button
-                    class="btn-secondary"
+                    class="btn-secondary hidden"
                     id="testNotificationsBtn"
-                    style="display: none"
                   >
                     <svg
                       width="16"
@@ -481,7 +468,7 @@ Licensed under the MIT License. See LICENSE file for details.
           </section>
         </div>
         <!-- Trash Page -->
-        <div id="trashPage" style="display: none">
+        <div id="trashPage" class="hidden">
           <div class="page-header">
             <button
               class="btn-icon back-btn"
@@ -540,7 +527,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <!-- Toast Notifications -->
     <div class="toast" id="toast"></div>
     <!-- Abandon Reason Modal -->
-    <div class="modal-overlay" id="abandonReasonModal" style="display: none">
+    <div class="modal-overlay hidden" id="abandonReasonModal">
       <div class="modal-content">
         <h3 data-i18n="modals.abandonReason.title">
           Why are you abandoning this task?

@@ -576,15 +576,15 @@ class DoThisApp {
   // Navigation methods
   showMainPage() {
     this.currentPage = "main";
-    document.getElementById("mainPage").style.display = "block";
-    document.getElementById("trashPage").style.display = "none";
+    document.getElementById("mainPage").classList.remove("hidden");
+    document.getElementById("trashPage").classList.add("hidden");
     this.refreshUI();
   }
 
   showTrashPage() {
     this.currentPage = "trash";
-    document.getElementById("mainPage").style.display = "none";
-    document.getElementById("trashPage").style.display = "block";
+    document.getElementById("mainPage").classList.add("hidden");
+    document.getElementById("trashPage").classList.remove("hidden");
     this.renderTrashList();
   }
 
@@ -594,10 +594,10 @@ class DoThisApp {
     const collapseIndicator = document.getElementById("taskCollapseIndicator");
 
     if (this.taskListCollapsed) {
-      taskContent.style.display = "none";
+      taskContent.classList.add("hidden");
       collapseIndicator.textContent = "▼";
     } else {
-      taskContent.style.display = "block";
+      taskContent.classList.remove("hidden");
       collapseIndicator.textContent = "▲";
       this.refreshUI();
     }
@@ -614,10 +614,10 @@ class DoThisApp {
     );
 
     if (this.settingsCollapsed) {
-      settingsContent.style.display = "none";
+      settingsContent.classList.add("hidden");
       collapseIndicator.textContent = "▼";
     } else {
-      settingsContent.style.display = "block";
+      settingsContent.classList.remove("hidden");
       collapseIndicator.textContent = "▲";
     }
 
@@ -633,10 +633,10 @@ class DoThisApp {
     );
 
     if (this.taskListCollapsed) {
-      taskContent.style.display = "none";
+      taskContent.classList.add("hidden");
       taskCollapseIndicator.textContent = "▼";
     } else {
-      taskContent.style.display = "block";
+      taskContent.classList.remove("hidden");
       taskCollapseIndicator.textContent = "▲";
     }
 
@@ -647,10 +647,10 @@ class DoThisApp {
     );
 
     if (this.settingsCollapsed) {
-      settingsContent.style.display = "none";
+      settingsContent.classList.add("hidden");
       settingsCollapseIndicator.textContent = "▼";
     } else {
-      settingsContent.style.display = "block";
+      settingsContent.classList.remove("hidden");
       settingsCollapseIndicator.textContent = "▲";
     }
   }
@@ -1187,7 +1187,7 @@ class DoThisApp {
               ${
                 status.type === "available" && !this.isTaskActive(task)
                   ? `
-              <button class="quick-log-btn"
+              <button class="btn-icon-base quick-log-btn"
                       onclick="app.quickLogTask(${index})"
                       aria-label="${this.t("buttons.quickLog")}"
                       title="${this.t("buttons.quickLogTitle")}">
@@ -1198,7 +1198,7 @@ class DoThisApp {
               `
                   : ""
               }
-              <button class="edit-btn${this.isTaskActive(task) ? " disabled" : ""}"
+              <button class="btn-icon-base edit-btn${this.isTaskActive(task) ? " disabled" : ""}"
                       ${this.isTaskActive(task) ? `disabled title="${this.t("buttons.cannotEditActive")}"` : `onclick="app.showTaskEdit(${index})"`}
                       aria-label="${this.t("buttons.edit")}">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1206,7 +1206,7 @@ class DoThisApp {
                     <path d="m14.5 5.5 4 4"></path>
                   </svg>
               </button>
-              <button class="delete-btn${this.isTaskActive(task) ? " disabled" : ""}"
+              <button class="btn-icon-base delete-btn${this.isTaskActive(task) ? " disabled" : ""}"
                       ${this.isTaskActive(task) ? `disabled title="${this.t("buttons.cannotDeleteActive")}"` : `onclick="app.deleteTask(${index})"`}
                       aria-label="${this.t("buttons.delete")}">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1505,11 +1505,11 @@ class DoThisApp {
     const taskList = document.getElementById("taskList");
 
     if (this.tasks.length === 0) {
-      emptyState.style.display = "block";
-      taskList.style.display = "none";
+      emptyState.classList.remove("hidden");
+      taskList.classList.add("hidden");
     } else {
-      emptyState.style.display = "none";
-      taskList.style.display = "block";
+      emptyState.classList.add("hidden");
+      taskList.classList.remove("hidden");
     }
   }
 
@@ -1564,9 +1564,9 @@ class DoThisApp {
   updateDefaultTasksButton() {
     const addDefaultTasksBtn = document.getElementById("addDefaultTasksBtn");
     if (this.tasks.length === 0) {
-      addDefaultTasksBtn.style.display = "inline-flex";
+      addDefaultTasksBtn.classList.remove("hidden");
     } else {
-      addDefaultTasksBtn.style.display = "none";
+      addDefaultTasksBtn.classList.add("hidden");
     }
   }
 
@@ -1609,7 +1609,7 @@ class DoThisApp {
         "taskCollapseIndicator",
       );
 
-      taskContent.style.display = "block";
+      taskContent.classList.remove("hidden");
       collapseIndicator.textContent = "▲";
 
       // Save the new state
@@ -1676,7 +1676,7 @@ class DoThisApp {
         "testNotificationsBtn",
       );
       if (testNotificationsBtn) {
-        testNotificationsBtn.style.display = "inline-flex";
+        testNotificationsBtn.classList.remove("hidden");
       }
     }
   }
@@ -1793,9 +1793,9 @@ class DoThisApp {
     const taskCompleted = document.getElementById("taskCompleted");
     const selectedTaskText = document.getElementById("selectedTaskText");
 
-    randomizerStart.style.display = "none";
-    taskCompleted.style.display = "none";
-    currentTask.style.display = "block";
+    randomizerStart.classList.add("hidden");
+    taskCompleted.classList.add("hidden");
+    currentTask.classList.remove("hidden");
 
     selectedTaskText.textContent = this.currentSelectedTask.text;
   }
@@ -1828,10 +1828,10 @@ class DoThisApp {
     const taskCompleted = document.getElementById("taskCompleted");
     const activeTaskElement = document.getElementById("activeTask");
 
-    randomizerStart.style.display = "none";
-    currentTask.style.display = "none";
-    taskCompleted.style.display = "none";
-    activeTaskElement.style.display = "block";
+    randomizerStart.classList.add("hidden");
+    currentTask.classList.add("hidden");
+    taskCompleted.classList.add("hidden");
+    activeTaskElement.classList.remove("hidden");
 
     const activeTaskText = document.getElementById("activeTaskText");
     activeTaskText.textContent = this.activeTask.task.text;
@@ -1842,9 +1842,9 @@ class DoThisApp {
     const taskCompleted = document.getElementById("taskCompleted");
     const activeTaskElement = document.getElementById("activeTask");
 
-    currentTask.style.display = "none";
-    activeTaskElement.style.display = "none";
-    taskCompleted.style.display = "block";
+    currentTask.classList.add("hidden");
+    activeTaskElement.classList.add("hidden");
+    taskCompleted.classList.remove("hidden");
   }
 
   nextTask() {
@@ -1853,9 +1853,9 @@ class DoThisApp {
     const currentTask = document.getElementById("currentTask");
     const taskCompleted = document.getElementById("taskCompleted");
 
-    taskCompleted.style.display = "none";
-    currentTask.style.display = "none";
-    randomizerStart.style.display = "block";
+    taskCompleted.classList.add("hidden");
+    currentTask.classList.add("hidden");
+    randomizerStart.classList.remove("hidden");
 
     // Start cooldown checking if needed
     this.updateRandomizeButton();
@@ -1956,7 +1956,7 @@ class DoThisApp {
     const modal = document.getElementById("abandonReasonModal");
     const input = document.getElementById("abandonReasonInput");
 
-    modal.style.display = "block";
+    modal.classList.remove("hidden");
     input.value = "";
     input.focus();
   }
@@ -1972,7 +1972,7 @@ class DoThisApp {
     }
 
     const modal = document.getElementById("abandonReasonModal");
-    modal.style.display = "none";
+    modal.classList.add("hidden");
   }
 
   saveAbandonReason() {
@@ -2013,10 +2013,10 @@ class DoThisApp {
     const taskCompleted = document.getElementById("taskCompleted");
     const activeTaskElement = document.getElementById("activeTask");
 
-    currentTask.style.display = "none";
-    taskCompleted.style.display = "none";
-    activeTaskElement.style.display = "none";
-    randomizerStart.style.display = "block";
+    currentTask.classList.add("hidden");
+    taskCompleted.classList.add("hidden");
+    activeTaskElement.classList.add("hidden");
+    randomizerStart.classList.remove("hidden");
 
     this.currentSelectedTask = null;
   }
@@ -2525,13 +2525,13 @@ class DoThisApp {
     trashList.innerHTML = "";
 
     if (this.deletedTasks.length === 0) {
-      emptyTrashState.style.display = "block";
-      trashList.style.display = "none";
+      emptyTrashState.classList.remove("hidden");
+      trashList.classList.add("hidden");
       return;
     }
 
-    emptyTrashState.style.display = "none";
-    trashList.style.display = "block";
+    emptyTrashState.classList.add("hidden");
+    trashList.classList.remove("hidden");
 
     this.deletedTasks.forEach((task, index) => {
       const taskItem = document.createElement("div");
@@ -2552,7 +2552,7 @@ class DoThisApp {
             </div>
           </div>
           <div class="task-actions">
-            <button class="restore-btn" onclick="app.restoreTask(${index})" aria-label="Restore task">
+            <button class="btn-icon-base restore-btn" onclick="app.restoreTask(${index})" aria-label="Restore task">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="23 4 23 10 17 10"></polyline>
                 <polyline points="1 20 1 14 7 14"></polyline>
@@ -2560,7 +2560,7 @@ class DoThisApp {
                 <path d="M3.51 15a9 9 0 0 0 14.85 3.36l-1.27-1.27"></path>
               </svg>
             </button>
-            <button class="delete-forever-btn" onclick="app.deleteTaskForever(${index})" aria-label="Delete forever">
+            <button class="btn-icon-base delete-forever-btn" onclick="app.deleteTaskForever(${index})" aria-label="Delete forever">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="3 6 5 6 21 6"></polyline>
                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
