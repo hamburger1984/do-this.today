@@ -1127,7 +1127,7 @@ class DoThisApp {
                       class="deadline-toggle-btn ${task.deadline ? "active" : ""}"
                       id="editDeadlineToggleBtn-${index}"
                       onclick="app.toggleEditDeadlineInput(${index})"
-                      aria-label="Toggle deadline"
+                      aria-label="${this.t("buttons.toggleDeadline")}"
                     >
                       <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                         <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
@@ -1177,8 +1177,8 @@ class DoThisApp {
                   ? `
               <button class="quick-log-btn"
                       onclick="app.quickLogTask(${index})"
-                      aria-label="Quick log completion"
-                      title="Log that you just completed this task">
+                      aria-label="${this.t("buttons.quickLog")}"
+                      title="${this.t("buttons.quickLogTitle")}">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="20 6 9 17 4 12"></polyline>
                   </svg>
@@ -1187,16 +1187,16 @@ class DoThisApp {
                   : ""
               }
               <button class="edit-btn${this.isTaskActive(task) ? " disabled" : ""}"
-                      ${this.isTaskActive(task) ? 'disabled title="Cannot edit active task"' : `onclick="app.showTaskEdit(${index})"`}
-                      aria-label="Edit task">
+                      ${this.isTaskActive(task) ? `disabled title="${this.t("buttons.cannotEditActive")}"` : `onclick="app.showTaskEdit(${index})"`}
+                      aria-label="${this.t("buttons.edit")}">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="m18 2 4 4-14 14H4v-4L18 2z"></path>
                     <path d="m14.5 5.5 4 4"></path>
                   </svg>
               </button>
               <button class="delete-btn${this.isTaskActive(task) ? " disabled" : ""}"
-                      ${this.isTaskActive(task) ? 'disabled title="Cannot delete active task"' : `onclick="app.deleteTask(${index})"`}
-                      aria-label="Delete task">
+                      ${this.isTaskActive(task) ? `disabled title="${this.t("buttons.cannotDeleteActive")}"` : `onclick="app.deleteTask(${index})"`}
+                      aria-label="${this.t("buttons.delete")}">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="3 6 5 6 21 6"></polyline>
                     <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>

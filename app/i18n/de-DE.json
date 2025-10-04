@@ -83,7 +83,12 @@
     "edit": "Bearbeiten",
     "delete": "Löschen",
     "restore": "Wiederherstellen",
-    "deletePermanently": "Dauerhaft löschen"
+    "deletePermanently": "Dauerhaft löschen",
+    "quickLog": "Schnell protokollieren",
+    "quickLogTitle": "Protokolliere, dass du diese Aufgabe gerade erledigt hast",
+    "toggleDeadline": "Frist umschalten",
+    "cannotEditActive": "Aktive Aufgabe kann nicht bearbeitet werden",
+    "cannotDeleteActive": "Aktive Aufgabe kann nicht gelöscht werden"
   },
   "taskStatus": {
     "available": "Verfügbar",

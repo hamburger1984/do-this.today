@@ -83,7 +83,12 @@
     "edit": "Edit",
     "delete": "Delete",
     "restore": "Restore",
-    "deletePermanently": "Delete Forever"
+    "deletePermanently": "Delete Forever",
+    "quickLog": "Quick log completion",
+    "quickLogTitle": "Log that you just completed this task",
+    "toggleDeadline": "Toggle deadline",
+    "cannotEditActive": "Cannot edit active task",
+    "cannotDeleteActive": "Cannot delete active task"
   },
   "taskStatus": {
     "available": "Available",
