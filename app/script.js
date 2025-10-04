@@ -1262,37 +1262,58 @@ class DoThisApp {
   formatDeadline(deadline) {
     if (!deadline) return null;
 
-    const now = Date.now();
     const deadlineDate = new Date(deadline);
-    const daysUntil = (deadline - now) / (1000 * 60 * 60 * 24);
+    const today = new Date();
 
-    if (daysUntil < 0) {
-      const daysOverdue = Math.ceil(Math.abs(daysUntil));
+    // Normalize to start of day for proper date comparison
+    const deadlineDay = new Date(
+      deadlineDate.getFullYear(),
+      deadlineDate.getMonth(),
+      deadlineDate.getDate(),
+    );
+    const currentDay = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
+    );
+
+    // Calculate difference in days
+    const daysDiff = Math.floor(
+      (deadlineDay - currentDay) / (1000 * 60 * 60 * 24),
+    );
+
+    if (daysDiff < 0) {
+      // Overdue
+      const daysOverdue = Math.abs(daysDiff);
       return {
         text:
           daysOverdue === 1 ? "1 day overdue" : `${daysOverdue} days overdue`,
         className: "deadline-overdue",
         title: `Overdue since ${deadlineDate.toLocaleDateString()}`,
       };
-    } else if (daysUntil < 1) {
+    } else if (daysDiff === 0) {
+      // Due today
       return {
         text: "Due today",
         className: "deadline-today",
         title: `Due ${deadlineDate.toLocaleDateString()}`,
       };
-    } else if (daysUntil < 2) {
+    } else if (daysDiff === 1) {
+      // Due tomorrow
       return {
         text: "Due tomorrow",
         className: "deadline-soon",
         title: `Due ${deadlineDate.toLocaleDateString()}`,
       };
-    } else if (daysUntil <= 7) {
+    } else if (daysDiff <= 7) {
+      // Due within a week
       return {
-        text: `Due in ${Math.ceil(daysUntil)} days`,
+        text: `Due in ${daysDiff} days`,
         className: "deadline-week",
         title: `Due ${deadlineDate.toLocaleDateString()}`,
       };
     } else {
+      // Due later
       return {
         text: `Due ${deadlineDate.toLocaleDateString()}`,
         className: "deadline-future",
