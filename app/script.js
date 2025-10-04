@@ -766,25 +766,25 @@ class DoThisApp {
 
   toggleCooldownOptions() {
     const taskType = document.getElementById("taskType").value;
-    const cooldownContainer = document.getElementById("cooldownContainer");
+    const cooldownSelect = document.getElementById("cooldownPeriod");
 
     if (taskType === "repeatable") {
-      cooldownContainer.style.display = "block";
+      cooldownSelect.disabled = false;
     } else {
-      cooldownContainer.style.display = "none";
+      cooldownSelect.disabled = true;
     }
   }
 
   toggleEditCooldownOptions(taskIndex) {
     const taskType = document.getElementById(`editTaskType-${taskIndex}`).value;
-    const cooldownContainer = document.getElementById(
-      `editCooldownContainer-${taskIndex}`,
+    const cooldownSelect = document.getElementById(
+      `editCooldownPeriod-${taskIndex}`,
     );
 
     if (taskType === "repeatable") {
-      cooldownContainer.style.display = "block";
+      cooldownSelect.disabled = false;
     } else {
-      cooldownContainer.style.display = "none";
+      cooldownSelect.disabled = true;
     }
   }
 
@@ -1106,9 +1106,9 @@ class DoThisApp {
                   </div>
                   <input type="hidden" id="editTaskType-${index}" value="${task.type}" />
                 </div>
-                <div class="edit-option-group" id="editCooldownContainer-${index}" style="${task.type === "repeatable" ? "display: block" : "display: none"}">
+                <div class="edit-option-group" id="editCooldownContainer-${index}">
                   <label for="editCooldownPeriod-${index}">Cooldown:</label>
-                  <select id="editCooldownPeriod-${index}">
+                  <select id="editCooldownPeriod-${index}" ${task.type === "repeatable" ? "" : "disabled"}>
                     <option value="0" ${task.cooldown === "0" ? "selected" : ""}>No cooldown</option>
                     <option value="1" ${task.cooldown === "1" ? "selected" : ""}>1 hour</option>
                     <option value="3" ${task.cooldown === "3" ? "selected" : ""}>3 hours</option>
