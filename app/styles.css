@@ -691,12 +691,13 @@ body {
   box-shadow: var(--shadow-soft);
 }
 
-/* Deadline section styling */
-.deadline-section {
-  margin-top: 0.75rem;
+/* Deadline option styling */
+.deadline-option {
+  flex: 1 1 100%;
+  min-width: 100%;
 }
 
-.deadline-section > label {
+.deadline-option > label {
   display: block;
   font-size: var(--font-size-small);
   color: var(--color-text-secondary);
