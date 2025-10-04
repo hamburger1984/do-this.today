@@ -115,6 +115,7 @@
       "testNotificationsSent": "Test-Benachrichtigungen gesendet!",
       "taskActive": "Aufgabe ist jetzt aktiv! Du hast 8 Stunden Zeit, sie zu erledigen.",
       "taskAbandoned": "Aufgabe mit Begründung aufgegeben",
+      "taskQuickLogged": "\"{{taskText}}\" als erledigt protokolliert",
       "cleanedUpTasks": "{{count}} beschädigte Aufgaben bereinigt",
       "noCorruptedData": "Keine beschädigten Daten gefunden",
       "tasksExported": "Aufgaben erfolgreich exportiert",

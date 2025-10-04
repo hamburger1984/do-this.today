@@ -115,6 +115,7 @@
       "testNotificationsSent": "Test notifications sent!",
       "taskActive": "Task is now active! You have 8 hours to complete it.",
       "taskAbandoned": "Task abandoned with reason recorded",
+      "taskQuickLogged": "\"{{taskText}}\" logged as completed",
       "cleanedUpTasks": "Cleaned up {{count}} corrupted tasks",
       "noCorruptedData": "No corrupted data found",
       "tasksExported": "Tasks exported successfully",

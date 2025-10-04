@@ -1172,6 +1172,20 @@ class DoThisApp {
               </div>
           </div>
           <div class="task-actions">
+              ${
+                status.type === "available" && !this.isTaskActive(task)
+                  ? `
+              <button class="quick-log-btn"
+                      onclick="app.quickLogTask(${index})"
+                      aria-label="Quick log completion"
+                      title="Log that you just completed this task">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+              </button>
+              `
+                  : ""
+              }
               <button class="edit-btn${this.isTaskActive(task) ? " disabled" : ""}"
                       ${this.isTaskActive(task) ? 'disabled title="Cannot edit active task"' : `onclick="app.showTaskEdit(${index})"`}
                       aria-label="Edit task">
@@ -1821,6 +1835,37 @@ class DoThisApp {
       clearInterval(this.cooldownCheckInterval);
       this.cooldownCheckInterval = null;
     }
+  }
+
+  quickLogTask(index) {
+    const task = this.tasks[index];
+    if (!task) return;
+
+    // Check if task is available
+    const status = this.getTaskStatus(task);
+    if (status.type !== "available") {
+      this.showToast(this.t("messages.errors.taskNotAvailable"), "error");
+      return;
+    }
+
+    // Record execution with minimal duration (1 second)
+    task.executions.push({
+      timestamp: Date.now(),
+      duration: 1000, // 1 second placeholder duration
+    });
+
+    // Mark one-off tasks as completed
+    if (task.type === "oneoff") {
+      task.completed = true;
+    }
+
+    this.completedTasks++;
+    this.saveAllData();
+    this.renderTasks();
+    this.showToast(
+      this.t("messages.success.taskQuickLogged", { taskText: task.text }),
+      "success",
+    );
   }
 
   completeActiveTask() {
