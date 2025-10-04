@@ -96,6 +96,15 @@
     "completed": "Erledigt",
     "active": "Aktiv"
   },
+  "deadline": {
+    "dueToday": "Fällig heute",
+    "dueTomorrow": "Fällig morgen",
+    "dueInDays": "Fällig in {{days}} Tagen",
+    "oneDayOverdue": "1 Tag überfällig",
+    "daysOverdue": "{{days}} Tage überfällig",
+    "overdueSince": "Überfällig seit {{date}}",
+    "due": "Fällig {{date}}"
+  },
   "messages": {
     "errors": {
       "taskNotFound": "Fehler: Aufgabe nicht gefunden",

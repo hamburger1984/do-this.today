@@ -96,6 +96,15 @@
     "completed": "Completed",
     "active": "Active"
   },
+  "deadline": {
+    "dueToday": "Due today",
+    "dueTomorrow": "Due tomorrow",
+    "dueInDays": "Due in {{days}} days",
+    "oneDayOverdue": "1 day overdue",
+    "daysOverdue": "{{days}} days overdue",
+    "overdueSince": "Overdue since {{date}}",
+    "due": "Due {{date}}"
+  },
   "messages": {
     "errors": {
       "taskNotFound": "Error: Task not found",

@@ -1287,37 +1287,51 @@ class DoThisApp {
       const daysOverdue = Math.abs(daysDiff);
       return {
         text:
-          daysOverdue === 1 ? "1 day overdue" : `${daysOverdue} days overdue`,
+          daysOverdue === 1
+            ? this.t("deadline.oneDayOverdue")
+            : this.t("deadline.daysOverdue", { days: daysOverdue }),
         className: "deadline-overdue",
-        title: `Overdue since ${deadlineDate.toLocaleDateString()}`,
+        title: this.t("deadline.overdueSince", {
+          date: deadlineDate.toLocaleDateString(),
+        }),
       };
     } else if (daysDiff === 0) {
       // Due today
       return {
-        text: "Due today",
+        text: this.t("deadline.dueToday"),
         className: "deadline-today",
-        title: `Due ${deadlineDate.toLocaleDateString()}`,
+        title: this.t("deadline.due", {
+          date: deadlineDate.toLocaleDateString(),
+        }),
       };
     } else if (daysDiff === 1) {
       // Due tomorrow
       return {
-        text: "Due tomorrow",
+        text: this.t("deadline.dueTomorrow"),
         className: "deadline-soon",
-        title: `Due ${deadlineDate.toLocaleDateString()}`,
+        title: this.t("deadline.due", {
+          date: deadlineDate.toLocaleDateString(),
+        }),
       };
     } else if (daysDiff <= 7) {
       // Due within a week
       return {
-        text: `Due in ${daysDiff} days`,
+        text: this.t("deadline.dueInDays", { days: daysDiff }),
         className: "deadline-week",
-        title: `Due ${deadlineDate.toLocaleDateString()}`,
+        title: this.t("deadline.due", {
+          date: deadlineDate.toLocaleDateString(),
+        }),
       };
     } else {
       // Due later
       return {
-        text: `Due ${deadlineDate.toLocaleDateString()}`,
+        text: this.t("deadline.due", {
+          date: deadlineDate.toLocaleDateString(),
+        }),
         className: "deadline-future",
-        title: `Due ${deadlineDate.toLocaleDateString()}`,
+        title: this.t("deadline.due", {
+          date: deadlineDate.toLocaleDateString(),
+        }),
       };
     }
   }
