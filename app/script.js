@@ -141,15 +141,27 @@ class DoThisApp {
 
     // Update all elements with data-i18n attributes
     document.querySelectorAll("[data-i18n]").forEach((element) => {
-      const key = element.getAttribute("data-i18n");
-      const translation = this.t(key);
+      const i18nAttr = element.getAttribute("data-i18n");
 
-      if (element.tagName === "INPUT" && element.type === "text") {
-        element.placeholder = translation;
-      } else if (element.tagName === "TEXTAREA") {
-        element.placeholder = translation;
+      // Check if it's an attribute-specific translation (e.g., [aria-label]key)
+      const attrMatch = i18nAttr.match(/^\[([^\]]+)\](.+)$/);
+
+      if (attrMatch) {
+        // Translate specific attribute
+        const [, attrName, key] = attrMatch;
+        const translation = this.t(key);
+        element.setAttribute(attrName, translation);
       } else {
-        element.textContent = translation;
+        // Translate text content
+        const translation = this.t(i18nAttr);
+
+        if (element.tagName === "INPUT" && element.type === "text") {
+          element.placeholder = translation;
+        } else if (element.tagName === "TEXTAREA") {
+          element.placeholder = translation;
+        } else {
+          element.textContent = translation;
+        }
       }
     });
   }
