@@ -633,8 +633,8 @@ body {
 }
 
 .option-group {
-  flex: 1;
-  min-width: 140px;
+  flex: 1 1 0%;
+  min-width: 180px;
 }
 
 .option-group label {
@@ -693,8 +693,8 @@ body {
 
 /* Deadline option styling */
 .deadline-option {
-  flex: 1 1 auto;
-  min-width: 200px;
+  flex: 1 1 0%;
+  min-width: 180px;
 }
 
 .deadline-option > label {
