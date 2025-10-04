@@ -701,9 +701,9 @@ class DoThisApp {
     const toggleBtn = document.getElementById("deadlineToggleBtn");
     const deadlineInput = document.getElementById("taskDeadline");
 
-    if (deadlineInput.style.display === "none") {
-      // Show deadline input
-      deadlineInput.style.display = "block";
+    if (deadlineInput.disabled) {
+      // Enable deadline input
+      deadlineInput.disabled = false;
       toggleBtn.classList.add("active");
       // Set today as default when enabling
       if (!deadlineInput.value) {
@@ -712,8 +712,8 @@ class DoThisApp {
       }
       deadlineInput.focus();
     } else {
-      // Hide deadline input
-      deadlineInput.style.display = "none";
+      // Disable deadline input
+      deadlineInput.disabled = true;
       toggleBtn.classList.remove("active");
       deadlineInput.value = "";
     }
@@ -723,9 +723,9 @@ class DoThisApp {
     const toggleBtn = document.getElementById(`editDeadlineToggleBtn-${index}`);
     const deadlineInput = document.getElementById(`editTaskDeadline-${index}`);
 
-    if (deadlineInput.style.display === "none") {
-      // Show deadline input
-      deadlineInput.style.display = "block";
+    if (deadlineInput.disabled) {
+      // Enable deadline input
+      deadlineInput.disabled = false;
       toggleBtn.classList.add("active");
       // Set today as default when enabling
       if (!deadlineInput.value) {
@@ -734,8 +734,8 @@ class DoThisApp {
       }
       deadlineInput.focus();
     } else {
-      // Hide deadline input
-      deadlineInput.style.display = "none";
+      // Disable deadline input
+      deadlineInput.disabled = true;
       toggleBtn.classList.remove("active");
       deadlineInput.value = "";
     }
@@ -833,7 +833,7 @@ class DoThisApp {
     document.getElementById("taskType").value = "oneoff";
     document.getElementById("cooldownPeriod").value = "daily";
     document.getElementById("taskDeadline").value = "";
-    document.getElementById("taskDeadline").style.display = "none";
+    document.getElementById("taskDeadline").disabled = true;
 
     // Reset toggle buttons
     document.querySelectorAll(".toggle-btn").forEach((btn) => {
@@ -1137,7 +1137,7 @@ class DoThisApp {
                       type="date"
                       id="editTaskDeadline-${index}"
                       value="${task.deadline ? new Date(task.deadline).toISOString().split("T")[0] : ""}"
-                      style="display: ${task.deadline ? "block" : "none"};"
+                      ${task.deadline ? "" : "disabled"}
                     />
                   </div>
                 </div>

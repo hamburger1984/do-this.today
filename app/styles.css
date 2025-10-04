@@ -693,8 +693,8 @@ body {
 
 /* Deadline option styling */
 .deadline-option {
-  flex: 1 1 100%;
-  min-width: 100%;
+  flex: 1 1 auto;
+  min-width: 200px;
 }
 
 .deadline-option > label {
@@ -754,6 +754,12 @@ body {
   color: var(--color-text-primary);
   font-weight: 500;
   font-family: inherit;
+}
+
+#taskDeadline:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--color-background-subtle);
 }
 
 #taskDeadline:focus {
