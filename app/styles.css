@@ -633,8 +633,8 @@ body {
 }
 
 .option-group {
-  flex: 1 1 0%;
-  min-width: 180px;
+  flex: 1 1 calc(50% - 0.5rem);
+  min-width: 200px;
 }
 
 .option-group label {
@@ -693,8 +693,13 @@ body {
 
 /* Deadline option styling */
 .deadline-option {
-  flex: 1 1 0%;
-  min-width: 180px;
+  flex: 1 1 calc(50% - 0.5rem);
+  min-width: 200px;
+}
+
+/* Force deadline to new line when cooldown is visible */
+#cooldownContainer:not([style*="display: none"]) ~ .deadline-option {
+  flex-basis: 100%;
 }
 
 .deadline-option > label {
