@@ -691,6 +691,65 @@ body {
   box-shadow: var(--shadow-soft);
 }
 
+/* Deadline input styling */
+.deadline-toggle-wrapper {
+  display: flex;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+
+.deadline-toggle-btn {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-border-medium);
+  border-radius: 12px;
+  background: var(--color-background-elevated);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.deadline-toggle-btn:hover {
+  background: var(--color-background-subtle);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-focus);
+}
+
+.deadline-toggle-btn.active {
+  background: var(--gradient-primary-action);
+  color: var(--color-text-on-primary);
+  border-color: var(--sunset-orange);
+}
+
+.deadline-toggle-btn:focus {
+  outline: none;
+  box-shadow: var(--focus-ring-primary);
+}
+
+#taskDeadline {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--color-border-medium);
+  border-radius: 12px;
+  font-size: var(--font-size-body);
+  transition: all 0.2s ease;
+  background: var(--color-background-elevated);
+  color: var(--color-text-primary);
+  font-weight: 500;
+  font-family: inherit;
+}
+
+#taskDeadline:focus {
+  outline: none;
+  border-color: var(--color-border-focus);
+  background: var(--color-background-elevated);
+  box-shadow: var(--focus-ring-primary);
+}
+
 .input-actions {
   display: flex;
   gap: 0.75rem;
@@ -752,6 +811,25 @@ body {
 }
 
 .edit-option-group select:focus {
+  outline: none;
+  border-color: var(--color-border-focus);
+  box-shadow: var(--focus-ring-primary);
+}
+
+.edit-option-group input[type="date"] {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--color-border-medium);
+  border-radius: 8px;
+  font-size: var(--font-size-small);
+  background: var(--color-background-elevated);
+  color: var(--color-text-primary);
+  font-weight: 500;
+  font-family: inherit;
+  transition: all 0.1s ease;
+}
+
+.edit-option-group input[type="date"]:focus {
   outline: none;
   border-color: var(--color-border-focus);
   box-shadow: var(--focus-ring-primary);

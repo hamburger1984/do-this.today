@@ -238,6 +238,11 @@ class DoThisApp {
       .getElementById("toggleRepeatable")
       .addEventListener("click", (e) => this.handleTaskTypeToggle(e));
 
+    // Deadline toggle button
+    document
+      .getElementById("deadlineToggleBtn")
+      .addEventListener("click", () => this.toggleDeadlineInput());
+
     // Task editing is now handled inline, no global event listeners needed
 
     // Task list collapse/expand
@@ -689,6 +694,50 @@ class DoThisApp {
     this.toggleCooldownOptions();
   }
 
+  toggleDeadlineInput() {
+    const toggleBtn = document.getElementById("deadlineToggleBtn");
+    const deadlineInput = document.getElementById("taskDeadline");
+
+    if (deadlineInput.style.display === "none") {
+      // Show deadline input
+      deadlineInput.style.display = "block";
+      toggleBtn.classList.add("active");
+      // Set today as default when enabling
+      if (!deadlineInput.value) {
+        const today = new Date().toISOString().split("T")[0];
+        deadlineInput.value = today;
+      }
+      deadlineInput.focus();
+    } else {
+      // Hide deadline input
+      deadlineInput.style.display = "none";
+      toggleBtn.classList.remove("active");
+      deadlineInput.value = "";
+    }
+  }
+
+  toggleEditDeadlineInput(index) {
+    const toggleBtn = document.getElementById(`editDeadlineToggleBtn-${index}`);
+    const deadlineInput = document.getElementById(`editTaskDeadline-${index}`);
+
+    if (deadlineInput.style.display === "none") {
+      // Show deadline input
+      deadlineInput.style.display = "block";
+      toggleBtn.classList.add("active");
+      // Set today as default when enabling
+      if (!deadlineInput.value) {
+        const today = new Date().toISOString().split("T")[0];
+        deadlineInput.value = today;
+      }
+      deadlineInput.focus();
+    } else {
+      // Hide deadline input
+      deadlineInput.style.display = "none";
+      toggleBtn.classList.remove("active");
+      deadlineInput.value = "";
+    }
+  }
+
   handleEditTaskTypeToggle(event, taskIndex) {
     const clickedBtn = event.target;
     const taskType = clickedBtn.dataset.type;
@@ -778,12 +827,14 @@ class DoThisApp {
     document.getElementById("taskType").value = "oneoff";
     document.getElementById("cooldownPeriod").value = "daily";
     document.getElementById("taskDeadline").value = "";
+    document.getElementById("taskDeadline").style.display = "none";
 
     // Reset toggle buttons
     document.querySelectorAll(".toggle-btn").forEach((btn) => {
       btn.classList.remove("active");
     });
     document.getElementById("toggleOneoff").classList.add("active");
+    document.getElementById("deadlineToggleBtn").classList.remove("active");
 
     this.toggleCooldownOptions();
 
@@ -1063,8 +1114,26 @@ class DoThisApp {
                   </select>
                 </div>
                 <div class="edit-option-group">
-                  <label for="editTaskDeadline-${index}">Deadline (optional):</label>
-                  <input type="date" id="editTaskDeadline-${index}" value="${task.deadline ? new Date(task.deadline).toISOString().split("T")[0] : ""}" />
+                  <label>Deadline:</label>
+                  <div class="deadline-toggle-wrapper">
+                    <button
+                      type="button"
+                      class="deadline-toggle-btn ${task.deadline ? "active" : ""}"
+                      id="editDeadlineToggleBtn-${index}"
+                      onclick="app.toggleEditDeadlineInput(${index})"
+                      aria-label="Toggle deadline"
+                    >
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                      </svg>
+                    </button>
+                    <input
+                      type="date"
+                      id="editTaskDeadline-${index}"
+                      value="${task.deadline ? new Date(task.deadline).toISOString().split("T")[0] : ""}"
+                      style="display: ${task.deadline ? "block" : "none"};"
+                    />
+                  </div>
                 </div>
               </div>
               <div class="edit-actions">
