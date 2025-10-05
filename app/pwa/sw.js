@@ -1,4 +1,4 @@
-const CACHE_NAME = "dothis-v2";
+const CACHE_NAME = "dothis-v3";
 const urlsToCache = [
   "/",
   "/index.html",
@@ -21,10 +21,21 @@ self.addEventListener("install", (event) => {
 
 self.addEventListener("fetch", (event) => {
   event.respondWith(
-    caches.match(event.request).then((response) => {
-      // Return cached version or fetch from network
-      return response || fetch(event.request);
-    }),
+    fetch(event.request)
+      .then((response) => {
+        // Cache the fresh response for offline use
+        if (response && response.status === 200) {
+          const responseToCache = response.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseToCache);
+          });
+        }
+        return response;
+      })
+      .catch(() => {
+        // Network failed, fall back to cache
+        return caches.match(event.request);
+      }),
   );
 });
 
