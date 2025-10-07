@@ -275,6 +275,12 @@ class DoThisApp {
       .getElementById("exportDataBtn")
       .addEventListener("click", () => this.exportTasksAsJson());
     document
+      .getElementById("importDataBtn")
+      .addEventListener("click", () => this.importTasksFromJson());
+    document
+      .getElementById("importFileInput")
+      .addEventListener("change", (e) => this.handleImportFile(e));
+    document
       .getElementById("resetAllBtn")
       .addEventListener("click", () => this.resetEverything());
     document
@@ -2318,6 +2324,302 @@ class DoThisApp {
       console.error("Error exporting tasks:", error);
       this.showToast(this.t("messages.errors.exportError"), "error");
     }
+  }
+
+  // Public method to trigger file input for import
+  importTasksFromJson() {
+    const fileInput = document.getElementById("importFileInput");
+    fileInput.click();
+  }
+
+  // Handle file selection for import
+  async handleImportFile(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    try {
+      const text = await file.text();
+      const importData = JSON.parse(text);
+
+      // Validate the import data structure
+      if (!importData || typeof importData !== "object") {
+        throw new Error("Invalid import file format");
+      }
+
+      // Show import options dialog
+      this.showImportDialog(importData);
+    } catch (error) {
+      console.error("Error reading import file:", error);
+      this.showToast(
+        this.t("messages.errors.importError") || "Failed to import tasks",
+        "error",
+      );
+    } finally {
+      // Clear the file input so the same file can be selected again
+      event.target.value = "";
+    }
+  }
+
+  // Show dialog to choose import options
+  showImportDialog(importData) {
+    const tasksToImport = importData.tasks || [];
+    const deletedTasksToImport = importData.deletedTasks || [];
+
+    if (tasksToImport.length === 0 && deletedTasksToImport.length === 0) {
+      this.showToast(
+        this.t("messages.errors.noTasksInImport") ||
+          "No tasks found in import file",
+        "error",
+      );
+      return;
+    }
+
+    // Create modal dialog
+    const modal = document.createElement("div");
+    modal.className = "modal-overlay";
+    modal.innerHTML = `
+      <div class="modal-content import-dialog">
+        <h3>${this.t("import.title") || "Import Tasks"}</h3>
+        <p>${this.t("import.description") || "Choose how to import tasks:"}</p>
+
+        <div class="import-stats">
+          <div class="import-stat">
+            <strong>${tasksToImport.length}</strong> ${this.t("import.tasksFound") || "tasks found"}
+          </div>
+          ${
+            deletedTasksToImport.length > 0
+              ? `<div class="import-stat">
+            <strong>${deletedTasksToImport.length}</strong> ${this.t("import.deletedTasksFound") || "deleted tasks found"}
+          </div>`
+              : ""
+          }
+        </div>
+
+        <div class="import-options">
+          <label class="import-option">
+            <input type="radio" name="importMode" value="replace" checked />
+            <div class="option-content">
+              <strong>${this.t("import.replaceAll") || "Replace All"}</strong>
+              <span>${this.t("import.replaceAllDesc") || "Replace your entire task list with imported tasks"}</span>
+            </div>
+          </label>
+
+          <label class="import-option">
+            <input type="radio" name="importMode" value="merge" />
+            <div class="option-content">
+              <strong>${this.t("import.merge") || "Merge"}</strong>
+              <span>${this.t("import.mergeDesc") || "Add imported tasks to your existing tasks (duplicates by text will be skipped)"}</span>
+            </div>
+          </label>
+
+          <label class="import-option">
+            <input type="radio" name="importMode" value="selective" />
+            <div class="option-content">
+              <strong>${this.t("import.selective") || "Select Specific Tasks"}</strong>
+              <span>${this.t("import.selectiveDesc") || "Choose which tasks to import"}</span>
+            </div>
+          </label>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn-secondary" id="cancelImportBtn">${this.t("buttons.cancel") || "Cancel"}</button>
+          <button class="btn-primary" id="confirmImportBtn">${this.t("buttons.continue") || "Continue"}</button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    // Event listeners
+    document.getElementById("cancelImportBtn").addEventListener("click", () => {
+      document.body.removeChild(modal);
+    });
+
+    document
+      .getElementById("confirmImportBtn")
+      .addEventListener("click", () => {
+        const selectedMode = modal.querySelector(
+          'input[name="importMode"]:checked',
+        ).value;
+
+        if (selectedMode === "selective") {
+          document.body.removeChild(modal);
+          this.showTaskSelectionDialog(importData);
+        } else {
+          this.executeImport(importData, selectedMode);
+          document.body.removeChild(modal);
+        }
+      });
+  }
+
+  // Show dialog to select specific tasks to import
+  showTaskSelectionDialog(importData) {
+    const tasksToImport = importData.tasks || [];
+
+    const modal = document.createElement("div");
+    modal.className = "modal-overlay";
+    modal.innerHTML = `
+      <div class="modal-content task-selection-dialog">
+        <h3>${this.t("import.selectTasks") || "Select Tasks to Import"}</h3>
+        <p>${this.t("import.selectTasksDesc") || "Choose which tasks you want to import:"}</p>
+
+        <div class="task-selection-list">
+          ${tasksToImport
+            .map(
+              (task, index) => `
+            <label class="task-selection-item">
+              <input type="checkbox" class="task-checkbox" data-index="${index}" checked />
+              <div class="task-info">
+                <div class="task-text">${this.escapeHtml(task.text)}</div>
+                <div class="task-meta">
+                  <span class="task-type-badge ${task.type}">${task.type === "repeatable" ? this.t("tasks.repeatable") || "Repeatable" : this.t("tasks.oneTime") || "One-time"}</span>
+                  ${task.cooldown && task.type === "repeatable" ? `<span class="cooldown-badge">${this.formatCooldown(task.cooldown)}</span>` : ""}
+                  ${task.deadline ? `<span class="deadline-badge">📅 ${new Date(task.deadline).toLocaleDateString()}</span>` : ""}
+                </div>
+              </div>
+            </label>
+          `,
+            )
+            .join("")}
+        </div>
+
+        <div class="selection-controls">
+          <button class="btn-secondary" id="selectAllBtn">${this.t("buttons.selectAll") || "Select All"}</button>
+          <button class="btn-secondary" id="deselectAllBtn">${this.t("buttons.deselectAll") || "Deselect All"}</button>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn-secondary" id="cancelSelectionBtn">${this.t("buttons.cancel") || "Cancel"}</button>
+          <button class="btn-primary" id="confirmSelectionBtn">${this.t("buttons.import") || "Import Selected"}</button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    // Event listeners
+    document
+      .getElementById("cancelSelectionBtn")
+      .addEventListener("click", () => {
+        document.body.removeChild(modal);
+      });
+
+    document.getElementById("selectAllBtn").addEventListener("click", () => {
+      modal
+        .querySelectorAll(".task-checkbox")
+        .forEach((cb) => (cb.checked = true));
+    });
+
+    document.getElementById("deselectAllBtn").addEventListener("click", () => {
+      modal
+        .querySelectorAll(".task-checkbox")
+        .forEach((cb) => (cb.checked = false));
+    });
+
+    document
+      .getElementById("confirmSelectionBtn")
+      .addEventListener("click", () => {
+        const selectedIndices = Array.from(
+          modal.querySelectorAll(".task-checkbox:checked"),
+        ).map((cb) => parseInt(cb.dataset.index));
+
+        const selectedTasks = selectedIndices.map((i) => tasksToImport[i]);
+
+        this.executeImport(
+          {
+            ...importData,
+            tasks: selectedTasks,
+            deletedTasks: [], // Don't import deleted tasks in selective mode
+          },
+          "merge",
+        );
+
+        document.body.removeChild(modal);
+      });
+  }
+
+  // Execute the import based on selected mode
+  executeImport(importData, mode) {
+    const tasksToImport = importData.tasks || [];
+    const deletedTasksToImport = importData.deletedTasks || [];
+
+    try {
+      let importedCount = 0;
+
+      if (mode === "replace") {
+        // Replace everything
+        this.tasks = tasksToImport.map((task) =>
+          this.validateImportedTask(task),
+        );
+        this.deletedTasks = deletedTasksToImport.map((task) =>
+          this.validateImportedTask(task),
+        );
+        importedCount = tasksToImport.length;
+
+        // Update next task ID
+        this.nextTaskId = Math.max(this.getMaxTaskId() + 1, this.nextTaskId);
+
+        this.showToast(
+          this.t("messages.success.tasksReplaced", { count: importedCount }) ||
+            `Replaced all tasks with ${importedCount} imported tasks`,
+          "success",
+        );
+      } else if (mode === "merge") {
+        // Merge tasks, skipping duplicates
+        const existingTexts = new Set(this.tasks.map((t) => t.text));
+
+        tasksToImport.forEach((task) => {
+          if (!existingTexts.has(task.text)) {
+            const validatedTask = this.validateImportedTask(task);
+            this.tasks.push(validatedTask);
+            importedCount++;
+          }
+        });
+
+        // Update next task ID
+        this.nextTaskId = Math.max(this.getMaxTaskId() + 1, this.nextTaskId);
+
+        this.showToast(
+          this.t("messages.success.tasksMerged", { count: importedCount }) ||
+            `Imported ${importedCount} new tasks`,
+          "success",
+        );
+      }
+
+      // Save and refresh
+      this.saveAllData();
+      this.refreshUI();
+      this.updateStats();
+      this.updateRandomizeButton();
+      this.updateDefaultTasksButton();
+    } catch (error) {
+      console.error("Error executing import:", error);
+      this.showToast(
+        this.t("messages.errors.importFailed") || "Import failed",
+        "error",
+      );
+    }
+  }
+
+  // Validate and normalize an imported task
+  validateImportedTask(task) {
+    return {
+      id: task.id || this.nextTaskId++,
+      text:
+        typeof task.text === "string" && task.text.trim()
+          ? task.text.trim()
+          : "Imported task",
+      type:
+        task.type === "repeatable" || task.type === "oneoff"
+          ? task.type
+          : "oneoff",
+      cooldown: task.cooldown || "daily",
+      executions: Array.isArray(task.executions) ? task.executions : [],
+      completed: Boolean(task.completed),
+      createdAt: task.createdAt || Date.now(),
+      deadline: task.deadline || null,
+      deletedAt: task.deletedAt || null,
+    };
   }
 
   // Add default sample tasks

@@ -1301,6 +1301,207 @@ body {
   max-width: 140px;
 }
 
+/* ===== IMPORT DIALOG ===== */
+.import-dialog {
+  max-width: 540px;
+}
+
+.import-dialog p {
+  color: var(--color-text-secondary);
+  text-align: center;
+  margin-bottom: var(--spacing-3xl);
+}
+
+.import-stats {
+  display: flex;
+  gap: var(--spacing-2xl);
+  justify-content: center;
+  margin-bottom: var(--spacing-3xl);
+  padding: var(--spacing-2xl);
+  background: var(--color-background-main);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-light);
+}
+
+.import-stat {
+  text-align: center;
+  color: var(--color-text-secondary);
+}
+
+.import-stat strong {
+  display: block;
+  font-size: var(--font-size-heading-large);
+  color: var(--color-primary-action);
+  font-weight: 700;
+  margin-bottom: var(--spacing-xs);
+}
+
+.import-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  margin-bottom: var(--spacing-3xl);
+}
+
+.import-option {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-xl);
+  background: var(--color-background-main);
+  border: 2px solid var(--color-border-medium);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.import-option:hover {
+  border-color: var(--color-primary-action);
+  background: var(--color-background-elevated);
+}
+
+.import-option input[type="radio"] {
+  margin-top: 2px;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  accent-color: var(--color-primary-action);
+}
+
+.import-option .option-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.import-option strong {
+  color: var(--color-text-primary);
+  font-weight: 600;
+  font-size: var(--font-size-body);
+}
+
+.import-option span {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-small);
+  line-height: 1.4;
+}
+
+/* ===== TASK SELECTION DIALOG ===== */
+.task-selection-dialog {
+  max-width: 640px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.task-selection-dialog p {
+  color: var(--color-text-secondary);
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.task-selection-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-2xl);
+  max-height: 400px;
+  padding: var(--spacing-xs);
+}
+
+.task-selection-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-xl);
+  background: var(--color-background-main);
+  border: 2px solid var(--color-border-medium);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.task-selection-item:hover {
+  border-color: var(--color-primary-action);
+  background: var(--color-background-elevated);
+}
+
+.task-selection-item input[type="checkbox"] {
+  margin-top: 2px;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  accent-color: var(--color-primary-action);
+}
+
+.task-selection-item .task-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.task-selection-item .task-text {
+  color: var(--color-text-primary);
+  font-weight: 500;
+  font-size: var(--font-size-body);
+  line-height: 1.4;
+}
+
+.task-selection-item .task-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  font-size: var(--font-size-tiny);
+}
+
+.task-type-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.task-type-badge.oneoff {
+  background: var(--color-status-info-bg);
+  color: var(--color-status-info);
+}
+
+.task-type-badge.repeatable {
+  background: var(--color-status-success-bg);
+  color: var(--color-status-success);
+}
+
+.cooldown-badge,
+.deadline-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  background: var(--color-background-elevated);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border-light);
+  font-weight: 500;
+}
+
+.selection-controls {
+  display: flex;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.selection-controls button {
+  flex: 1;
+}
+
 /* ===== TOAST NOTIFICATIONS ===== */
 .toast {
   position: fixed;

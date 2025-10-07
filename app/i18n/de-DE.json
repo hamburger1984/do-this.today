@@ -59,6 +59,7 @@
     "debugInfo": "Debug-Informationen",
     "addSampleTasks": "Beispielaufgaben hinzufügen",
     "exportTasks": "Aufgaben als JSON exportieren",
+    "importTasks": "Aufgaben aus JSON importieren",
     "viewTrash": "Papierkorb anzeigen",
     "resetEverything": "Alles zurücksetzen",
     "debugData": "Daten debuggen",
@@ -92,7 +93,26 @@
     "quickLogTitle": "Protokolliere, dass du diese Aufgabe gerade erledigt hast",
     "toggleDeadline": "Frist umschalten",
     "cannotEditActive": "Aktive Aufgabe kann nicht bearbeitet werden",
-    "cannotDeleteActive": "Aktive Aufgabe kann nicht gelöscht werden"
+    "cannotDeleteActive": "Aktive Aufgabe kann nicht gelöscht werden",
+    "cancel": "Abbrechen",
+    "continue": "Weiter",
+    "import": "Ausgewählte importieren",
+    "selectAll": "Alle auswählen",
+    "deselectAll": "Alle abwählen"
+  },
+  "import": {
+    "title": "Aufgaben importieren",
+    "description": "Wähle aus, wie Aufgaben importiert werden sollen:",
+    "tasksFound": "Aufgaben gefunden",
+    "deletedTasksFound": "gelöschte Aufgaben gefunden",
+    "replaceAll": "Alle ersetzen",
+    "replaceAllDesc": "Ersetze deine gesamte Aufgabenliste mit den importierten Aufgaben",
+    "merge": "Zusammenführen",
+    "mergeDesc": "Füge importierte Aufgaben zu deinen bestehenden Aufgaben hinzu (Duplikate nach Text werden übersprungen)",
+    "selective": "Bestimmte Aufgaben auswählen",
+    "selectiveDesc": "Wähle aus, welche Aufgaben importiert werden sollen",
+    "selectTasks": "Aufgaben zum Importieren auswählen",
+    "selectTasksDesc": "Wähle aus, welche Aufgaben du importieren möchtest:"
   },
   "taskStatus": {
     "available": "Verfügbar",
@@ -133,6 +153,9 @@
       "mustProvideReason": "Du musst einen Grund für das Aufgeben der abgelaufenen Aufgabe angeben",
       "pleaseEnterReason": "Bitte gib einen Grund für das Aufgeben ein",
       "exportError": "Fehler beim Exportieren der Aufgaben",
+      "importError": "Fehler beim Importieren der Aufgaben",
+      "noTasksInImport": "Keine Aufgaben in der Importdatei gefunden",
+      "importFailed": "Import fehlgeschlagen",
       "resetError": "Fehler beim Zurücksetzen"
     },
     "success": {
@@ -146,6 +169,8 @@
       "cleanedUpTasks": "{{count}} beschädigte Aufgaben bereinigt",
       "noCorruptedData": "Keine beschädigten Daten gefunden",
       "tasksExported": "Aufgaben erfolgreich exportiert",
+      "tasksReplaced": "Alle Aufgaben durch {{count}} importierte Aufgaben ersetzt",
+      "tasksMerged": "{{count}} neue Aufgaben importiert",
       "sampleTasksAdded": "Beispielaufgaben erfolgreich hinzugefügt",
       "everythingReset": "Alles wurde erfolgreich zurückgesetzt",
       "debugLogged": "Debug-Informationen in der Konsole protokolliert",

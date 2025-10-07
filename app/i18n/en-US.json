@@ -59,6 +59,7 @@
     "debugInfo": "Debug Information",
     "addSampleTasks": "Add Sample Tasks",
     "exportTasks": "Export Tasks as JSON",
+    "importTasks": "Import Tasks from JSON",
     "viewTrash": "View Trash",
     "resetEverything": "Reset Everything",
     "debugData": "Debug Data",
@@ -92,7 +93,26 @@
     "quickLogTitle": "Log that you just completed this task",
     "toggleDeadline": "Toggle deadline",
     "cannotEditActive": "Cannot edit active task",
-    "cannotDeleteActive": "Cannot delete active task"
+    "cannotDeleteActive": "Cannot delete active task",
+    "cancel": "Cancel",
+    "continue": "Continue",
+    "import": "Import Selected",
+    "selectAll": "Select All",
+    "deselectAll": "Deselect All"
+  },
+  "import": {
+    "title": "Import Tasks",
+    "description": "Choose how to import tasks:",
+    "tasksFound": "tasks found",
+    "deletedTasksFound": "deleted tasks found",
+    "replaceAll": "Replace All",
+    "replaceAllDesc": "Replace your entire task list with imported tasks",
+    "merge": "Merge",
+    "mergeDesc": "Add imported tasks to your existing tasks (duplicates by text will be skipped)",
+    "selective": "Select Specific Tasks",
+    "selectiveDesc": "Choose which tasks to import",
+    "selectTasks": "Select Tasks to Import",
+    "selectTasksDesc": "Choose which tasks you want to import:"
   },
   "taskStatus": {
     "available": "Available",
@@ -133,6 +153,9 @@
       "mustProvideReason": "You must provide a reason for abandoning the expired task",
       "pleaseEnterReason": "Please enter a reason for abandoning",
       "exportError": "Error exporting tasks",
+      "importError": "Failed to import tasks",
+      "noTasksInImport": "No tasks found in import file",
+      "importFailed": "Import failed",
       "resetError": "Error during reset"
     },
     "success": {
@@ -146,6 +169,8 @@
       "cleanedUpTasks": "Cleaned up {{count}} corrupted tasks",
       "noCorruptedData": "No corrupted data found",
       "tasksExported": "Tasks exported successfully",
+      "tasksReplaced": "Replaced all tasks with {{count}} imported tasks",
+      "tasksMerged": "Imported {{count}} new tasks",
       "sampleTasksAdded": "Sample tasks added successfully",
       "everythingReset": "Everything has been reset successfully",
       "debugLogged": "Debug information logged to console",
