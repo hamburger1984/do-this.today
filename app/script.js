@@ -12,7 +12,6 @@ class DoThisApp {
     this.activeTask = null;
     this.cooldownCheckInterval = null;
     this.activeTaskTimer = null;
-    this.nextTaskId = 1;
     this.taskListCollapsed = true;
     this.settingsCollapsed = true;
     this.currentPage = "main";
@@ -23,6 +22,31 @@ class DoThisApp {
     this.i18n = null;
     this.currentLanguage = "en-US";
     this.init();
+  }
+
+  // Generate a UUID v4
+  generateUUID() {
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+      /[xy]/g,
+      function (c) {
+        const r = (Math.random() * 16) | 0;
+        const v = c === "x" ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+      },
+    );
+  }
+
+  // Check if an ID is numeric (legacy format)
+  isNumericId(id) {
+    return typeof id === "number" || /^\d+$/.test(String(id));
+  }
+
+  // Check if an ID is a valid UUID
+  isValidUUID(id) {
+    if (typeof id !== "string") return false;
+    const uuidRegex =
+      /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    return uuidRegex.test(id);
   }
 
   async init() {
@@ -352,7 +376,7 @@ class DoThisApp {
   // Statistics and counters
   saveStatistics() {
     localStorage.setItem("dothis-completed", this.completedTasks.toString());
-    localStorage.setItem("dothis-nextid", this.nextTaskId.toString());
+    // nextTaskId no longer needed with UUIDs
   }
 
   // UI state persistence
@@ -376,35 +400,20 @@ class DoThisApp {
     this.saveUIState();
   }
 
-  getMaxTaskId() {
-    let maxId = 0;
-
-    // Check tasks array
-    if (this.tasks && this.tasks.length > 0) {
-      const taskMaxId = Math.max(...this.tasks.map((t) => t.id || 0));
-      maxId = Math.max(maxId, taskMaxId);
-    }
-
-    // Check deleted tasks array
-    if (this.deletedTasks && this.deletedTasks.length > 0) {
-      const deletedMaxId = Math.max(...this.deletedTasks.map((t) => t.id || 0));
-      maxId = Math.max(maxId, deletedMaxId);
-    }
-
-    return maxId;
-  }
-
   // Task data loading with validation and migration
   loadTaskData() {
     const saved = localStorage.getItem("dothis-tasks");
     if (saved) {
       try {
         this.tasks = JSON.parse(saved);
+        let needsMigration = false;
+
         // Migrate and validate task objects
         this.tasks = this.tasks.map((task, index) => {
           if (typeof task === "string") {
+            needsMigration = true;
             return {
-              id: this.nextTaskId++,
+              id: this.generateUUID(),
               text: task,
               type: "oneoff",
               cooldown: "daily",
@@ -415,8 +424,9 @@ class DoThisApp {
           // Validate and fix corrupted task objects
           if (!task || typeof task !== "object") {
             console.warn(`Invalid task at index ${index}:`, task);
+            needsMigration = true;
             return {
-              id: this.nextTaskId++,
+              id: this.generateUUID(),
               text: "Corrupted task (please edit)",
               type: "oneoff",
               cooldown: "daily",
@@ -424,9 +434,20 @@ class DoThisApp {
               completed: false,
             };
           }
+
+          // Migrate numeric IDs to UUIDs
+          let taskId = task.id;
+          if (!taskId || this.isNumericId(taskId)) {
+            taskId = this.generateUUID();
+            needsMigration = true;
+            console.log(
+              `Migrating task "${task.text}" from numeric ID ${task.id} to UUID ${taskId}`,
+            );
+          }
+
           // Ensure all required properties exist and are valid
           const validTask = {
-            id: task.id || this.nextTaskId++,
+            id: taskId,
             text:
               typeof task.text === "string"
                 ? task.text
@@ -445,6 +466,12 @@ class DoThisApp {
         });
         // Filter out any null/undefined tasks
         this.tasks = this.tasks.filter((task) => task && task.text);
+
+        // Save migrated data back to localStorage
+        if (needsMigration) {
+          console.log("UUID migration completed, saving to localStorage");
+          this.saveTaskData();
+        }
       } catch (error) {
         console.error("Error loading tasks from localStorage:", error);
         this.tasks = [];
@@ -459,10 +486,13 @@ class DoThisApp {
     const deletedSaved = localStorage.getItem("dothis-deleted");
     if (deletedSaved) {
       try {
+        let needsMigration = false;
+
         this.deletedTasks = JSON.parse(deletedSaved).map((task, index) => {
           if (typeof task === "string") {
+            needsMigration = true;
             return {
-              id: this.nextTaskId++,
+              id: this.generateUUID(),
               text: task,
               type: "oneoff",
               cooldown: "daily",
@@ -474,8 +504,9 @@ class DoThisApp {
           // Validate deleted task objects
           if (!task || typeof task !== "object") {
             console.warn(`Invalid deleted task at index ${index}:`, task);
+            needsMigration = true;
             return {
-              id: this.nextTaskId++,
+              id: this.generateUUID(),
               text: "Corrupted deleted task",
               type: "oneoff",
               cooldown: "daily",
@@ -484,8 +515,19 @@ class DoThisApp {
               deletedAt: Date.now(),
             };
           }
+
+          // Migrate numeric IDs to UUIDs
+          let taskId = task.id;
+          if (!taskId || this.isNumericId(taskId)) {
+            taskId = this.generateUUID();
+            needsMigration = true;
+            console.log(
+              `Migrating deleted task "${task.text}" from numeric ID ${task.id} to UUID ${taskId}`,
+            );
+          }
+
           const validTask = {
-            id: task.id || this.nextTaskId++,
+            id: taskId,
             text:
               typeof task.text === "string"
                 ? task.text
@@ -506,6 +548,14 @@ class DoThisApp {
         this.deletedTasks = this.deletedTasks.filter(
           (task) => task && task.text,
         );
+
+        // Save migrated data back to localStorage
+        if (needsMigration) {
+          console.log(
+            "Deleted tasks UUID migration completed, saving to localStorage",
+          );
+          this.saveDeletedTasks();
+        }
       } catch (error) {
         console.error("Error loading deleted tasks from localStorage:", error);
         this.deletedTasks = [];
@@ -533,17 +583,15 @@ class DoThisApp {
 
   loadStatistics() {
     const completedSaved = localStorage.getItem("dothis-completed");
-    const nextIdSaved = localStorage.getItem("dothis-nextid");
 
     if (completedSaved) {
       this.completedTasks = parseInt(completedSaved) || 0;
     }
 
-    if (nextIdSaved) {
-      this.nextTaskId = Math.max(
-        parseInt(nextIdSaved) || 1,
-        this.getMaxTaskId() + 1,
-      );
+    // Clean up legacy nextTaskId from localStorage (no longer needed with UUIDs)
+    if (localStorage.getItem("dothis-nextid")) {
+      localStorage.removeItem("dothis-nextid");
+      console.log("Removed legacy nextTaskId from localStorage");
     }
   }
 
@@ -830,7 +878,7 @@ class DoThisApp {
     const deadline = document.getElementById("taskDeadline").value || null;
 
     const newTask = {
-      id: this.nextTaskId++,
+      id: this.generateUUID(),
       text: taskText,
       type: taskType,
       cooldown: cooldownPeriod,
@@ -2226,7 +2274,6 @@ class DoThisApp {
     console.log("Deleted Tasks:", this.deletedTasks);
     console.log("Completed Tasks:", this.completedTasks);
     console.log("Active Task:", this.activeTask);
-    console.log("Next Task ID:", this.nextTaskId);
 
     // Detailed execution statistics
     console.group("Execution Statistics");
@@ -2556,45 +2603,59 @@ class DoThisApp {
         );
         importedCount = tasksToImport.length;
 
-        // Update next task ID
-        this.nextTaskId = Math.max(this.getMaxTaskId() + 1, this.nextTaskId);
-
         this.showToast(
           this.t("messages.success.tasksReplaced", { count: importedCount }) ||
             `Replaced all tasks with ${importedCount} imported tasks`,
           "success",
         );
       } else if (mode === "merge") {
-        // Merge tasks, skipping duplicates by text or ID
-        const existingTexts = new Set(this.tasks.map((t) => t.text));
+        // Build lookup maps for existing tasks
+        const existingTasksByText = new Map();
+        this.tasks.forEach((task) => {
+          existingTasksByText.set(task.text, task);
+        });
         const existingIds = new Set(this.tasks.map((t) => t.id));
         let skippedCount = 0;
 
         tasksToImport.forEach((task) => {
-          const isDuplicateText = existingTexts.has(task.text);
+          const isDuplicateText = existingTasksByText.has(task.text);
           const isDuplicateId = task.id && existingIds.has(task.id);
 
           if (!isDuplicateText && !isDuplicateId) {
-            // Task is unique - import it
+            // Task is unique - import it (migrate numeric IDs if needed)
             const validatedTask = this.validateImportedTask(task);
             this.tasks.push(validatedTask);
             importedCount++;
           } else if (isDuplicateText && !isDuplicateId) {
-            // Same text but different ID - assign new ID and import
-            const validatedTask = this.validateImportedTask({
-              ...task,
-              id: null, // Force new ID assignment
-            });
-            this.tasks.push(validatedTask);
-            importedCount++;
+            // Same text exists - try to preserve UUID from existing task if import has numeric ID
+            const existingTask = existingTasksByText.get(task.text);
+            if (
+              this.isNumericId(task.id) &&
+              this.isValidUUID(existingTask.id)
+            ) {
+              // Import has numeric ID, existing has UUID - use existing UUID
+              console.log(
+                `Preserving UUID ${existingTask.id} for task "${task.text}" (had numeric ID ${task.id})`,
+              );
+              const validatedTask = this.validateImportedTask({
+                ...task,
+                id: existingTask.id,
+              });
+              // Update existing task with imported data
+              const existingIndex = this.tasks.findIndex(
+                (t) => t.id === existingTask.id,
+              );
+              this.tasks[existingIndex] = validatedTask;
+              importedCount++;
+            } else {
+              // Both have proper IDs but same text - skip to avoid duplicates
+              skippedCount++;
+            }
           } else {
-            // Duplicate text or ID - skip
+            // Duplicate ID or already handled - skip
             skippedCount++;
           }
         });
-
-        // Update next task ID
-        this.nextTaskId = Math.max(this.getMaxTaskId() + 1, this.nextTaskId);
 
         // Show appropriate message
         if (importedCount > 0 && skippedCount > 0) {
@@ -2638,8 +2699,30 @@ class DoThisApp {
 
   // Validate and normalize an imported task
   validateImportedTask(task) {
+    // Determine the ID to use
+    let taskId;
+    if (!task.id) {
+      // No ID provided - generate new UUID
+      taskId = this.generateUUID();
+    } else if (this.isNumericId(task.id)) {
+      // Numeric ID from legacy export - generate new UUID
+      taskId = this.generateUUID();
+      console.log(
+        `Migrating imported task "${task.text}" from numeric ID ${task.id} to UUID ${taskId}`,
+      );
+    } else if (this.isValidUUID(task.id)) {
+      // Valid UUID - use it
+      taskId = task.id;
+    } else {
+      // Invalid ID format - generate new UUID
+      console.warn(
+        `Invalid ID format for task "${task.text}": ${task.id}, generating new UUID`,
+      );
+      taskId = this.generateUUID();
+    }
+
     return {
-      id: task.id || this.nextTaskId++,
+      id: taskId,
       text:
         typeof task.text === "string" && task.text.trim()
           ? task.text.trim()
@@ -2661,7 +2744,7 @@ class DoThisApp {
   addDefaultTasks() {
     const defaultTasks = [
       {
-        id: this.nextTaskId++,
+        id: this.generateUUID(),
         text: "Read a book for 30 minutes",
         type: "repeatable",
         cooldown: "daily",
@@ -2671,7 +2754,7 @@ class DoThisApp {
         deadline: null,
       },
       {
-        id: this.nextTaskId++,
+        id: this.generateUUID(),
         text: "Go for a 15-minute walk",
         type: "repeatable",
         cooldown: "daily",
@@ -2681,7 +2764,7 @@ class DoThisApp {
         deadline: null,
       },
       {
-        id: this.nextTaskId++,
+        id: this.generateUUID(),
         text: "Organize your desk",
         type: "repeatable",
         cooldown: "weekly",
@@ -2691,7 +2774,7 @@ class DoThisApp {
         deadline: null,
       },
       {
-        id: this.nextTaskId++,
+        id: this.generateUUID(),
         text: "Call a friend or family member",
         type: "repeatable",
         cooldown: "weekly",
@@ -2701,7 +2784,7 @@ class DoThisApp {
         deadline: null,
       },
       {
-        id: this.nextTaskId++,
+        id: this.generateUUID(),
         text: "Practice a hobby",
         type: "repeatable",
         cooldown: "daily",
@@ -2711,7 +2794,7 @@ class DoThisApp {
         deadline: null,
       },
       {
-        id: this.nextTaskId++,
+        id: this.generateUUID(),
         text: "Do 10 minutes of stretching",
         type: "repeatable",
         cooldown: "daily",
@@ -2721,7 +2804,7 @@ class DoThisApp {
         deadline: null,
       },
       {
-        id: this.nextTaskId++,
+        id: this.generateUUID(),
         text: "Write in a journal",
         type: "repeatable",
         cooldown: "daily",
@@ -2731,7 +2814,7 @@ class DoThisApp {
         deadline: null,
       },
       {
-        id: this.nextTaskId++,
+        id: this.generateUUID(),
         text: "Learn something new online",
         type: "oneoff",
         cooldown: "daily",
@@ -2777,7 +2860,6 @@ class DoThisApp {
       this.completedTasks = 0;
       this.currentSelectedTask = null;
       this.activeTask = null;
-      this.nextTaskId = 1;
       this.editingTaskIndex = null;
 
       // Clear any active timers
