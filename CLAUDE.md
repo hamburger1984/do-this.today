@@ -52,9 +52,11 @@ For basic development, you can open `app/index.html` directly in a browser.
 - `dothis-deleted` - Trash/deleted tasks (JSON)
 - `dothis-completed` - Completion count (integer)
 - `dothis-active` - Currently active task (JSON object)
-- `dothis-nextid` - Next task ID (integer)
+- `dothis-language` - User's preferred language (string: "en-US" or "de-DE")
 - `dothis-tasklist-collapsed` - Task list collapse state (boolean)
 - `dothis-settings-collapsed` - Settings collapse state (boolean)
+
+**Note**: `dothis-nextid` is legacy and automatically removed on load (UUIDs are now used instead of integer IDs)
 
 ### localStorage Management Methods
 The app uses fine-grained localStorage operations for better performance:
@@ -63,22 +65,22 @@ The app uses fine-grained localStorage operations for better performance:
 - `saveTaskData()` - Save only tasks array
 - `saveDeletedTasks()` - Save only deleted/trash tasks
 - `saveActiveTask()` - Save only active task state
-- `saveStatistics()` - Save completion count and next ID
+- `saveStatistics()` - Save completion count only
 - `saveUIState()` - Save UI collapse states
 - `saveAllData()` - Save all data (orchestrator method)
 
 **Load Methods:**
-- `loadTaskData()` - Load and validate tasks with migration
-- `loadDeletedTasks()` - Load and validate deleted tasks
+- `loadTaskData()` - Load and validate tasks with UUID migration from numeric IDs
+- `loadDeletedTasks()` - Load and validate deleted tasks with UUID migration
 - `loadActiveTask()` - Load active task with error handling
-- `loadStatistics()` - Load completion stats and ID counter
+- `loadStatistics()` - Load completion stats (also cleans up legacy nextTaskId)
 - `loadUIState()` - Load UI collapse states
 - `loadAllData()` - Load all data (orchestrator method)
 
 ### Task Object Schema
 ```javascript
 {
-  id: number,                    // Unique identifier
+  id: string,                    // UUID v4 (e.g., "550e8400-e29b-41d4-a716-446655440000")
   text: string,                  // Task description (max 200 chars)
   type: "oneoff"|"repeatable",   // Task type
   cooldown: string,              // "0"|"1"|"3"|"6"|"12"|"daily"|"weekly"|"monthly"
@@ -90,9 +92,12 @@ The app uses fine-grained localStorage operations for better performance:
     reason?: string
   }],
   completed: boolean,            // For one-off tasks only
+  createdAt: number,             // Task creation timestamp
   deletedAt?: number            // For deleted tasks
 }
 ```
+
+**ID System**: The app uses UUID v4 for task IDs. Legacy numeric IDs are automatically migrated to UUIDs when loading from localStorage or importing tasks.
 
 ## Key Application Logic
 
@@ -118,6 +123,21 @@ Tasks have four states:
 - Requests browser notification permissions on startup
 - Sends progress notifications via service worker or direct browser API
 - Development test button available on localhost only (Settings → Debug Information)
+
+### Import/Export System
+- **Export**: Downloads tasks as JSON with metadata (date, version, task counts)
+- **Import**: Three modes available:
+  - **Replace All**: Replace entire task list with imported tasks
+  - **Merge**: Add imported tasks to existing ones (skips duplicates by text or ID)
+  - **Selective**: Choose specific tasks to import via modal dialog
+- **UUID Migration**: Automatically converts legacy numeric IDs to UUIDs on import
+- **Smart Matching**: When importing tasks with numeric IDs, tries to match by task text to preserve existing UUIDs
+
+### Internationalization (i18n)
+- Supports multiple languages (currently English and German)
+- Language detection: checks localStorage → browser language → defaults to English
+- Translation files located in `app/i18n/` (en-US.json, de-DE.json)
+- Uses `t(key, params)` method for translating strings with parameter replacement
 
 ## CSS Theme System
 
@@ -180,12 +200,92 @@ app.exportTasksAsJson()         // Download backup
 
 ## File Locations to Remember
 
-- Main app logic: `app/script.js` (DoThisApp class)
+- Main app logic: `app/script.js` (DoThisApp class - ~3200 lines, 74 methods)
 - Styles: `app/styles.css`
+- Translations: `app/i18n/` (en-US.json, de-DE.json)
 - PWA files: `app/pwa/` (manifest, service worker)
 - All images: `app/img/` (favicons, PWA icons, UI icons)
-- Documentation: `docs/development.md`, `docs/technical-details.md`
+- Documentation: `CLAUDE.md` (this file), `docs/development.md`, `docs/technical-details.md`
 - Debug tools: Available via browser console commands
+
+## Code Organization
+
+### Current Structure (script.js)
+The `DoThisApp` class is currently a single ~3200 line file with 74 methods. While this works, it can be challenging to navigate. The methods are logically grouped by functionality:
+
+**Core Initialization** (~100 lines)
+- `constructor()`, `init()`, `bindEvents()`
+
+**UUID & ID Management** (~50 lines)
+- `generateUUID()`, `isNumericId()`, `isValidUUID()`
+
+**Internationalization** (~150 lines)
+- `loadI18n()`, `detectLanguage()`, `t()`, `applyTranslations()`, `changeLanguage()`
+
+**Data Persistence** (~400 lines)
+- `saveTaskData()`, `loadTaskData()`, `saveDeletedTasks()`, `loadDeletedTasks()`, etc.
+- Includes automatic UUID migration logic
+
+**UI Navigation & State** (~200 lines)
+- `showMainPage()`, `showTrashPage()`, `toggleTaskList()`, `toggleSettings()`, etc.
+
+**Task Management** (~800 lines)
+- `saveTask()`, `saveTaskEdit()`, `deleteTask()`, `renderTasks()`, `getTaskStatus()`, etc.
+
+**Randomizer Logic** (~400 lines)
+- `randomizeTask()`, `acceptTask()`, `showSelectedTask()`, `getAvailableTasks()`, etc.
+
+**Active Task Timer** (~300 lines)
+- `startActiveTaskTimer()`, `updateActiveTaskTimer()`, `completeActiveTask()`, `abandonActiveTask()`, etc.
+
+**Import/Export** (~600 lines)
+- `exportTasksAsJson()`, `importTasksFromJson()`, `showImportDialog()`, `executeImport()`, `validateImportedTask()`, etc.
+
+**Utility Methods** (~200 lines)
+- `showToast()`, `escapeHtml()`, `debugData()`, `cleanupCorruptedData()`, etc.
+
+### Future Refactoring Considerations
+
+If the codebase grows beyond 4000-5000 lines, consider splitting into modules:
+
+**Option 1: ES6 Modules (requires minimal changes)**
+```javascript
+// app/modules/data-manager.js
+export class DataManager {
+  constructor(app) { this.app = app; }
+  saveTaskData() { ... }
+  loadTaskData() { ... }
+}
+
+// app/modules/task-manager.js
+export class TaskManager {
+  constructor(app) { this.app = app; }
+  saveTask() { ... }
+  deleteTask() { ... }
+}
+
+// app/script.js - becomes orchestrator
+import { DataManager } from './modules/data-manager.js';
+import { TaskManager } from './modules/task-manager.js';
+
+class DoThisApp {
+  constructor() {
+    this.data = new DataManager(this);
+    this.tasks = new TaskManager(this);
+  }
+}
+```
+
+**Option 2: Keep as single file (current approach)**
+- Pros: No module loading complexity, works without build tools, easy to debug
+- Cons: Large file, harder to navigate
+- **Current best practice**: Use clear section comments and keep methods organized by functionality
+
+**Recommended approach for now**: Keep the single-file architecture since:
+- The app is still under 5000 lines
+- No build process means better accessibility for contributors
+- Modern IDEs handle navigation well with method outlines
+- Clear commenting helps readability
 
 ## Development Guidelines
 

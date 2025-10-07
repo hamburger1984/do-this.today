@@ -2,6 +2,18 @@
  * do this - today! - A mobile-first Progressive Web App for task randomization
  * Copyright (c) 2025 Andreas Krohn
  * Licensed under the MIT License. See LICENSE file for details.
+ *
+ * File Structure:
+ * - Core Initialization & UUID Management (lines 1-100)
+ * - Internationalization (i18n) (lines 100-250)
+ * - Event Binding (lines 250-350)
+ * - Data Persistence (localStorage) (lines 350-650)
+ * - UI Navigation & State Management (lines 650-850)
+ * - Task Management & Rendering (lines 850-1650)
+ * - Randomizer Logic (lines 1650-2050)
+ * - Active Task Timer (lines 2050-2350)
+ * - Import/Export System (lines 2350-2850)
+ * - Utility & Debug Methods (lines 2850-3200)
  */
 class DoThisApp {
   constructor() {
@@ -48,6 +60,8 @@ class DoThisApp {
       /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
     return uuidRegex.test(id);
   }
+
+  // ===== CORE INITIALIZATION =====
 
   async init() {
     try {
@@ -230,7 +244,8 @@ class DoThisApp {
     }
   }
 
-  // Event binding
+  // ===== EVENT BINDING =====
+
   bindEvents() {
     // Task management
 
@@ -357,8 +372,8 @@ class DoThisApp {
       });
   }
 
-  // ===== LOCAL STORAGE MANAGEMENT =====
-  // Fine-grained localStorage operations for better control and performance
+  // ===== DATA PERSISTENCE (localStorage) =====
+  // Fine-grained localStorage operations for better performance and control
 
   // Task data operations
   saveTaskData() {
@@ -627,7 +642,8 @@ class DoThisApp {
       : 0;
   }
 
-  // Navigation methods
+  // ===== UI NAVIGATION & STATE MANAGEMENT =====
+
   showMainPage() {
     this.currentPage = "main";
     document.getElementById("mainPage").classList.remove("hidden");
@@ -1022,7 +1038,9 @@ class DoThisApp {
     }
   }
 
-  // UI update methods
+  // ===== TASK MANAGEMENT & RENDERING =====
+  // UI update, rendering, and task CRUD operations
+
   // ===== UI SYNCHRONIZATION METHODS =====
   /*
    * UI Update Organization:
@@ -1677,7 +1695,8 @@ class DoThisApp {
     document.getElementById("completedTasks").textContent = this.completedTasks;
   }
 
-  // Notification methods
+  // ===== NOTIFICATION SYSTEM =====
+
   async requestNotificationPermission() {
     if (!("Notification" in window)) {
       console.log("This browser does not support desktop notifications.");
@@ -1761,7 +1780,8 @@ class DoThisApp {
     this.showToast(this.t("messages.success.testNotificationsSent"), "success");
   }
 
-  // Randomizer methods
+  // ===== RANDOMIZER LOGIC =====
+
   getTaskWeight(task) {
     if (!task.deadline) {
       return 1.0; // Normal weight for tasks without deadlines
@@ -1915,7 +1935,8 @@ class DoThisApp {
     this.updateRandomizeButton();
   }
 
-  // Cooldown checking methods
+  // ===== COOLDOWN MANAGEMENT =====
+
   startCooldownChecking() {
     // Clear any existing interval first
     this.stopCooldownChecking();
@@ -1937,6 +1958,8 @@ class DoThisApp {
       this.cooldownCheckInterval = null;
     }
   }
+
+  // ===== ACTIVE TASK MANAGEMENT =====
 
   quickLogTask(index) {
     const task = this.tasks[index];
@@ -2075,8 +2098,9 @@ class DoThisApp {
     this.currentSelectedTask = null;
   }
 
-  // ===== STATE VALIDATION METHODS =====
-  // Validates active task timer and handles expiration
+  // ===== ACTIVE TASK TIMER =====
+  // Timer management and state validation
+
   checkActiveTask() {
     if (this.activeTask) {
       const now = Date.now();
@@ -2200,7 +2224,8 @@ class DoThisApp {
     }
   }
 
-  // Utility methods
+  // ===== UTILITY & HELPER METHODS =====
+
   showToast(message, type = "default") {
     const toast = document.getElementById("toast");
     toast.textContent = message;
@@ -2336,6 +2361,8 @@ class DoThisApp {
       issues: taskIssues,
     };
   }
+
+  // ===== IMPORT/EXPORT SYSTEM =====
 
   // Public method to export tasks as pretty-printed JSON
   exportTasksAsJson() {
@@ -2740,6 +2767,8 @@ class DoThisApp {
     };
   }
 
+  // ===== DEFAULT TASKS & RESET =====
+
   // Add default sample tasks
   addDefaultTasks() {
     const defaultTasks = [
@@ -2936,7 +2965,8 @@ class DoThisApp {
     }
   }
 
-  // Trash management methods
+  // ===== TRASH MANAGEMENT =====
+
   renderTrashList() {
     const trashList = document.getElementById("trashList");
     const emptyTrashState = document.getElementById("emptyTrashState");
