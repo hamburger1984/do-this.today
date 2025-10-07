@@ -171,6 +171,7 @@
       "tasksExported": "Tasks exported successfully",
       "tasksReplaced": "Replaced all tasks with {{count}} imported tasks",
       "tasksMerged": "Imported {{count}} new tasks",
+      "tasksMergedWithSkips": "Imported {{imported}} new tasks ({{skipped}} duplicates skipped)",
       "sampleTasksAdded": "Sample tasks added successfully",
       "everythingReset": "Everything has been reset successfully",
       "debugLogged": "Debug information logged to console",
@@ -180,6 +181,7 @@
     },
     "info": {
       "trashAlreadyEmpty": "Trash is already empty",
+      "allTasksAlreadyExist": "All tasks already exist (no new tasks imported)",
       "dataIntegrityIssues": "Data integrity issues detected. Consider running app.cleanupCorruptedData() from console."
     },
     "notifications": {

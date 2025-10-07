@@ -2565,25 +2565,60 @@ class DoThisApp {
           "success",
         );
       } else if (mode === "merge") {
-        // Merge tasks, skipping duplicates
+        // Merge tasks, skipping duplicates by text or ID
         const existingTexts = new Set(this.tasks.map((t) => t.text));
+        const existingIds = new Set(this.tasks.map((t) => t.id));
+        let skippedCount = 0;
 
         tasksToImport.forEach((task) => {
-          if (!existingTexts.has(task.text)) {
+          const isDuplicateText = existingTexts.has(task.text);
+          const isDuplicateId = task.id && existingIds.has(task.id);
+
+          if (!isDuplicateText && !isDuplicateId) {
+            // Task is unique - import it
             const validatedTask = this.validateImportedTask(task);
             this.tasks.push(validatedTask);
             importedCount++;
+          } else if (isDuplicateText && !isDuplicateId) {
+            // Same text but different ID - assign new ID and import
+            const validatedTask = this.validateImportedTask({
+              ...task,
+              id: null, // Force new ID assignment
+            });
+            this.tasks.push(validatedTask);
+            importedCount++;
+          } else {
+            // Duplicate text or ID - skip
+            skippedCount++;
           }
         });
 
         // Update next task ID
         this.nextTaskId = Math.max(this.getMaxTaskId() + 1, this.nextTaskId);
 
-        this.showToast(
-          this.t("messages.success.tasksMerged", { count: importedCount }) ||
-            `Imported ${importedCount} new tasks`,
-          "success",
-        );
+        // Show appropriate message
+        if (importedCount > 0 && skippedCount > 0) {
+          this.showToast(
+            this.t("messages.success.tasksMergedWithSkips", {
+              imported: importedCount,
+              skipped: skippedCount,
+            }) ||
+              `Imported ${importedCount} new tasks (${skippedCount} duplicates skipped)`,
+            "success",
+          );
+        } else if (importedCount > 0) {
+          this.showToast(
+            this.t("messages.success.tasksMerged", { count: importedCount }) ||
+              `Imported ${importedCount} new tasks`,
+            "success",
+          );
+        } else {
+          this.showToast(
+            this.t("messages.info.allTasksAlreadyExist") ||
+              "All tasks already exist (no new tasks imported)",
+            "default",
+          );
+        }
       }
 
       // Save and refresh

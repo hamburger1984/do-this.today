@@ -171,6 +171,7 @@
       "tasksExported": "Aufgaben erfolgreich exportiert",
       "tasksReplaced": "Alle Aufgaben durch {{count}} importierte Aufgaben ersetzt",
       "tasksMerged": "{{count}} neue Aufgaben importiert",
+      "tasksMergedWithSkips": "{{imported}} neue Aufgaben importiert ({{skipped}} Duplikate übersprungen)",
       "sampleTasksAdded": "Beispielaufgaben erfolgreich hinzugefügt",
       "everythingReset": "Alles wurde erfolgreich zurückgesetzt",
       "debugLogged": "Debug-Informationen in der Konsole protokolliert",
@@ -180,6 +181,7 @@
     },
     "info": {
       "trashAlreadyEmpty": "Papierkorb ist bereits leer",
+      "allTasksAlreadyExist": "Alle Aufgaben existieren bereits (keine neuen Aufgaben importiert)",
       "dataIntegrityIssues": "Datenintegritätsprobleme erkannt. Erwäge app.cleanupCorruptedData() in der Konsole auszuführen."
     },
     "notifications": {
