@@ -34,25 +34,38 @@ do-this-today/
 ├── app/
 │   ├── index.html              # Main application entry point
 │   ├── styles.css              # Mobile-first CSS with CSS variables
-│   ├── script.js               # Core application logic (DoThisApp class)
-│   ├── manifest.json           # PWA manifest for app installation
-│   ├── sw.js                   # Service Worker for offline support
-│   ├── favicon.svg             # App icon in SVG format
-│   └── img/                    # SVG icon assets
+│   ├── script.js               # Main app orchestrator (~350 lines)
+│   ├── modules/                # ES6 modules
+│   │   ├── DataManager.js      # Data persistence (~380 lines)
+│   │   ├── Utils.js            # Utilities & helpers (~300 lines)
+│   │   ├── I18nManager.js      # Internationalization (~140 lines)
+│   │   ├── TaskManager.js      # Task operations (~1000 lines)
+│   │   ├── UIManager.js        # UI navigation (~500 lines)
+│   │   ├── RandomizerManager.js # Randomization (~240 lines)
+│   │   ├── ActiveTaskManager.js # Task timer (~250 lines)
+│   │   └── ImportExportManager.js # Import/export (~480 lines)
+│   ├── i18n/                   # Translation files
+│   │   ├── en-US.json          # English translations
+│   │   └── de-DE.json          # German translations
+│   ├── pwa/
+│   │   ├── manifest.json       # PWA manifest for app installation
+│   │   └── sw.js               # Service Worker for offline support
+│   └── img/                    # Icon assets
+│       ├── favicon.svg         # App icon in SVG format
+│       ├── arrow-left.svg      # Back navigation (24x24)
+│       ├── check.svg           # Complete/accept actions (20x20)
+│       ├── clock.svg           # Timer/cooldown indicators (20x20)
+│       ├── dice.svg            # Randomizer icon (20x20)
+│       ├── download.svg        # Export data action (16x16)
+│       ├── edit.svg            # Edit task action (16x16)
+│       ├── info.svg            # Debug/info actions (16x16)
+│       ├── refresh.svg         # Try another/refresh actions (20x20)
+│       ├── trash.svg           # Delete task action (16x16)
+│       └── x.svg               # Cancel/close actions (20x20)
 ├── docs/
 │   ├── development.md          # Development guide
 │   └── technical-details.md    # This file
 └── debug-test.html             # Standalone data integrity diagnostic tool
-    ├── arrow-left.svg      # Back navigation (24x24)
-    ├── check.svg           # Complete/accept actions (20x20)
-    ├── clock.svg           # Timer/cooldown indicators (20x20)
-    ├── dice.svg            # Icon assets (20x20)
-    ├── download.svg        # Export data action (16x16)
-    ├── edit.svg            # Edit task action (16x16)
-    ├── info.svg            # Debug/info actions (16x16)
-    ├── refresh.svg         # Try another/refresh actions (20x20)
-    ├── trash.svg           # Delete task action (16x16)
-    └── x.svg               # Cancel/close actions (20x20)
 ```
 
 ### File Descriptions
@@ -60,7 +73,17 @@ do-this-today/
 #### Core Application Files
 - **`index.html`**: Single-page application structure with semantic HTML5
 - **`styles.css`**: Mobile-first CSS with CSS custom properties for theming
-- **`script.js`**: Main application logic encapsulated in DoThisApp ES6 class
+- **`script.js`**: Main DoThisApp orchestrator class that initializes and coordinates modules
+
+#### Modular Architecture (app/modules/)
+- **`DataManager.js`**: localStorage persistence, data validation, UUID migration
+- **`Utils.js`**: UUID generation, time/date formatting, cooldown calculations, debugging
+- **`I18nManager.js`**: Language loading, translation function, dynamic UI updates
+- **`TaskManager.js`**: Task CRUD operations, rendering, status calculation, trash management
+- **`UIManager.js`**: UI navigation, toast notifications, form interactions, browser notifications
+- **`RandomizerManager.js`**: Weighted random selection, cooldown checking, task flow
+- **`ActiveTaskManager.js`**: 8-hour timer, progress notifications, completion/abandonment
+- **`ImportExportManager.js`**: JSON export/import with three modes (replace, merge, selective)
 
 #### PWA Files
 - **`manifest.json`**: Defines app metadata for installation and app store listing
@@ -79,25 +102,27 @@ The app uses the following localStorage keys:
 'dothis-deleted'            // JSON array of deleted tasks (trash)
 'dothis-completed'          // Integer count of completed tasks
 'dothis-active'             // JSON object of currently active task
-'dothis-nextid'             // Integer for next task ID assignment
+'dothis-language'           // String: "en-US" or "de-DE"
 'dothis-tasklist-collapsed' // Boolean for task list collapse state
 'dothis-settings-collapsed' // Boolean for settings collapse state
 ```
 
+**Note**: `dothis-nextid` is legacy and automatically removed on load (UUIDs are now used instead of integer IDs)
+
 ### localStorage Management Architecture
 
-The app uses fine-grained localStorage operations for better performance and precision:
+The app uses fine-grained localStorage operations for better performance and precision (managed by `DataManager` module):
 
 **Save Operations:**
-- `saveTaskData()` - Saves only the tasks array
-- `saveDeletedTasks()` - Saves only deleted tasks
-- `saveActiveTask()` - Saves only active task state
-- `saveStatistics()` - Saves completion count and next ID
-- `saveUIState()` - Saves UI collapse states
-- `saveAllData()` - Orchestrator that saves all data types
+- `app.data.saveTaskData()` - Saves only the tasks array
+- `app.data.saveDeletedTasks()` - Saves only deleted tasks
+- `app.data.saveActiveTask()` - Saves only active task state
+- `app.data.saveStatistics()` - Saves completion count
+- `app.data.saveUIState()` - Saves UI collapse states
+- `app.data.saveAllData()` - Orchestrator that saves all data types
 
 **Load Operations:**
-- `loadTaskData()` - Loads and validates tasks with migration
+- `app.data.loadTaskData()` - Loads and validates tasks with UUID migration
 - `loadDeletedTasks()` - Loads and validates deleted tasks
 - `loadActiveTask()` - Loads active task with error handling
 - `loadStatistics()` - Loads completion stats and ID counter

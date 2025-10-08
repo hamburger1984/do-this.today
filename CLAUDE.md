@@ -18,7 +18,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Key Files
 - `app/index.html` - Main application entry point
-- `app/script.js` - Core application logic (DoThisApp class)
+- `app/script.js` - Main DoThisApp orchestrator class (~350 lines)
+- `app/modules/` - ES6 modules for organized code structure:
+  - `DataManager.js` - Data persistence with localStorage (~380 lines)
+  - `Utils.js` - UUID generation, formatting, validation (~300 lines)
+  - `I18nManager.js` - Internationalization and translations (~140 lines)
+  - `TaskManager.js` - Task CRUD operations and rendering (~1000 lines)
+  - `UIManager.js` - UI navigation, updates, interactions (~500 lines)
+  - `RandomizerManager.js` - Task randomization logic (~240 lines)
+  - `ActiveTaskManager.js` - 8-hour task timer and lifecycle (~250 lines)
+  - `ImportExportManager.js` - Import/export functionality (~480 lines)
 - `app/styles.css` - Mobile-first CSS with sunset color theme
 - `app/pwa/manifest.json` - PWA manifest
 - `app/pwa/sw.js` - Service Worker for offline support
@@ -59,23 +68,23 @@ For basic development, you can open `app/index.html` directly in a browser.
 **Note**: `dothis-nextid` is legacy and automatically removed on load (UUIDs are now used instead of integer IDs)
 
 ### localStorage Management Methods
-The app uses fine-grained localStorage operations for better performance:
+The app uses fine-grained localStorage operations for better performance (managed by `DataManager` module):
 
-**Save Methods:**
-- `saveTaskData()` - Save only tasks array
-- `saveDeletedTasks()` - Save only deleted/trash tasks
-- `saveActiveTask()` - Save only active task state
-- `saveStatistics()` - Save completion count only
-- `saveUIState()` - Save UI collapse states
-- `saveAllData()` - Save all data (orchestrator method)
+**Save Methods (DataManager):**
+- `data.saveTaskData()` - Save only tasks array
+- `data.saveDeletedTasks()` - Save only deleted/trash tasks
+- `data.saveActiveTask()` - Save only active task state
+- `data.saveStatistics()` - Save completion count only
+- `data.saveUIState()` - Save UI collapse states
+- `data.saveAllData()` - Save all data (orchestrator method)
 
-**Load Methods:**
-- `loadTaskData()` - Load and validate tasks with UUID migration from numeric IDs
-- `loadDeletedTasks()` - Load and validate deleted tasks with UUID migration
-- `loadActiveTask()` - Load active task with error handling
-- `loadStatistics()` - Load completion stats (also cleans up legacy nextTaskId)
-- `loadUIState()` - Load UI collapse states
-- `loadAllData()` - Load all data (orchestrator method)
+**Load Methods (DataManager):**
+- `data.loadTaskData()` - Load and validate tasks with UUID migration from numeric IDs
+- `data.loadDeletedTasks()` - Load and validate deleted tasks with UUID migration
+- `data.loadActiveTask()` - Load active task with error handling
+- `data.loadStatistics()` - Load completion stats (also cleans up legacy nextTaskId)
+- `data.loadUIState()` - Load UI collapse states
+- `data.loadAllData()` - Load all data (orchestrator method)
 
 ### Task Object Schema
 ```javascript
@@ -134,10 +143,11 @@ Tasks have four states:
 - **Smart Matching**: When importing tasks with numeric IDs, tries to match by task text to preserve existing UUIDs
 
 ### Internationalization (i18n)
+- Managed by `I18nManager` module
 - Supports multiple languages (currently English and German)
 - Language detection: checks localStorage → browser language → defaults to English
 - Translation files located in `app/i18n/` (en-US.json, de-DE.json)
-- Uses `t(key, params)` method for translating strings with parameter replacement
+- Uses `i18n.t(key, params)` method for translating strings with parameter replacement
 
 ## CSS Theme System
 
@@ -163,23 +173,23 @@ Always use semantic variables instead of raw colors:
 ## Common Development Tasks
 
 ### Adding New Task Types
-1. Update HTML forms with new type options
-2. Modify `saveTask()` validation in app/script.js
-3. Update `getTaskStatus()` for new type behavior
-4. Add CSS styling for new type indicators
+1. Update HTML forms with new type options in `app/index.html`
+2. Modify `saveTask()` validation in `app/modules/TaskManager.js`
+3. Update `getTaskStatus()` in `app/modules/TaskManager.js` for new type behavior
+4. Add CSS styling for new type indicators in `app/styles.css`
 
 ### Adding New Cooldown Options
-1. Add option to select elements in app/index.html
-2. Update `getCooldownMs()` method in app/script.js for duration calculation
-3. Update `formatCooldown()` method in app/script.js for display text
+1. Add option to select elements in `app/index.html`
+2. Update `getCooldownMs()` method in `app/modules/Utils.js` for duration calculation
+3. Update `formatCooldown()` method in `app/modules/Utils.js` for display text
 
 ### Debugging Data Issues
 Browser console commands available when app is loaded:
 ```javascript
-app.debugData()                 // View all data and statistics
-app.cleanupCorruptedData()      // Fix corrupted entries
-app.validateDataIntegrity()     // Check for data issues
-app.exportTasksAsJson()         // Download backup
+app.utils.debugData()                 // View all data and statistics
+app.data.cleanupCorruptedData()       // Fix corrupted entries
+app.data.validateDataIntegrity()      // Check for data issues
+app.importExport.exportTasksAsJson()  // Download backup
 ```
 
 ### Testing Offline Functionality
@@ -200,7 +210,8 @@ app.exportTasksAsJson()         // Download backup
 
 ## File Locations to Remember
 
-- Main app logic: `app/script.js` (DoThisApp class - ~3200 lines, 74 methods)
+- Main app orchestrator: `app/script.js` (DoThisApp class - ~350 lines)
+- Modular code structure: `app/modules/` (8 ES6 modules, ~3300 lines total)
 - Styles: `app/styles.css`
 - Translations: `app/i18n/` (en-US.json, de-DE.json)
 - PWA files: `app/pwa/` (manifest, service worker)
@@ -210,82 +221,115 @@ app.exportTasksAsJson()         // Download backup
 
 ## Code Organization
 
-### Current Structure (script.js)
-The `DoThisApp` class is currently a single ~3200 line file with 74 methods. While this works, it can be challenging to navigate. The methods are logically grouped by functionality:
+### Current Structure - Modular ES6 Architecture
 
-**Core Initialization** (~100 lines)
-- `constructor()`, `init()`, `bindEvents()`
+The application uses a **modular ES6 architecture** with the main `DoThisApp` class acting as an orchestrator for specialized modules:
 
-**UUID & ID Management** (~50 lines)
-- `generateUUID()`, `isNumericId()`, `isValidUUID()`
+**Main Orchestrator: `app/script.js`** (~350 lines)
+- `DoThisApp` class initializes all modules and manages global state
+- Handles event binding and coordination between modules
+- Provides browser-level event handlers (keyboard shortcuts, visibility changes)
+- Includes `playConfetti()` animation function
 
-**Internationalization** (~150 lines)
-- `loadI18n()`, `detectLanguage()`, `t()`, `applyTranslations()`, `changeLanguage()`
+**Module Structure: `app/modules/`**
 
-**Data Persistence** (~400 lines)
-- `saveTaskData()`, `loadTaskData()`, `saveDeletedTasks()`, `loadDeletedTasks()`, etc.
-- Includes automatic UUID migration logic
+Each module is a self-contained ES6 class that receives the app instance for cross-module communication:
 
-**UI Navigation & State** (~200 lines)
-- `showMainPage()`, `showTrashPage()`, `toggleTaskList()`, `toggleSettings()`, etc.
+1. **DataManager.js** (~380 lines) - Data persistence layer
+   - Save/load methods for tasks, deleted tasks, active task, statistics, UI state
+   - Data validation and integrity checking
+   - Automatic UUID migration from legacy numeric IDs
+   - Complete data reset functionality
 
-**Task Management** (~800 lines)
-- `saveTask()`, `saveTaskEdit()`, `deleteTask()`, `renderTasks()`, `getTaskStatus()`, etc.
+2. **Utils.js** (~300 lines) - Utility functions and helpers
+   - UUID generation (`generateUUID()`, `isNumericId()`, `isValidUUID()`)
+   - Time formatting (`getTimeAgo()`, `formatCooldown()`, `formatCooldownTime()`)
+   - Deadline formatting (`formatDeadline()`)
+   - Cooldown calculations (`getCooldownMs()`, `calculateNextAvailableTime()`)
+   - HTML escaping and debug tools (`debugData()`)
 
-**Randomizer Logic** (~400 lines)
-- `randomizeTask()`, `acceptTask()`, `showSelectedTask()`, `getAvailableTasks()`, etc.
+3. **I18nManager.js** (~140 lines) - Internationalization
+   - Language loading and detection
+   - Translation function (`t(key, params)`)
+   - Dynamic UI translation application
+   - Language switching
 
-**Active Task Timer** (~300 lines)
-- `startActiveTaskTimer()`, `updateActiveTaskTimer()`, `completeActiveTask()`, `abandonActiveTask()`, etc.
+4. **TaskManager.js** (~1000 lines) - Task operations and rendering
+   - Task CRUD operations (`saveTask()`, `saveTaskEdit()`, `deleteTask()`)
+   - Task status calculation (`getTaskStatus()`, `getAvailableTasks()`)
+   - Task list rendering (`renderTasks()`, `renderTrashList()`)
+   - Execution statistics (`getExecutionStats()`)
+   - Quick logging (`quickLogTask()`)
+   - Trash management (`restoreTask()`, `deleteTaskForever()`, `clearAllTrash()`)
+   - Default sample tasks (`addDefaultTasks()`)
+   - Completed task cleanup (`cleanupCompletedOneOffTasks()`)
 
-**Import/Export** (~600 lines)
-- `exportTasksAsJson()`, `importTasksFromJson()`, `showImportDialog()`, `executeImport()`, `validateImportedTask()`, etc.
+5. **UIManager.js** (~500 lines) - UI navigation and interactions
+   - UI refresh orchestration (`refreshUI()`, `updateRandomizerSection()`)
+   - Page navigation (`showMainPage()`, `showTrashPage()`)
+   - Section collapse/expand (`toggleTaskList()`, `toggleSettings()`)
+   - Task editing UI (`showTaskEdit()`, `hideTaskEdit()`)
+   - Form interactions (toggles, deadlines)
+   - Toast notifications (`showToast()`)
+   - Browser notifications (`requestNotificationPermission()`, `sendTaskTimerNotification()`)
+   - Empty state management
 
-**Utility Methods** (~200 lines)
-- `showToast()`, `escapeHtml()`, `debugData()`, `cleanupCorruptedData()`, etc.
+6. **RandomizerManager.js** (~240 lines) - Task randomization
+   - Weighted random selection (`getTaskWeight()`, `randomizeTask()`)
+   - Task flow management (`showSelectedTask()`, `acceptTask()`)
+   - Randomizer UI states (`showTaskCompleted()`, `nextTask()`, `resetRandomizer()`)
+   - Cooldown checking (`startCooldownChecking()`, `stopCooldownChecking()`)
+   - Loading state management
 
-### Future Refactoring Considerations
+7. **ActiveTaskManager.js** (~250 lines) - Active task lifecycle
+   - Task timer management (`startActiveTaskTimer()`, `clearActiveTaskTimer()`)
+   - Timer updates with notifications (`updateActiveTaskTimer()`)
+   - Task completion (`completeActiveTask()`)
+   - Task abandonment (`abandonActiveTask()`, `saveAbandonReason()`)
+   - Abandon reason modal (`showAbandonReasonModal()`, `hideAbandonReasonModal()`)
+   - Active task validation (`checkActiveTask()`)
 
-If the codebase grows beyond 4000-5000 lines, consider splitting into modules:
+8. **ImportExportManager.js** (~480 lines) - Import/export functionality
+   - JSON export with metadata (`exportTasksAsJson()`)
+   - File import handling (`importTasksFromJson()`, `handleImportFile()`)
+   - Import dialogs (mode selection, task selection)
+   - Three import modes: replace, merge, selective
+   - Task validation and UUID migration (`validateImportedTask()`)
 
-**Option 1: ES6 Modules (requires minimal changes)**
+### Module Communication
+
+Modules communicate through the main app instance:
 ```javascript
-// app/modules/data-manager.js
-export class DataManager {
-  constructor(app) { this.app = app; }
-  saveTaskData() { ... }
-  loadTaskData() { ... }
-}
-
-// app/modules/task-manager.js
-export class TaskManager {
-  constructor(app) { this.app = app; }
-  saveTask() { ... }
-  deleteTask() { ... }
-}
-
-// app/script.js - becomes orchestrator
-import { DataManager } from './modules/data-manager.js';
-import { TaskManager } from './modules/task-manager.js';
-
+// In script.js
 class DoThisApp {
   constructor() {
+    // Initialize modules
+    this.utils = new Utils(this);
     this.data = new DataManager(this);
-    this.tasks = new TaskManager(this);
+    this.taskManager = new TaskManager(this);
+    // ... etc
+  }
+}
+
+// Modules can access each other via app instance
+class TaskManager {
+  saveTask() {
+    // Access other modules
+    const uuid = this.app.utils.generateUUID();
+    this.app.data.saveTaskData();
+    this.app.ui.showToast("Task saved!");
   }
 }
 ```
 
-**Option 2: Keep as single file (current approach)**
-- Pros: No module loading complexity, works without build tools, easy to debug
-- Cons: Large file, harder to navigate
-- **Current best practice**: Use clear section comments and keep methods organized by functionality
+### Benefits of Current Architecture
 
-**Recommended approach for now**: Keep the single-file architecture since:
-- The app is still under 5000 lines
-- No build process means better accessibility for contributors
-- Modern IDEs handle navigation well with method outlines
-- Clear commenting helps readability
+✅ **Improved readability** - Each module has a clear, focused purpose
+✅ **Easy navigation** - Find functionality by module name
+✅ **Better maintainability** - Changes isolated to specific modules
+✅ **No build process** - Pure ES6 modules work in modern browsers
+✅ **Modular testing** - Test individual modules independently
+✅ **Clear dependencies** - Module structure makes relationships explicit
 
 ## Development Guidelines
 
